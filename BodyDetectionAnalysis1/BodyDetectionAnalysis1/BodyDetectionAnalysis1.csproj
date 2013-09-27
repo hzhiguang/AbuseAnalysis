@@ -97,6 +97,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HandDetector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -124,6 +125,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="gloveHSV.txt" />
     <Content Include="haar\Original\haarcascade_frontalface_default.xml" />
     <Content Include="haar\Original\haarcascade_fullbody.xml" />
     <Content Include="haar\Original\haarcascade_hand.xml" />
