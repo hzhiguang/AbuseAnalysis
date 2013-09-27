@@ -46,9 +46,9 @@ namespace BodyDetectionAnalysis1
         private int hueLower, hueUpper, satLower, satUpper, briLower, briUpper;
 
         // EmguCV elements
-        private MIplImage scaleImg;     // for resizing the webcam image
-        private MIplImage hsvImg;       // HSV version of webcam image
-        private MIplImage imgThreshed;  // threshold for HSV settings
+        private Image<Bgr, Byte> scaleImg;     // for resizing the webcam image
+        private Image<Hsv, Byte> hsvImg;       // HSV version of webcam image
+        private Image<Hsv, Byte> imgThreshed;  // threshold for HSV settings
         private MemStorage contourStorage, approxStorage, hullStorage, defectsStorage;
 
         private Font msgFont;
@@ -68,12 +68,16 @@ namespace BodyDetectionAnalysis1
         public HandDetector(string hsvFnm, int width, int height)
         {
             Size scale = new Size(width/IMG_SCALE, height/IMG_SCALE);
-            IntPtr scaleImage = (CvInvoke.cvCreateImage(scale, IPL_DEPTH.IPL_DEPTH_8U, 3));
-            scaleImg = (MIplImage)Marshal.PtrToStructure(scaleImage, typeof(MIplImage));
+            scaleImg = new Image<Bgr, Byte>(scale);
+            hsvImg = new Image<Hsv, Byte>(scale);
+            imgThreshed = new Image<Hsv, Byte>(scale);
+
+            /*IntPtr scaleImage = (CvInvoke.cvCreateImage(scale, IPL_DEPTH.IPL_DEPTH_8U, 3));
+            scaleImg = (Image<Bgr, Byte>)Marshal.PtrToStructure(scaleImage, typeof(Image<Bgr, Byte>));
             IntPtr hsvImage = (CvInvoke.cvCreateImage(scale, IPL_DEPTH.IPL_DEPTH_8U, 3));
-            hsvImg = (MIplImage)Marshal.PtrToStructure(hsvImage, typeof(MIplImage));
+            hsvImg = (Image<Hsv, Byte>)Marshal.PtrToStructure(hsvImage, typeof(Image<Hsv, Byte>));
             IntPtr imageThreshed = (CvInvoke.cvCreateImage(scale, IPL_DEPTH.IPL_DEPTH_8U, 3));
-            imgThreshed = (MIplImage)Marshal.PtrToStructure(imageThreshed, typeof(MIplImage));
+            imgThreshed = (Image<Hsv, Byte>)Marshal.PtrToStructure(imageThreshed, typeof(Image<Hsv, Byte>));*/
 
             // storage for contour, hull, and defect calculations by OpenCV
             contourStorage = new MemStorage();
@@ -125,17 +129,17 @@ namespace BodyDetectionAnalysis1
 
         public void update(Image<Bgr, Byte> im)
         {
-            CvInvoke.cvResize(im, scaleImg.roi, INTER.CV_INTER_CUBIC); // reduce the size of the image to make processing faster
+            CvInvoke.cvResize(im, scaleImg, INTER.CV_INTER_CUBIC); // reduce the size of the image to make processing faster
 
             // convert image format to HSV
-            CvInvoke.cvCvtColor(scaleImg.roi, hsvImg.roi, COLOR_CONVERSION.CV_BGR2HSV);
+            CvInvoke.cvCvtColor(scaleImg, hsvImg, COLOR_CONVERSION.CV_BGR2HSV);
 
             // threshold image using loaded HSV settings for user's glove
-            CvInvoke.cvInRangeS(hsvImg.roi, new MCvScalar(hueLower, satLower, briLower, 0),
+            CvInvoke.cvInRangeS(hsvImg, new MCvScalar(hueLower, satLower, briLower, 0),
                                         new MCvScalar(hueUpper, satUpper, briUpper, 0),
-                                        imgThreshed.roi);
+                                        imgThreshed);
 
-            CvInvoke.cvMorphologyEx(imgThreshed.roi, imgThreshed.roi, imgThreshed.roi, imgThreshed.roi, CV_MORPH_OP.CV_MOP_OPEN, 1);
+            CvInvoke.cvMorphologyEx(imgThreshed, imgThreshed, imgThreshed, imgThreshed, CV_MORPH_OP.CV_MOP_OPEN, 1);
 
             // erosion followed by dilation on the image to remove
             // specks of white while retaining the image size
@@ -144,9 +148,9 @@ namespace BodyDetectionAnalysis1
             {
                 return;
             }
-            extractContourInfo(bigContour, IMG_SCALE); // find the COG and angle to horizontal of the contour
-            findFingerTips(bigContour, IMG_SCALE); // detect the fingertips positions in the contour
-            nameFingers(cogPt, contourAxisAngle, fingerTips);
+            //extractContourInfo(bigContour, IMG_SCALE); // find the COG and angle to horizontal of the contour
+            //findFingerTips(bigContour, IMG_SCALE); // detect the fingertips positions in the contour
+            //nameFingers(cogPt, contourAxisAngle, fingerTips);
         }
 
         private Bitmap scaleImage(Bitmap im, int scale) // scaling makes the image faster to process
@@ -162,11 +166,11 @@ namespace BodyDetectionAnalysis1
             return smallIm;
         }
 
-        private MCvSeq findBiggestContour(MIplImage imgThreshed)
+        private MCvSeq findBiggestContour(Image<Hsv, Byte> imgThreshed)
         {
             MCvSeq bigContour = new MCvSeq(); // generate all the contours in the threshold image as a list
             MCvSeq contours = new MCvSeq();
-            CvInvoke.cvFindContours(imgThreshed.roi, contourStorage, ref contours.ptr, System.Runtime.InteropServices.Marshal.SizeOf(typeof(MCvContour)),
+            CvInvoke.cvFindContours(imgThreshed, contourStorage, ref contours.ptr, System.Runtime.InteropServices.Marshal.SizeOf(typeof(MCvContour)),
                 RETR_TYPE.CV_RETR_LIST,
                 CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE,
                 new Point(0, 0));
@@ -190,7 +194,7 @@ namespace BodyDetectionAnalysis1
             return bigContour;
         }
 
-        private void extractContourInfo(MCvSeq bigContour, int scale)
+        /*private void extractContourInfo(MCvSeq bigContour, int scale)
         {
             MCvMoments moments = new MCvMoments();
             CvInvoke.cvMoments(bigContour.ptr, ref moments, 1);
@@ -482,6 +486,6 @@ namespace BodyDetectionAnalysis1
                 }
             }
             g.FillEllipse(green, cogPt.X - 8, cogPt.Y - 8, 16, 16);
-        }
+        }*/
     }
 }

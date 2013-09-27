@@ -38,7 +38,6 @@ namespace BodyDetectionAnalysis1
         private HandDetector handDec = null;   // for detecting hand and fingers
         private static int WIDTH = 640;  
         private static int HEIGHT = 480;
-        private MIplImage snapIm;
 
         public Form1()
         {
@@ -71,8 +70,7 @@ namespace BodyDetectionAnalysis1
                     imageBox1.Image = grayFrame.Clone();*/
 
                     handDec = new HandDetector("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/gloveHSV.txt", WIDTH, HEIGHT);
-                    snapIm = currentFrame.MIplImage;
-                    //handDec.update(snapIm);
+                    handDec.update(currentFrame.Clone());
                 }
             }
         }
