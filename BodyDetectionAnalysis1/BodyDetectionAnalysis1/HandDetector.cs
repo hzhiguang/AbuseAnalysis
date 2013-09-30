@@ -27,7 +27,7 @@ namespace BodyDetectionAnalysis1
     {
         private static int IMG_SCALE = 2;  // scaling applied to webcam image
 
-        private static float SMALLEST_AREA = 600.0f;    // was 100.0f; ignore smaller contour areas
+        private static float SMALLEST_AREA = 100.0f;    // was 100.0f; ignore smaller contour areas
 
         private static int MAX_POINTS = 20;   // max number of points stored in an array
 
@@ -48,7 +48,7 @@ namespace BodyDetectionAnalysis1
         // EmguCV elements
         private Image<Bgr, Byte> scaleImg;     // for resizing the webcam image
         private Image<Hsv, Byte> hsvImg;       // HSV version of webcam image
-        private Image<Hsv, Byte> imgThreshed;  // threshold for HSV settings
+        private Image<Gray, Byte> imgThreshed;  // threshold for HSV settings
         private MemStorage contourStorage, approxStorage, hullStorage, defectsStorage;
 
         private Font msgFont;
@@ -70,14 +70,7 @@ namespace BodyDetectionAnalysis1
             Size scale = new Size(width/IMG_SCALE, height/IMG_SCALE);
             scaleImg = new Image<Bgr, Byte>(scale);
             hsvImg = new Image<Hsv, Byte>(scale);
-            imgThreshed = new Image<Hsv, Byte>(scale);
-
-            /*IntPtr scaleImage = (CvInvoke.cvCreateImage(scale, IPL_DEPTH.IPL_DEPTH_8U, 3));
-            scaleImg = (Image<Bgr, Byte>)Marshal.PtrToStructure(scaleImage, typeof(Image<Bgr, Byte>));
-            IntPtr hsvImage = (CvInvoke.cvCreateImage(scale, IPL_DEPTH.IPL_DEPTH_8U, 3));
-            hsvImg = (Image<Hsv, Byte>)Marshal.PtrToStructure(hsvImage, typeof(Image<Hsv, Byte>));
-            IntPtr imageThreshed = (CvInvoke.cvCreateImage(scale, IPL_DEPTH.IPL_DEPTH_8U, 3));
-            imgThreshed = (Image<Hsv, Byte>)Marshal.PtrToStructure(imageThreshed, typeof(Image<Hsv, Byte>));*/
+            imgThreshed = new Image<Gray, Byte>(scale);
 
             // storage for contour, hull, and defect calculations by OpenCV
             contourStorage = new MemStorage();
@@ -136,8 +129,8 @@ namespace BodyDetectionAnalysis1
 
             // threshold image using loaded HSV settings for user's glove
             CvInvoke.cvInRangeS(hsvImg, new MCvScalar(hueLower, satLower, briLower, 0),
-                                        new MCvScalar(hueUpper, satUpper, briUpper, 0),
-                                        imgThreshed);
+                                    new MCvScalar(hueUpper, satUpper, briUpper, 0),
+                                    imgThreshed);
 
             CvInvoke.cvMorphologyEx(imgThreshed, imgThreshed, imgThreshed, imgThreshed, CV_MORPH_OP.CV_MOP_OPEN, 1);
 
@@ -148,9 +141,9 @@ namespace BodyDetectionAnalysis1
             {
                 return;
             }
-            //extractContourInfo(bigContour, IMG_SCALE); // find the COG and angle to horizontal of the contour
-            //findFingerTips(bigContour, IMG_SCALE); // detect the fingertips positions in the contour
-            //nameFingers(cogPt, contourAxisAngle, fingerTips);
+            extractContourInfo(bigContour, IMG_SCALE); // find the COG and angle to horizontal of the contour
+            findFingerTips(bigContour, IMG_SCALE); // detect the fingertips positions in the contour
+            nameFingers(cogPt, contourAxisAngle, fingerTips);
         }
 
         private Bitmap scaleImage(Bitmap im, int scale) // scaling makes the image faster to process
@@ -166,35 +159,32 @@ namespace BodyDetectionAnalysis1
             return smallIm;
         }
 
-        private MCvSeq findBiggestContour(Image<Hsv, Byte> imgThreshed)
+        private MCvSeq findBiggestContour(Image<Gray, Byte> imgThreshed)
         {
-            MCvSeq bigContour = new MCvSeq(); // generate all the contours in the threshold image as a list
-            MCvSeq contours = new MCvSeq();
-            CvInvoke.cvFindContours(imgThreshed, contourStorage, ref contours.ptr, System.Runtime.InteropServices.Marshal.SizeOf(typeof(MCvContour)),
-                RETR_TYPE.CV_RETR_LIST,
-                CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE,
-                new Point(0, 0));
-            // find the largest contour in the list based on bounded box size
-            float maxArea = SMALLEST_AREA;
-            while (contours.ptr != null)
+            MCvSeq bigContour = new MCvSeq();
+            
+            // generate all the contours in the threshold image as a list
+            for (Contour<Point> contours = imgThreshed.FindContours(CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE, RETR_TYPE.CV_RETR_LIST, contourStorage); contours != null; contours = contours.HNext)
             {
-                if (contours.elem_size > 0)
+                // find the largest contour in the list based on bounded box size
+                float maxArea = SMALLEST_AREA;
+                MCvBox2D box = new MCvBox2D();
+                if (contours.MCvSeq.elem_size > 0)
                 {
-                    MCvBox2D box = CvInvoke.cvMinAreaRect2(contours.ptr, contourStorage);
+                    box = CvInvoke.cvMinAreaRect2(contours, contourStorage);
                     SizeF size = box.size;
                     float area = size.ToPointF().X * size.ToPointF().Y;
                     if (area > maxArea)
                     {
                         maxArea = area;
-                        bigContour = contours;
+                        bigContour = contours.MCvSeq;
                     }
                 }
-                contours.ptr = contours.h_next;
             }
             return bigContour;
         }
 
-        /*private void extractContourInfo(MCvSeq bigContour, int scale)
+        private void extractContourInfo(MCvSeq bigContour, int scale)
         {
             MCvMoments moments = new MCvMoments();
             CvInvoke.cvMoments(bigContour.ptr, ref moments, 1);
@@ -220,6 +210,7 @@ namespace BodyDetectionAnalysis1
             // uses fingertips information generated on the last update of the hand, so will be out-of-date
             if (fingerTips.Count() > 0)
             {
+                MessageBox.Show("LOL");
                 int yTotal = 0;
                 for (int i = 0; i < fingerTips.Count(); i++)
                 {
@@ -303,7 +294,7 @@ namespace BodyDetectionAnalysis1
                 foldPts[i] = new Point((int)Math.Round(dx * scale), (int)Math.Round(dy * scale)); //array contains coords of the skin fold between fingers
                 depths[i] = cdf.Depth * scale; // array contains distances from tips to folds
 
-                //reduceTips(defectsTotal, tipPts, foldPts, depths);
+                reduceTips(defectsTotal, tipPts, foldPts, depths);
             }
         }
 
@@ -486,6 +477,6 @@ namespace BodyDetectionAnalysis1
                 }
             }
             g.FillEllipse(green, cogPt.X - 8, cogPt.Y - 8, 16, 16);
-        }*/
+        }
     }
 }

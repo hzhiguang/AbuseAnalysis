@@ -46,7 +46,7 @@ namespace BodyDetectionAnalysis1
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            string path = "C:/Users/L33549.CITI/Desktop/b.avi";
+            string path = "C:/Users/L33549.CITI/Desktop/a.avi";
             _capture = new Capture(path);
             _capture.ImageGrabbed += loadAndProcess;
             _capture.Start();
@@ -71,6 +71,13 @@ namespace BodyDetectionAnalysis1
 
                     handDec = new HandDetector("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/gloveHSV.txt", WIDTH, HEIGHT);
                     handDec.update(currentFrame.Clone());
+                    capturedImageBox.Image = currentFrame.Clone();
+
+                    //Draw the image, the detected hand and finger info, and the average ms snap time at the bottom left of the panel.
+                    Graphics g = Graphics.FromImage(currentFrame.ToBitmap());
+                    handDec.draw(g);
+
+                    System.Threading.Thread.Sleep(100);
                 }
             }
         }
