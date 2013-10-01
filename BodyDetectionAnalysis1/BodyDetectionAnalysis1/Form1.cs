@@ -46,7 +46,7 @@ namespace BodyDetectionAnalysis1
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            string path = "C:/Users/L33549.CITI/Desktop/a.avi";
+            string path = "C:/Users/L33549.CITI/Desktop/c.avi";
             _capture = new Capture(path);
             _capture.ImageGrabbed += loadAndProcess;
             _capture.Start();
@@ -58,7 +58,7 @@ namespace BodyDetectionAnalysis1
             {
                 if (currentFrame != null)
                 {
-                    /*CascadeClassifier fullBodyCascade = new CascadeClassifier(fb);
+                    CascadeClassifier fullBodyCascade = new CascadeClassifier(h);
                     Image<Gray, Byte> grayFrame = currentFrame.Convert<Gray, Byte>();
                     Rectangle[] fullBodyDetected = fullBodyCascade.DetectMultiScale(grayFrame, 1.1, 10, Size.Empty, Size.Empty);
                     foreach (Rectangle fullBody in fullBodyDetected)
@@ -67,17 +67,17 @@ namespace BodyDetectionAnalysis1
                         imgs.Add(currentFrame.Clone());
                     }
                     capturedImageBox.Image = currentFrame.Clone();
-                    imageBox1.Image = grayFrame.Clone();*/
+                    imageBox1.Image = grayFrame.Clone();
 
-                    handDec = new HandDetector("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/gloveHSV.txt", WIDTH, HEIGHT);
-                    handDec.update(currentFrame.Clone());
+                    //handDec = new HandDetector("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/gloveHSV.txt", WIDTH, HEIGHT);
+                    //handDec.update(currentFrame);
                     capturedImageBox.Image = currentFrame.Clone();
 
                     //Draw the image, the detected hand and finger info, and the average ms snap time at the bottom left of the panel.
-                    Graphics g = Graphics.FromImage(currentFrame.ToBitmap());
-                    handDec.draw(g);
+                    //Graphics g = Graphics.FromImage(currentFrame.ToBitmap());
+                    //handDec.draw(g);
 
-                    System.Threading.Thread.Sleep(100);
+                    //System.Threading.Thread.Sleep(50);
                 }
             }
         }

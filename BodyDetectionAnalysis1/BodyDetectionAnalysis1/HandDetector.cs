@@ -134,16 +134,21 @@ namespace BodyDetectionAnalysis1
 
             CvInvoke.cvMorphologyEx(imgThreshed, imgThreshed, imgThreshed, imgThreshed, CV_MORPH_OP.CV_MOP_OPEN, 1);
 
-            // erosion followed by dilation on the image to remove
-            // specks of white while retaining the image size
-            MCvSeq bigContour = findBiggestContour(imgThreshed);
-            if (bigContour.ptr == null)
+            // erosion followed by dilation on the image to remove specks of white while retaining the image size
+            List<Contour<Point>> bigContour = findBiggestContour(imgThreshed);
+            if (bigContour == null)
             {
                 return;
             }
-            extractContourInfo(bigContour, IMG_SCALE); // find the COG and angle to horizontal of the contour
-            findFingerTips(bigContour, IMG_SCALE); // detect the fingertips positions in the contour
-            nameFingers(cogPt, contourAxisAngle, fingerTips);
+            for (int i = 0; i < bigContour.Count(); i++)
+            {
+                if (bigContour.ElementAt(i) != null)
+                {
+                    extractContourInfo(bigContour.ElementAt(i), IMG_SCALE, im); // find the COG and angle to horizontal of the contour
+                    findFingerTips(bigContour.ElementAt(i), IMG_SCALE); // detect the fingertips positions in the contour
+                    nameFingers(cogPt, contourAxisAngle, fingerTips);
+                }
+            }
         }
 
         private Bitmap scaleImage(Bitmap im, int scale) // scaling makes the image faster to process
@@ -159,16 +164,20 @@ namespace BodyDetectionAnalysis1
             return smallIm;
         }
 
-        private MCvSeq findBiggestContour(Image<Gray, Byte> imgThreshed)
+        private List<Contour<Point>> findBiggestContour(Image<Gray, Byte> imgThreshed)
         {
-            MCvSeq bigContour = new MCvSeq();
-            
+            List<Contour<Point>> contourList = new List<Contour<Point>>();
+            Contour<Point> bigContour = null;
+            Contour<Point> secondContour = null;
+            Contour<Point> thirdContour = null;
+            float maxArea = SMALLEST_AREA;
+            float nxtMaxArea = maxArea;
+            float lastMaxArea = nxtMaxArea;
+            MCvBox2D box = new MCvBox2D();
             // generate all the contours in the threshold image as a list
             for (Contour<Point> contours = imgThreshed.FindContours(CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE, RETR_TYPE.CV_RETR_LIST, contourStorage); contours != null; contours = contours.HNext)
             {
                 // find the largest contour in the list based on bounded box size
-                float maxArea = SMALLEST_AREA;
-                MCvBox2D box = new MCvBox2D();
                 if (contours.MCvSeq.elem_size > 0)
                 {
                     box = CvInvoke.cvMinAreaRect2(contours, contourStorage);
@@ -177,17 +186,30 @@ namespace BodyDetectionAnalysis1
                     if (area > maxArea)
                     {
                         maxArea = area;
-                        bigContour = contours.MCvSeq;
+                        bigContour = contours;
+                    }
+                    if ((area < maxArea) && (area > nxtMaxArea) & (area > lastMaxArea))
+                    {
+                        nxtMaxArea = area;
+                        secondContour = contours;
+                    }
+                    if ((area < maxArea) && (area < nxtMaxArea) && (area > lastMaxArea))
+                    {
+                        nxtMaxArea = area;
+                        thirdContour = contours;
                     }
                 }
             }
-            return bigContour;
+            contourList.Add(bigContour);
+            contourList.Add(secondContour);
+            contourList.Add(thirdContour);
+            return contourList;
         }
 
-        private void extractContourInfo(MCvSeq bigContour, int scale)
+        private void extractContourInfo(Contour<Point> bigContour, int scale, Image<Bgr, Byte> im)
         {
             MCvMoments moments = new MCvMoments();
-            CvInvoke.cvMoments(bigContour.ptr, ref moments, 1);
+            CvInvoke.cvMoments(bigContour, ref moments, 1);
 
             // center of gravity
             double m00 = CvInvoke.cvGetSpatialMoment(ref moments, 0, 0);
@@ -199,6 +221,9 @@ namespace BodyDetectionAnalysis1
                 int xCenter = (int)Math.Round(m10 / m00) * scale;
                 int yCenter = (int)Math.Round(m01 / m00) * scale;
                 cogPt = new Point(xCenter, yCenter);
+                Size s = new Size(bigContour.MCvContour.rect.Height, bigContour.MCvContour.rect.Width);
+                Rectangle rect = new Rectangle(cogPt, s);
+                im.Draw(rect, new Bgr(Color.Red), 2);
             }
 
             double m11 = CvInvoke.cvGetCentralMoment(ref moments, 1, 1);
@@ -210,7 +235,6 @@ namespace BodyDetectionAnalysis1
             // uses fingertips information generated on the last update of the hand, so will be out-of-date
             if (fingerTips.Count() > 0)
             {
-                MessageBox.Show("LOL");
                 int yTotal = 0;
                 for (int i = 0; i < fingerTips.Count(); i++)
                 {
@@ -259,13 +283,13 @@ namespace BodyDetectionAnalysis1
             return 0;
         }
 
-        private void findFingerTips(MCvSeq bigContour, int scale)
+        private void findFingerTips(Contour<Point> bigContour, int scale)
         {
             MCvSeq approxContour = new MCvSeq();
             MCvSeq hullSeq = new MCvSeq();
             MCvSeq defects = new MCvSeq();
 
-            approxContour.ptr = CvInvoke.cvApproxPoly(bigContour.ptr, System.Runtime.InteropServices.Marshal.SizeOf(typeof(MCvContour)), approxStorage, APPROX_POLY_TYPE.CV_POLY_APPROX_DP, 3, 1); // reduce number of points in the contour
+            approxContour.ptr = CvInvoke.cvApproxPoly(bigContour, System.Runtime.InteropServices.Marshal.SizeOf(typeof(MCvContour)), approxStorage, APPROX_POLY_TYPE.CV_POLY_APPROX_DP, 3, 1); // reduce number of points in the contour
             hullSeq.ptr = CvInvoke.cvConvexHull2(approxContour.ptr, hullStorage, ORIENTATION.CV_COUNTER_CLOCKWISE, 0); // find the convex hull around the contour
             defects.ptr = CvInvoke.cvConvexityDefects(approxContour.ptr, hullSeq.ptr, defectsStorage); // find the defect differences between the contour and hull
 

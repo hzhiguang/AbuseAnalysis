@@ -70,4 +70,3 @@ namespace BodyDetectionAnalysis1
         } // end of getPrev()
     }
 }
-
