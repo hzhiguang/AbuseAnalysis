@@ -24,20 +24,14 @@ namespace BodyDetectionAnalysis1
 {
     public partial class Form1 : Form
     {
-        private MotionDetector detector = new MotionDetector(new SimpleBackgroundModelingDetector(), new BlobCountingObjectsProcessing());
-        private string f = "C:/Users/L33549.CITI/Desktop/ChildAbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/haar/Original/haarcascade_frontalface_default.xml";
-        private string ub = "C:/Users/L33549.CITI/Desktop/ChildAbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/haar/Original/haarcascade_mcs_upperbody.xml";
-        private string lb = "C:/Users/L33549.CITI/Desktop/ChildAbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/haar/Original/haarcascade_lowerbody.xml";
-        private string fb = "C:/Users/L33549.CITI/Desktop/ChildAbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/haar/Original/haarcascade_fullbody.xml";
-        private string h = "C:/Users/L33549.CITI/Desktop/ChildAbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/haar/Original/haarcascade_hand.xml";
-
         private Capture _capture;
-        List<Bitmap> images = new List<Bitmap>();
-        List<Image<Bgr, Byte>> imgs = new List<Image<Bgr, Byte>>();
 
         private HandDetector handDec = null;   // for detecting hand and fingers
         private static int WIDTH = 640;  
         private static int HEIGHT = 480;
+
+        private CascadeClassifier hand = new CascadeClassifier("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/haar/OS/handcascade.xml");
+        List<Image<Bgr, Byte>> imgs = new List<Image<Bgr, Byte>>();
 
         public Form1()
         {
@@ -46,7 +40,7 @@ namespace BodyDetectionAnalysis1
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            string path = "C:/Users/L33549.CITI/Desktop/c.avi";
+            string path = "C:/Users/L33549.CITI/Desktop/a.avi";
             _capture = new Capture(path);
             _capture.ImageGrabbed += loadAndProcess;
             _capture.Start();
@@ -58,33 +52,26 @@ namespace BodyDetectionAnalysis1
             {
                 if (currentFrame != null)
                 {
-                    CascadeClassifier fullBodyCascade = new CascadeClassifier(h);
-                    Image<Gray, Byte> grayFrame = currentFrame.Convert<Gray, Byte>();
-                    Rectangle[] fullBodyDetected = fullBodyCascade.DetectMultiScale(grayFrame, 1.1, 10, Size.Empty, Size.Empty);
-                    foreach (Rectangle fullBody in fullBodyDetected)
-                    {
-                        currentFrame.Draw(fullBody, new Bgr(Color.Yellow), 2);
-                        imgs.Add(currentFrame.Clone());
-                    }
-                    capturedImageBox.Image = currentFrame.Clone();
-                    imageBox1.Image = grayFrame.Clone();
-
                     //handDec = new HandDetector("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/gloveHSV.txt", WIDTH, HEIGHT);
                     //handDec.update(currentFrame);
-                    capturedImageBox.Image = currentFrame.Clone();
 
                     //Draw the image, the detected hand and finger info, and the average ms snap time at the bottom left of the panel.
                     //Graphics g = Graphics.FromImage(currentFrame.ToBitmap());
                     //handDec.draw(g);
+                    //capturedImageBox.Image = currentFrame.Clone();
 
                     //System.Threading.Thread.Sleep(50);
+
+                    Image<Gray, Byte> grayFrame = currentFrame.Convert<Gray, Byte>();
+                    Rectangle[] handDetected = hand.DetectMultiScale(grayFrame, 1.1, 10, Size.Empty, Size.Empty);
+                    foreach (Rectangle hands in handDetected)
+                    {
+                        currentFrame.Draw(hands, new Bgr(Color.Yellow), 2);
+                        imgs.Add(currentFrame.Clone());
+                    }
+                    capturedImageBox.Image = currentFrame.Clone();
                 }
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(imgs.Count().ToString());
         }
     }
 }

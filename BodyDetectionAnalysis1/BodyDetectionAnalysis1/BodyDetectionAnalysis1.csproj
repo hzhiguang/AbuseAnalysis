@@ -125,13 +125,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="gloveHSV.txt" />
     <Content Include="haar\Original\haarcascade_frontalface_default.xml" />
     <Content Include="haar\Original\haarcascade_fullbody.xml" />
     <Content Include="haar\Original\haarcascade_hand.xml" />
     <Content Include="haar\Original\haarcascade_lowerbody.xml" />
     <Content Include="haar\Original\haarcascade_mcs_upperbody.xml" />
     <Content Include="haar\Original\haarcascade_upperbody.xml" />
+    <Content Include="haar\OS\fullbody.xml" />
+    <Content Include="haar\OS\hand.xml" />
+    <Content Include="haar\OS\handcascade.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

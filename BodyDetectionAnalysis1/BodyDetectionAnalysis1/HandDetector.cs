@@ -27,7 +27,7 @@ namespace BodyDetectionAnalysis1
     {
         private static int IMG_SCALE = 2;  // scaling applied to webcam image
 
-        private static float SMALLEST_AREA = 100.0f;    // was 100.0f; ignore smaller contour areas
+        private static float SMALLEST_AREA = 500.0f;    // was 100.0f; ignore smaller contour areas
 
         private static int MAX_POINTS = 20;   // max number of points stored in an array
 
@@ -88,36 +88,12 @@ namespace BodyDetectionAnalysis1
             foldPts = new Point[MAX_POINTS];  // coords of the skin folds between fingers
             depths = new float[MAX_POINTS];   // distances from tips to folds
 
-            setHSVRanges(hsvFnm);
-        }
-
-        private void setHSVRanges(String fnm)
-        {
-            try
-            {
-                StreamReader reader = new StreamReader(fnm);
-
-                string line = reader.ReadLine(); // get hues
-                string[] toks = line.Split(new string[] { "\\s+", " " }, StringSplitOptions.None);
-                hueLower = int.Parse(toks[1]);
-                hueUpper = int.Parse(toks[2]);
-
-                line = reader.ReadLine();   // get saturations
-                toks = line.Split(new string[] { "\\s+", " " }, StringSplitOptions.None);
-                satLower = int.Parse(toks[1]);
-                satUpper = int.Parse(toks[2]);
-
-                line = reader.ReadLine();    // get brightnesses
-                toks = line.Split(new string[] { "\\s+", " " }, StringSplitOptions.None);
-                briLower = int.Parse(toks[1]);
-                briUpper = int.Parse(toks[2]);
-
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                //e.Message;
-            }
+            hueLower = 0;
+            hueUpper = 100;
+            satLower = 50;
+            satUpper = 120;
+            briLower = 0;
+            briUpper = 150;
         }
 
         public void update(Image<Bgr, Byte> im)
@@ -170,9 +146,9 @@ namespace BodyDetectionAnalysis1
             Contour<Point> bigContour = null;
             Contour<Point> secondContour = null;
             Contour<Point> thirdContour = null;
-            float maxArea = SMALLEST_AREA;
-            float nxtMaxArea = maxArea;
-            float lastMaxArea = nxtMaxArea;
+            float maxArea = 500.0f;
+            float nxtMaxArea = 300.0f;
+            float lastMaxArea = 250.0f;
             MCvBox2D box = new MCvBox2D();
             // generate all the contours in the threshold image as a list
             for (Contour<Point> contours = imgThreshed.FindContours(CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE, RETR_TYPE.CV_RETR_LIST, contourStorage); contours != null; contours = contours.HNext)
@@ -185,24 +161,27 @@ namespace BodyDetectionAnalysis1
                     float area = size.ToPointF().X * size.ToPointF().Y;
                     if (area > maxArea)
                     {
+                        contourList.Remove(bigContour);
                         maxArea = area;
                         bigContour = contours;
+                        contourList.Add(bigContour);
                     }
                     if ((area < maxArea) && (area > nxtMaxArea) & (area > lastMaxArea))
                     {
+                        contourList.Remove(secondContour);
                         nxtMaxArea = area;
                         secondContour = contours;
+                        contourList.Add(secondContour);
                     }
                     if ((area < maxArea) && (area < nxtMaxArea) && (area > lastMaxArea))
                     {
-                        nxtMaxArea = area;
+                        contourList.Remove(thirdContour);
+                        lastMaxArea = area;
                         thirdContour = contours;
+                        contourList.Add(thirdContour);
                     }
                 }
             }
-            contourList.Add(bigContour);
-            contourList.Add(secondContour);
-            contourList.Add(thirdContour);
             return contourList;
         }
 
