@@ -91,9 +91,9 @@ namespace BodyDetectionAnalysis1
             hueLower = 0;
             hueUpper = 100;
             satLower = 50;
-            satUpper = 120;
+            satUpper = 150;
             briLower = 0;
-            briUpper = 150;
+            briUpper = 200;
         }
 
         public void update(Image<Bgr, Byte> im)
@@ -116,7 +116,7 @@ namespace BodyDetectionAnalysis1
             {
                 return;
             }
-            for (int i = 0; i < bigContour.Count(); i++)
+            for (int i = 2; i < bigContour.Count(); i++)
             {
                 if (bigContour.ElementAt(i) != null)
                 {
@@ -208,9 +208,8 @@ namespace BodyDetectionAnalysis1
             double m11 = CvInvoke.cvGetCentralMoment(ref moments, 1, 1);
             double m20 = CvInvoke.cvGetCentralMoment(ref moments, 2, 0);
             double m02 = CvInvoke.cvGetCentralMoment(ref moments, 0, 2);
-            contourAxisAngle = calculateTilt(m11, m20, m02);
+            contourAxisAngle = calculateTilt(m11, m20, m02); // deal with hand contour pointing downwards
 
-            // deal with hand contour pointing downwards
             // uses fingertips information generated on the last update of the hand, so will be out-of-date
             if (fingerTips.Count() > 0)
             {

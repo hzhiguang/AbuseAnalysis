@@ -40,7 +40,7 @@ namespace BodyDetectionAnalysis1
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            string path = "C:/Users/L33549.CITI/Desktop/a.avi";
+            string path = "C:/Users/L33549.CITI/Desktop/c.avi";
             _capture = new Capture(path);
             _capture.ImageGrabbed += loadAndProcess;
             _capture.Start();
@@ -52,24 +52,24 @@ namespace BodyDetectionAnalysis1
             {
                 if (currentFrame != null)
                 {
-                    //handDec = new HandDetector("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/gloveHSV.txt", WIDTH, HEIGHT);
-                    //handDec.update(currentFrame);
+                    handDec = new HandDetector("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/BodyDetectionAnalysis1/BodyDetectionAnalysis1/gloveHSV.txt", WIDTH, HEIGHT);
+                    handDec.update(currentFrame);
 
                     //Draw the image, the detected hand and finger info, and the average ms snap time at the bottom left of the panel.
-                    //Graphics g = Graphics.FromImage(currentFrame.ToBitmap());
-                    //handDec.draw(g);
-                    //capturedImageBox.Image = currentFrame.Clone();
+                    Graphics g = Graphics.FromImage(currentFrame.ToBitmap());
+                    handDec.draw(g);
+                    capturedImageBox.Image = currentFrame.Clone();
 
-                    //System.Threading.Thread.Sleep(50);
+                    System.Threading.Thread.Sleep(50);
 
-                    Image<Gray, Byte> grayFrame = currentFrame.Convert<Gray, Byte>();
+                    /*Image<Gray, Byte> grayFrame = currentFrame.Convert<Gray, Byte>();
                     Rectangle[] handDetected = hand.DetectMultiScale(grayFrame, 1.1, 10, Size.Empty, Size.Empty);
                     foreach (Rectangle hands in handDetected)
                     {
                         currentFrame.Draw(hands, new Bgr(Color.Yellow), 2);
                         imgs.Add(currentFrame.Clone());
                     }
-                    capturedImageBox.Image = currentFrame.Clone();
+                    capturedImageBox.Image = currentFrame.Clone();*/
                 }
             }
         }
