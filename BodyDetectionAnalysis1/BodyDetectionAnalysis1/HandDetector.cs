@@ -61,6 +61,9 @@ namespace BodyDetectionAnalysis1
         private Point[] tipPts, foldPts;
         private float[] depths;
         private List<Point> fingerTips;
+        private Seq<Point> hull;
+        private Seq<MCvConvexityDefect> defects;
+        private MCvConvexityDefect[] defectArray;
 
         // finger identifications
         private List<FingerNameClass.FingerName> namedFingers;
@@ -263,15 +266,12 @@ namespace BodyDetectionAnalysis1
 
         private void findFingerTips(Contour<Point> bigContour, int scale)
         {
-            MCvSeq approxContour = new MCvSeq();
-            MCvSeq hullSeq = new MCvSeq();
-            MCvSeq defects = new MCvSeq();
+            Contour<Point> appContour = bigContour.ApproxPoly(bigContour.Perimeter * 0.0025, contourStorage);
+            hull = bigContour.GetConvexHull(Emgu.CV.CvEnum.ORIENTATION.CV_CLOCKWISE);
+            defects = bigContour.GetConvexityDefacts(contourStorage, Emgu.CV.CvEnum.ORIENTATION.CV_CLOCKWISE);
+            defectArray = defects.ToArray();
 
-            approxContour.ptr = CvInvoke.cvApproxPoly(bigContour, System.Runtime.InteropServices.Marshal.SizeOf(typeof(MCvContour)), approxStorage, APPROX_POLY_TYPE.CV_POLY_APPROX_DP, 3, 1); // reduce number of points in the contour
-            hullSeq.ptr = CvInvoke.cvConvexHull2(approxContour.ptr, hullStorage, ORIENTATION.CV_COUNTER_CLOCKWISE, 0); // find the convex hull around the contour
-            defects.ptr = CvInvoke.cvConvexityDefects(approxContour.ptr, hullSeq.ptr, defectsStorage); // find the defect differences between the contour and hull
-
-            int defectsTotal = defects.total;
+            int defectsTotal = defectArray.Count();
             if (defectsTotal > MAX_POINTS)
             {
                 defectsTotal = MAX_POINTS;
@@ -280,17 +280,15 @@ namespace BodyDetectionAnalysis1
             // copy defect information from defects sequence into arrays
             for (int i = 0; i < defectsTotal; i++)
             {
-                IntPtr pntr = CvInvoke.cvGetSeqElem(defects.ptr, i);
-                MCvConvexityDefect cdf = new MCvConvexityDefect();
-                cdf.StartPointPointer = pntr;
-
+                MCvConvexityDefect cdf = defectArray.ElementAt(i);
                 Point startPt = cdf.StartPoint;
+                Point endPt = cdf.EndPoint;
+                Point depthPt = cdf.DepthPoint;
+
                 double sx = startPt.X;
                 double sy = startPt.Y;
                 tipPts[i] = new Point((int)Math.Round(sx * scale), (int)Math.Round(sy * scale)); // array contains coords of the fingertips
 
-                Point endPt = cdf.EndPoint;
-                Point depthPt = cdf.DepthPoint;
                 double dx = depthPt.X;
                 double dy = depthPt.Y;
                 foldPts[i] = new Point((int)Math.Round(dx * scale), (int)Math.Round(dy * scale)); //array contains coords of the skin fold between fingers
