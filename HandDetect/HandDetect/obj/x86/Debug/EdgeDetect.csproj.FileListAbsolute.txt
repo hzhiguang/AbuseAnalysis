@@ -1,0 +1,15 @@
+C:\Users\LuCuS\AppData\Local\Temporary Projects\EdgeDetect\bin\Debug\EdgeDetect.exe
+C:\Users\LuCuS\AppData\Local\Temporary Projects\EdgeDetect\bin\Debug\EdgeDetect.pdb
+C:\Users\LuCuS\AppData\Local\Temporary Projects\EdgeDetect\bin\Debug\OpenCvSharp.dll
+C:\Users\LuCuS\AppData\Local\Temporary Projects\EdgeDetect\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\LuCuS\AppData\Local\Temporary Projects\EdgeDetect\obj\x86\Debug\EdgeDetect.exe
+C:\Users\LuCuS\AppData\Local\Temporary Projects\EdgeDetect\obj\x86\Debug\EdgeDetect.pdb
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Debug\EdgeDetect.exe
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Debug\EdgeDetect.pdb
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Debug\EdgeDetect.exe
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Debug\EdgeDetect.pdb
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Debug\EdgeDetect.exe.config
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Debug\EdgeDetect.Form1.resources
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Debug\GenerateResource.write.1.tlog

@@ -1,0 +1,13 @@
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Release\EdgeDetect.exe.config
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Release\EdgeDetect.exe
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Release\EdgeDetect.pdb
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Release\OpenCvSharp.Blob.dll
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Release\OpenCvSharp.dll
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Release\VideoInputSharp.dll
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Release\ResolveAssemblyReference.cache
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Release\EdgeDetect.exe
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Release\EdgeDetect.pdb
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\bin\Release\OpenCvSharp.CPlusPlus.dll
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Release\EdgeDetect.Form1.resources
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Release\GenerateResource.read.1.tlog
+C:\_projects\c#\vision\EdgeDetect\EdgeDetect\obj\x86\Release\GenerateResource.write.1.tlog

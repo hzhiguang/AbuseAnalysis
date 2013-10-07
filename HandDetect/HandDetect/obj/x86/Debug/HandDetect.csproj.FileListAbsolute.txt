@@ -1,0 +1,9 @@
+C:\_projects\c#\vision\HandDetect\HandDetect\bin\Debug\HandDetect.exe.config
+C:\_projects\c#\vision\HandDetect\HandDetect\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\_projects\c#\vision\HandDetect\HandDetect\bin\Debug\HandDetect.exe
+C:\_projects\c#\vision\HandDetect\HandDetect\bin\Debug\HandDetect.pdb
+C:\_projects\c#\vision\HandDetect\HandDetect\obj\x86\Debug\HandDetect.exe
+C:\_projects\c#\vision\HandDetect\HandDetect\obj\x86\Debug\HandDetect.pdb
+C:\Users\hzhig_000\Desktop\HandDetect\HandDetect\bin\Debug\HandDetect.exe.config
+C:\Users\hzhig_000\Desktop\HandDetect\HandDetect\obj\x86\Debug\HandDetect.exe
+C:\Users\hzhig_000\Desktop\HandDetect\HandDetect\obj\x86\Debug\HandDetect.pdb
