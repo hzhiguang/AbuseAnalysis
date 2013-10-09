@@ -19,3 +19,12 @@ C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecog
 C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\obj\Debug\HandGestureRecognition.SkinDetector.csprojResolveAssemblyReference.cache
 C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\obj\Debug\HandGestureRecognition.SkinDetector.dll
 C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\obj\Debug\HandGestureRecognition.SkinDetector.pdb
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\bin\Debug\HandGestureRecognition.SkinDetector.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\bin\Debug\HandGestureRecognition.SkinDetector.pdb
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\bin\Debug\Emgu.CV.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\bin\Debug\Emgu.Util.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\bin\Debug\Emgu.CV.xml
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\bin\Debug\Emgu.Util.xml
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\obj\Debug\HandGestureRecognition.SkinDetector.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandGestureRecognition\HandGestureRecognition\HandGestureRecognition.SkinDetector\obj\Debug\HandGestureRecognition.SkinDetector.pdb

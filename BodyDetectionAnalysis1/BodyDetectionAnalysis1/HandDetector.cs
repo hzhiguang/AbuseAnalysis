@@ -92,11 +92,11 @@ namespace BodyDetectionAnalysis1
             depths = new float[MAX_POINTS];   // distances from tips to folds
 
             hueLower = 0;
-            hueUpper = 100;
+            hueUpper = 20;
             satLower = 50;
-            satUpper = 150;
+            satUpper = 255;
             briLower = 0;
-            briUpper = 200;
+            briUpper = 255;
         }
 
         public void update(Image<Bgr, Byte> im)
@@ -114,12 +114,12 @@ namespace BodyDetectionAnalysis1
             CvInvoke.cvMorphologyEx(imgThreshed, imgThreshed, imgThreshed, imgThreshed, CV_MORPH_OP.CV_MOP_OPEN, 1);
 
             // erosion followed by dilation on the image to remove specks of white while retaining the image size
-            List<Contour<Point>> bigContour = findBiggestContour(imgThreshed);
+            /*List<Contour<Point>> bigContour = findBiggestContour(imgThreshed);
             if (bigContour == null)
             {
                 return;
             }
-            for (int i = 2; i < bigContour.Count(); i++)
+            for (int i = 0; i < 1; i++)
             {
                 if (bigContour.ElementAt(i) != null)
                 {
@@ -127,7 +127,16 @@ namespace BodyDetectionAnalysis1
                     findFingerTips(bigContour.ElementAt(i), IMG_SCALE); // detect the fingertips positions in the contour
                     nameFingers(cogPt, contourAxisAngle, fingerTips);
                 }
+            }*/
+
+            Contour<Point> bigContour = findBiggestContour(imgThreshed);
+            if (bigContour == null)
+            {
+                return;
             }
+            extractContourInfo(bigContour, IMG_SCALE, im); // find the COG and angle to horizontal of the contour
+            findFingerTips(bigContour, IMG_SCALE); // detect the fingertips positions in the contour
+            nameFingers(cogPt, contourAxisAngle, fingerTips);
         }
 
         private Bitmap scaleImage(Bitmap im, int scale) // scaling makes the image faster to process
@@ -143,7 +152,28 @@ namespace BodyDetectionAnalysis1
             return smallIm;
         }
 
-        private List<Contour<Point>> findBiggestContour(Image<Gray, Byte> imgThreshed)
+        private Contour<Point> findBiggestContour(Image<Gray, Byte> imgThreshed)
+        {
+            Contour<Point> contours = imgThreshed.FindContours(CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE, RETR_TYPE.CV_RETR_LIST, contourStorage);
+            Contour<Point> bigContour = null;
+            Double current = 0;
+            Double largest = 0;
+
+            while (contours != null)
+            {
+                current = contours.Area;
+                if (current > largest)
+                {
+                    largest = current;
+                    bigContour = contours;
+                }
+                contours = contours.HNext;
+            }
+
+            return bigContour;
+        }
+
+        private List<Contour<Point>> findDiffContour(Image<Gray, Byte> imgThreshed)
         {
             List<Contour<Point>> contourList = new List<Contour<Point>>();
             Contour<Point> bigContour = null;

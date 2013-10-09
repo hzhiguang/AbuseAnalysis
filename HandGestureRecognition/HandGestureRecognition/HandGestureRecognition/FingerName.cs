@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BodyDetectionAnalysis1
+namespace HandGestureRecognition
 {
     public class FingerNameClass
     {

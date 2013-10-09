@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HandGestureRecognition</RootNamespace>
     <AssemblyName>HandGestureRecognition</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -98,16 +98,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV">
-      <HintPath>..\emgu_dlls\Emgu.CV.dll</HintPath>
+      <HintPath>..\..\..\..\Dropbox\FYPJ 2013 P3\OpenCV\libemgucv-windows-x86-gpu-2.4.2.1777\bin\Emgu.CV.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.DebuggerVisualizers.VS2010">
+      <HintPath>..\..\..\..\Dropbox\FYPJ 2013 P3\OpenCV\libemgucv-windows-x86-gpu-2.4.2.1777\bin\Emgu.CV.DebuggerVisualizers.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.GPU">
+      <HintPath>..\..\..\..\Dropbox\FYPJ 2013 P3\OpenCV\libemgucv-windows-x86-gpu-2.4.2.1777\bin\Emgu.CV.GPU.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.UI">
-      <HintPath>..\emgu_dlls\Emgu.CV.UI.dll</HintPath>
+      <HintPath>..\..\..\..\Dropbox\FYPJ 2013 P3\OpenCV\libemgucv-windows-x86-gpu-2.4.2.1777\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.Util">
-      <HintPath>..\emgu_dlls\Emgu.Util.dll</HintPath>
+      <HintPath>..\..\..\..\Dropbox\FYPJ 2013 P3\OpenCV\libemgucv-windows-x86-gpu-2.4.2.1777\bin\Emgu.Util.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Kinect">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Microsoft SDKs\Kinect\v1.7\Assemblies\Microsoft.Kinect.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -115,6 +127,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FingerName.cs" />
@@ -151,9 +164,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cvextern.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="haar\Original\haarcascade_frontalface.xml" />
+    <Content Include="haar\Original\haarcascade_fullbody.xml" />
+    <Content Include="haar\Original\haarcascade_hand.xml" />
+    <Content Include="haar\Original\haarcascade_lowerbody.xml" />
+    <Content Include="haar\Original\haarcascade_mcs_upperbody.xml" />
+    <Content Include="haar\Original\haarcascade_upperbody.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HandGestureRecognition.SkinDetector\HandGestureRecognition.SkinDetector.csproj">

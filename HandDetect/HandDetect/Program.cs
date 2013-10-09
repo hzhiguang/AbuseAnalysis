@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenCvSharp;
 using OpenCvSharp.Blob;
+using Emgu.CV;
 
 namespace HandDetect
 {

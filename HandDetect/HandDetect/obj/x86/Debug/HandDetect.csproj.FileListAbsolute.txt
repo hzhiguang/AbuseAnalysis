@@ -7,3 +7,13 @@ C:\_projects\c#\vision\HandDetect\HandDetect\obj\x86\Debug\HandDetect.pdb
 C:\Users\hzhig_000\Desktop\HandDetect\HandDetect\bin\Debug\HandDetect.exe.config
 C:\Users\hzhig_000\Desktop\HandDetect\HandDetect\obj\x86\Debug\HandDetect.exe
 C:\Users\hzhig_000\Desktop\HandDetect\HandDetect\obj\x86\Debug\HandDetect.pdb
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\bin\Debug\HandDetect.exe.config
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\obj\x86\Debug\HandDetect.exe
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\obj\x86\Debug\HandDetect.pdb
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\bin\Debug\HandDetect.exe
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\bin\Debug\HandDetect.pdb
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\bin\Debug\Emgu.CV.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\bin\Debug\Emgu.Util.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\bin\Debug\Emgu.CV.xml
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\bin\Debug\Emgu.Util.xml
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandDetect\HandDetect\obj\x86\Debug\ResolveAssemblyReference.cache
