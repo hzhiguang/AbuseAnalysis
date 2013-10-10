@@ -19,7 +19,6 @@ namespace HandGestureRecognition.SkinDetector
             StructuringElementEx rect_6 = new StructuringElementEx(6, 6, 3, 3, Emgu.CV.CvEnum.CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
             CvInvoke.cvDilate(skin, skin, rect_6, 2);
             return skin;
-        }
-        
+        }   
     }
 }

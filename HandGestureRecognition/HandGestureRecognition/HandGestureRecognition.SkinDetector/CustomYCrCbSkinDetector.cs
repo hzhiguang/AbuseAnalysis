@@ -50,7 +50,6 @@ namespace HandGestureRecognition.SkinDetector
             CvInvoke.cvErode(skin, skin, rect_6, 1);
             CvInvoke.cvDilate(skin, skin, rect_6, 2);
             return skin;
-
         }
     }
 }
