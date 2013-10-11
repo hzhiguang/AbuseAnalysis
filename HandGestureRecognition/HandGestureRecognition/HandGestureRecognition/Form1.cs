@@ -73,10 +73,10 @@ namespace HandGestureRecognition
         {
             InitializeComponent();
 
-            //grabber = new Emgu.CV.Capture("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/Video/d.avi");            
-            //grabber.QueryFrame();
-            //frameWidth = grabber.Width;
-            //frameHeight = grabber.Height;            
+            grabber = new Emgu.CV.Capture("C:/Users/L33549.CITI/Desktop/a.avi");            
+            grabber.QueryFrame();
+            frameWidth = grabber.Width;
+            frameHeight = grabber.Height;            
             //detector = new AdaptiveSkinDetector(1, AdaptiveSkinDetector.MorphingMethod.NONE);
             hsv_min = new Hsv(0, 45, 0);
             hsv_max = new Hsv(20, 255, 255);
@@ -97,9 +97,9 @@ namespace HandGestureRecognition
             fingerTips = new List<Point>();
             face = new CascadeClassifier("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/HandGestureRecognition/HandGestureRecognition/HandGestureRecognition/haar/Original/haarcascade_hand.xml");
 
-            //Application.Idle += new EventHandler(FrameGrabber);
+            Application.Idle += new EventHandler(FrameGrabber);
 
-            foreach (var potentialSensor in KinectSensor.KinectSensors)
+            /*foreach (var potentialSensor in KinectSensor.KinectSensors)
             {
                 if (potentialSensor.Status == KinectStatus.Connected)
                 {
@@ -127,7 +127,7 @@ namespace HandGestureRecognition
 
                 // Start the sensor!
                 this.sensor.Start();
-            }
+            }*/
         }
 
         private Bitmap convertFromColorFrame(ColorImageFrame colorFrame)
@@ -213,8 +213,8 @@ namespace HandGestureRecognition
                         }
                     }
                 }*/
-                //ExtractContourAndHull(skin);
-                //DrawAndComputeFingersNum();
+                ExtractContourAndHull(skin);
+                DrawAndComputeFingersNum();
 
                 imageBoxSkin.Image = skin;
                 imageBoxFrameGrabber.Image = currentFrame;
