@@ -32,6 +32,7 @@ namespace HandMotionDetection
 
         //Face Detector
         private CascadeClassifier faceHaar;
+        private Point facePoint;
 
         //Skin Detector
         private IColorSkinDetector skinDetector;
@@ -45,23 +46,26 @@ namespace HandMotionDetection
         private MCvBox2D box;
         private Seq<MCvConvexityDefect> defects;
         private MCvConvexityDefect[] defectArray;
+        private List<LineSegment2D> fingers;
 
         public Form1()
         {
             InitializeComponent();
 
-            string videoPath = "C:/Users/L33549.CITI/Desktop/a.avi";
+            string videoPath = "C:/Users/L33549.CITI/Desktop/abc.avi";
             grabVideo(videoPath);
 
             faceHaar = new CascadeClassifier("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
 
             hsv_min = new Hsv(0, 45, 0);
             hsv_max = new Hsv(20, 255, 255);
-            YCrCb_min = new Ycc(0, 129, 0);
+            //YCrCb_min = new Ycc(0, 131, 80);
+            YCrCb_min = new Ycc(0, 140, 0);
             YCrCb_max = new Ycc(255, 185, 135);
 
             contourStorage = new MemStorage();
             box = new MCvBox2D();
+            fingers = new List<LineSegment2D>();
 
             Application.Idle += new EventHandler(frameAnalysis);
         }
@@ -104,7 +108,7 @@ namespace HandMotionDetection
         private void detectAndRemoveFace(Bitmap edit)
         {
             Image<Gray, Byte> grayFrame = currentFrame.Convert<Gray, Byte>();
-            Rectangle[] faceDetected = faceHaar.DetectMultiScale(grayFrame, 1.2, 20, Size.Empty, Size.Empty);
+            Rectangle[] faceDetected = faceHaar.DetectMultiScale(grayFrame, 1.2, 16, Size.Empty, Size.Empty);
             SolidBrush black = new SolidBrush(System.Drawing.Color.Black);
             System.Drawing.Pen bPen = new System.Drawing.Pen(black, 2);
             Graphics g = Graphics.FromImage(edit);
@@ -112,13 +116,13 @@ namespace HandMotionDetection
             {
                 Rectangle f1 = faceDetected.ElementAt(0);
                 Size rec = f1.Size;
-                int h = rec.Height + 100;
-                int w = rec.Width + 100;
-                int x = f1.X - 50;
-                int y = f1.Y - 50;
-                Point newPoint = new Point(x, y);
+                int h = rec.Height + 200;
+                int w = rec.Width + 60;
+                int x = f1.X - 30;
+                int y = f1.Y - 100;
+                facePoint = new Point(x, y);
                 Size newSize = new Size(w, h);
-                Rectangle editRec = new Rectangle(newPoint, newSize);
+                Rectangle editRec = new Rectangle(facePoint, newSize);
                 g.FillRectangle(black, editRec);
                 //g.DrawLine(bPen, new Point((x + h) / 2, f1.Y + 200), new Point((x + h) / 2, f1.Y - 200));
             }
@@ -178,28 +182,25 @@ namespace HandMotionDetection
             hull = currentContour.GetConvexHull(Emgu.CV.CvEnum.ORIENTATION.CV_CLOCKWISE);
             box = currentContour.GetMinAreaRect();
 
+            //Calculate the center of the hand
             PointF center = new PointF(box.center.X, box.center.Y);
             float centerX = box.center.X;
             float centerY = box.center.Y;
 
+            //Find all defects in the contour
             defects = currentContour.GetConvexityDefacts(contourStorage, Emgu.CV.CvEnum.ORIENTATION.CV_CLOCKWISE);
             defectArray = defects.ToArray();
 
             if (defects != null)
             {
                 List<double> tipDistance = new List<double>();
-                List<PointF> points = new List<PointF>();
-                List<PointF> depthPoints = new List<PointF>();
-                for (int i = 0; i < defects.Total; i++)
+
+                /*for (int i = 0; i < defects.Total; i++)
                 {
-                    PointF startPoint = new PointF((float)defectArray[i].StartPoint.X, (float)defectArray[i].StartPoint.Y);
-                    PointF depthPoint = new PointF((float)defectArray[i].DepthPoint.X, (float)defectArray[i].DepthPoint.Y);
                     float sX = defectArray[i].StartPoint.X;
                     float sY = defectArray[i].StartPoint.Y;
                     double distance = (Math.Pow(sX - centerX, 2) + Math.Pow(sY - centerY, 2));
                     tipDistance.Add(distance);
-                    points.Add(startPoint);
-                    depthPoints.Add(depthPoint);
                 }
 
                 for (int i = 0; i < tipDistance.Count(); i++)
@@ -208,10 +209,46 @@ namespace HandMotionDetection
                     {
                         first = tipDistance.ElementAt(i);
                     }
-                    else
+                    else if (i > 0)
                     {
                         double difference = first - tipDistance.ElementAt(i);
                         if ((difference < 10) && (tipDistance.ElementAt(i) > -10))
+                        {
+                            realHand = true;
+                        }
+                    }
+                }*/
+
+                for (int i = 0; i < defects.Total; i++)
+                {
+                    float sX = defectArray[i].StartPoint.X;
+                    float sY = defectArray[i].StartPoint.Y;
+                    if (i < defects.Total - 1)
+                    {
+                        float eX = defectArray[i + 1].StartPoint.X;
+                        float eY = defectArray[i + 1].StartPoint.Y;
+                        double distance = (Math.Pow(sX - eX, 2) + Math.Pow(sY - eY, 2));
+                        tipDistance.Add(distance);
+                    }
+                    else if (i == defects.Total - 1)
+                    {
+                        float eX = defectArray[0].StartPoint.X;
+                        float eY = defectArray[0].StartPoint.Y;
+                        double distance = (Math.Pow(sX - eX, 2) + Math.Pow(sY - eY, 2));
+                        tipDistance.Add(distance);
+                    }
+                }
+
+                for (int i = 0; i < tipDistance.Count(); i++)
+                {
+                    if (i < tipDistance.Count() - 1)
+                    {
+                        first = first + tipDistance.ElementAt(i);
+                    }
+                    else if (i == tipDistance.Count() - 1)
+                    {
+                        double difference = tipDistance.ElementAt(i) - first;
+                        if ((difference < 100) && (difference > -100))
                         {
                             realHand = true;
                         }
@@ -224,23 +261,19 @@ namespace HandMotionDetection
                     editedFrame.Draw(currentContour, new Bgr(System.Drawing.Color.LimeGreen), 2);
                     //Draw Mid Point of hand
                     editedFrame.Draw(new CircleF(center, 3), new Bgr(200, 125, 75), 2);
-                    /*foreach (PointF startPoint in points)
-                    {
-                        editedFrame.Draw(new CircleF(startPoint, 3), new Bgr(System.Drawing.Color.BlueViolet), 2);
-                    }
-                    foreach (PointF depthPoint in depthPoints)
-                    {
-                        editedFrame.Draw(new CircleF(depthPoint, 3), new Bgr(System.Drawing.Color.DarkRed), 2);
-                    }*/
+
+                    fingers.Clear();
                     for (int i = 0; i < defects.Total; i++)
                     {
                         PointF startPoint = new PointF((float)defectArray[i].StartPoint.X, (float)defectArray[i].StartPoint.Y);
+                        Point newStartPoint = new Point(defectArray[i].StartPoint.X + 10, defectArray[i].StartPoint.Y);
 
                         PointF depthPoint = new PointF((float)defectArray[i].DepthPoint.X, (float)defectArray[i].DepthPoint.Y);
+                        Point newDepthPoint = new Point(defectArray[i].DepthPoint.X + 10, defectArray[i].DepthPoint.Y);
 
                         PointF endPoint = new PointF((float)defectArray[i].EndPoint.X, (float)defectArray[i].EndPoint.Y);
 
-                        LineSegment2D startDepthLine = new LineSegment2D(defectArray[i].StartPoint, defectArray[i].DepthPoint);
+                        LineSegment2D startDepthLine = new LineSegment2D(newStartPoint, newDepthPoint);
 
                         LineSegment2D depthEndLine = new LineSegment2D(defectArray[i].DepthPoint, defectArray[i].EndPoint);
 
@@ -254,11 +287,22 @@ namespace HandMotionDetection
                         if ((startCircle.Center.Y < box.center.Y || depthCircle.Center.Y < box.center.Y) && (startCircle.Center.Y < depthCircle.Center.Y) && (Math.Sqrt(Math.Pow(startCircle.Center.X - depthCircle.Center.X, 2) + Math.Pow(startCircle.Center.Y - depthCircle.Center.Y, 2)) > box.size.Height / 6.5))
                         {
                             editedFrame.Draw(startDepthLine, new Bgr(System.Drawing.Color.Green), 2);
+                            fingers.Add(startDepthLine);
                         }
+                    }
+
+                    int size = fingers.Count();
+                    //lbRightHand.Text = size.ToString() + " Fingers";
+                    if (facePoint.X + 60 < centerX)
+                    {
+                        lbLeftHand.Text = "Left found";
+                    }
+                    else if (facePoint.X > centerX)
+                    {
+                        lbRightHand.Text = "Right found";
                     }
                 }
             }
-
             return realHand;
         }
     }

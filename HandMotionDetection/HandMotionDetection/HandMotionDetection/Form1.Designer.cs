@@ -30,6 +30,8 @@
         {
             this.defaultFrame = new Emgu.CV.UI.ImageBox();
             this.blackFrame = new Emgu.CV.UI.ImageBox();
+            this.lbRightHand = new System.Windows.Forms.Label();
+            this.lbLeftHand = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.defaultFrame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blackFrame)).BeginInit();
             this.SuspendLayout();
@@ -44,17 +46,33 @@
             // 
             // blackFrame
             // 
-            this.blackFrame.Location = new System.Drawing.Point(700, 8);
+            this.blackFrame.Location = new System.Drawing.Point(8, 441);
             this.blackFrame.Name = "blackFrame";
-            this.blackFrame.Size = new System.Drawing.Size(665, 419);
+            this.blackFrame.Size = new System.Drawing.Size(677, 419);
             this.blackFrame.TabIndex = 4;
             this.blackFrame.TabStop = false;
+            // 
+            // lbRightHand
+            // 
+            this.lbRightHand.Location = new System.Drawing.Point(720, 441);
+            this.lbRightHand.Name = "lbRightHand";
+            this.lbRightHand.Size = new System.Drawing.Size(137, 23);
+            this.lbRightHand.TabIndex = 5;
+            // 
+            // lbLeftHand
+            // 
+            this.lbLeftHand.Location = new System.Drawing.Point(720, 9);
+            this.lbLeftHand.Name = "lbLeftHand";
+            this.lbLeftHand.Size = new System.Drawing.Size(127, 19);
+            this.lbLeftHand.TabIndex = 6;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1377, 506);
+            this.ClientSize = new System.Drawing.Size(1265, 887);
+            this.Controls.Add(this.lbLeftHand);
+            this.Controls.Add(this.lbRightHand);
             this.Controls.Add(this.blackFrame);
             this.Controls.Add(this.defaultFrame);
             this.Name = "Form1";
@@ -69,6 +87,8 @@
 
         private Emgu.CV.UI.ImageBox defaultFrame;
         private Emgu.CV.UI.ImageBox blackFrame;
+        private System.Windows.Forms.Label lbRightHand;
+        private System.Windows.Forms.Label lbLeftHand;
 
 
     }
