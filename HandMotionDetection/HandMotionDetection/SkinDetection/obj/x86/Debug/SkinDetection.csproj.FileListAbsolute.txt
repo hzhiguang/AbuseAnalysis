@@ -7,3 +7,10 @@ C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetecti
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\obj\x86\Debug\SkinDetection.pdb
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\bin\Debug\SkinDetection.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\obj\x86\Debug\SkinDetection.dll
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\bin\Debug\SkinDetection.dll
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\bin\Debug\SkinDetection.pdb
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\bin\Debug\Emgu.CV.xml
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\bin\Debug\Emgu.Util.xml
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\obj\x86\Debug\SkinDetection.csprojResolveAssemblyReference.cache
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\obj\x86\Debug\SkinDetection.dll
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\SkinDetection\obj\x86\Debug\SkinDetection.pdb

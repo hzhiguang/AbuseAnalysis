@@ -52,10 +52,12 @@ namespace HandMotionDetection
         {
             InitializeComponent();
 
-            string videoPath = "C:/Users/L33549.CITI/Desktop/abc.avi";
+            //string videoPath = "C:/Users/L33549.CITI/Desktop/abc.avi";
+            string videoPath = "C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/Video/c.avi";
             grabVideo(videoPath);
 
-            faceHaar = new CascadeClassifier("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
+            //faceHaar = new CascadeClassifier("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
+            faceHaar = new CascadeClassifier("C:/Users/hzhig_000/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
 
             hsv_min = new Hsv(0, 45, 0);
             hsv_max = new Hsv(20, 255, 255);
@@ -100,7 +102,7 @@ namespace HandMotionDetection
 
                 }
 
-                defaultFrame.Image = editedFrame;
+                //defaultFrame.Image = editedFrame;
                 blackFrame.Image = skin;
             }
         }
@@ -116,10 +118,10 @@ namespace HandMotionDetection
             {
                 Rectangle f1 = faceDetected.ElementAt(0);
                 Size rec = f1.Size;
-                int h = rec.Height + 200;
+                int h = rec.Height + 100;
                 int w = rec.Width + 60;
                 int x = f1.X - 30;
-                int y = f1.Y - 100;
+                int y = f1.Y - 30;
                 facePoint = new Point(x, y);
                 Size newSize = new Size(w, h);
                 Rectangle editRec = new Rectangle(facePoint, newSize);
@@ -292,14 +294,29 @@ namespace HandMotionDetection
                     }
 
                     int size = fingers.Count();
-                    //lbRightHand.Text = size.ToString() + " Fingers";
-                    if (facePoint.X + 60 < centerX)
+                    if (facePoint.X + 70 < centerX)
                     {
                         lbLeftHand.Text = "Left found";
+                        if (size == 0)
+                        {
+                            lbLeftHand.Text = "Fist";
+                        }
+                        else if (size > 0)
+                        {
+                            lbLeftHand.Text = size + " fingers";
+                        }
                     }
-                    else if (facePoint.X > centerX)
+                    else if (facePoint.X - 10 > centerX)
                     {
                         lbRightHand.Text = "Right found";
+                        if (size == 0)
+                        {
+                            lbRightHand.Text = "Fist";
+                        }
+                        else if (size > 0)
+                        {
+                            lbRightHand.Text = size + " fingers";
+                        }
                     }
                 }
             }
