@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.defaultFrame = new Emgu.CV.UI.ImageBox();
             this.blackFrame = new Emgu.CV.UI.ImageBox();
             this.lbRightHand = new System.Windows.Forms.Label();
@@ -40,13 +41,13 @@
             // 
             this.defaultFrame.Location = new System.Drawing.Point(8, 8);
             this.defaultFrame.Name = "defaultFrame";
-            this.defaultFrame.Size = new System.Drawing.Size(677, 419);
+            this.defaultFrame.Size = new System.Drawing.Size(351, 206);
             this.defaultFrame.TabIndex = 3;
             this.defaultFrame.TabStop = false;
             // 
             // blackFrame
             // 
-            this.blackFrame.Location = new System.Drawing.Point(8, 441);
+            this.blackFrame.Location = new System.Drawing.Point(8, 220);
             this.blackFrame.Name = "blackFrame";
             this.blackFrame.Size = new System.Drawing.Size(677, 419);
             this.blackFrame.TabIndex = 4;
@@ -70,7 +71,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1265, 887);
+            this.ClientSize = new System.Drawing.Size(1265, 653);
             this.Controls.Add(this.lbLeftHand);
             this.Controls.Add(this.lbRightHand);
             this.Controls.Add(this.blackFrame);
