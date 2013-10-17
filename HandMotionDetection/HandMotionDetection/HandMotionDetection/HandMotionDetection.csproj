@@ -115,6 +115,77 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="emotionData\375.jpg" />
+    <Content Include="emotionData\376.jpg" />
+    <Content Include="emotionData\377.jpg" />
+    <Content Include="emotionData\378.jpg" />
+    <Content Include="emotionData\379.jpg" />
+    <Content Include="emotionData\380.jpg" />
+    <Content Include="emotionData\381.jpg" />
+    <Content Include="emotionData\382.jpg" />
+    <Content Include="emotionData\383.jpg" />
+    <Content Include="emotionData\384.jpg" />
+    <Content Include="emotionData\385.jpg" />
+    <Content Include="emotionData\386.jpg" />
+    <Content Include="emotionData\387.jpg" />
+    <Content Include="emotionData\388.jpg" />
+    <Content Include="emotionData\389.jpg" />
+    <Content Include="emotionData\390.jpg" />
+    <Content Include="emotionData\391.jpg" />
+    <Content Include="emotionData\392.jpg" />
+    <Content Include="emotionData\393.jpg" />
+    <Content Include="emotionData\394.jpg" />
+    <Content Include="emotionData\395.jpg" />
+    <Content Include="emotionData\396.jpg" />
+    <Content Include="emotionData\545.jpg" />
+    <Content Include="emotionData\546.jpg" />
+    <Content Include="emotionData\547.jpg" />
+    <Content Include="emotionData\548.jpg" />
+    <Content Include="emotionData\557.jpg" />
+    <Content Include="emotionData\558.jpg" />
+    <Content Include="emotionData\559.jpg" />
+    <Content Include="emotionData\560.jpg" />
+    <Content Include="emotionData\561.jpg" />
+    <Content Include="emotionData\562.jpg" />
+    <Content Include="emotionData\563.jpg" />
+    <Content Include="emotionData\564.jpg" />
+    <Content Include="emotionData\565.jpg" />
+    <Content Include="emotionData\566.jpg" />
+    <Content Include="emotionData\567.jpg" />
+    <Content Include="emotionData\568.jpg" />
+    <Content Include="emotionData\569.jpg" />
+    <Content Include="emotionData\570.jpg" />
+    <Content Include="emotionData\571.jpg" />
+    <Content Include="emotionData\572.jpg" />
+    <Content Include="emotionData\573.jpg" />
+    <Content Include="emotionData\574.jpg" />
+    <Content Include="emotionData\575.jpg" />
+    <Content Include="emotionData\576.jpg" />
+    <Content Include="emotionData\577.jpg" />
+    <Content Include="emotionData\578.jpg" />
+    <Content Include="emotionData\579.jpg" />
+    <Content Include="emotionData\580.jpg" />
+    <Content Include="emotionData\581.jpg" />
+    <Content Include="emotionData\582.jpg" />
+    <Content Include="emotionData\583.jpg" />
+    <Content Include="emotionData\584.jpg" />
+    <Content Include="emotionData\585.jpg" />
+    <Content Include="emotionData\586.jpg" />
+    <Content Include="emotionData\587.jpg" />
+    <Content Include="emotionData\588.jpg" />
+    <Content Include="emotionData\589.jpg" />
+    <Content Include="emotionData\590.jpg" />
+    <Content Include="emotionData\angry1.jpg" />
+    <Content Include="emotionData\happy1.jpg" />
+    <Content Include="emotionData\happy2.jpg" />
+    <Content Include="emotionData\happy3.jpg" />
+    <Content Include="emotionData\happy4.jpg" />
+    <Content Include="emotionData\happy5.jpg" />
+    <Content Include="emotionData\happy6.jpg" />
+    <Content Include="emotionData\happy7.jpg" />
+    <Content Include="emotionData\netural1.jpg" />
+    <Content Include="emotionData\netural2.jpg" />
+    <Content Include="emotionData\sad1.jpg" />
     <Content Include="haar\haarcascade_frontalface.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +210,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -33,6 +33,7 @@ namespace HandMotionDetection
         private List<Image<Gray, Byte>> grayFrameList;
         private int frameHeight;
         private int frameWidth;
+        private int totalFrame;
 
         //Temp Memory Storage
         private MemStorage contourStorage;
@@ -41,6 +42,7 @@ namespace HandMotionDetection
         private CascadeClassifier faceHaar;
         private Rectangle[] faceDetect;
         private Point facePoint;
+        private List<string> faceEmotions;
 
         //Skin Detection
         private Image<Gray, Byte> skin;
@@ -61,19 +63,13 @@ namespace HandMotionDetection
         private List<Image<Gray, Byte>> handMotionList;
         private List<PointF> motionPoints;
         private List<string> gestures;
-        private List<long> realTimes;
+        private List<long> runTimes;
 
         public Form1()
         {
             InitializeComponent();
 
-            //string videoPath = "C:/Users/L33549.CITI/Desktop/a.avi";
-            string videoPath = "C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/Video/abc.avi";
-            //string videoPath = "C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/Video/c.avi";
-            grabVideo(videoPath);
-
-            //faceHaar = new CascadeClassifier("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
-            faceHaar = new CascadeClassifier("C:/Users/hzhig_000/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
+            faceHaar = new CascadeClassifier(@"..\..\haar\haarcascade_frontalface.xml");
 
             hsv_min = new Hsv(0, 45, 0);
             hsv_max = new Hsv(20, 255, 255);
@@ -90,9 +86,8 @@ namespace HandMotionDetection
             fingers = new List<LineSegment2D>();
             motionPoints = new List<PointF>();
             gestures = new List<string>();
-            realTimes = new List<long>();
-
-            //Application.Idle += new EventHandler(frameAnalysis);
+            runTimes = new List<long>();
+            faceEmotions = new List<string>();
         }
 
         private void grabVideo(string path)
@@ -102,38 +97,20 @@ namespace HandMotionDetection
             frameWidth = grabber.Width;
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private void txtFileLink_TextChanged(object sender, EventArgs e)
         {
-            videoAnalysis();
-        }
+            DialogResult drVideo;
+            OpenFileDialog open = new OpenFileDialog();
+            drVideo = open.ShowDialog();
+            txtFileLink.Text = open.FileName;
 
-        private void frameAnalysis(object sender, EventArgs e)
-        {
-            currentFrame = grabber.QueryFrame();
-            if (currentFrame != null)
+            if (drVideo == System.Windows.Forms.DialogResult.OK && open.FileName != "")
             {
-                //Detect face
-                grayFrame = currentFrame.Convert<Gray, Byte>();
-                detectFace();
-
-                //Remove face
-                Bitmap remove = currentFrame.ToBitmap();
-                removeFace(remove);
-                editedSkinFrame = new Image<Bgr, Byte>(remove);
-
-                //Use skin detection to detect hand
-                skinDetector = new YCrCbSkinDetector();
-                Image<Gray, Byte> skin = skinDetector.DetectSkin(editedSkinFrame, YCrCb_min, YCrCb_max);
-
-                //Find 2 largest contour (left and right hand)
-                List<Contour<Point>> handContours = findHandContours();
-
-                //defaultFrame.Image = editedFrame;
-                blackFrame.Image = skin;
+                txtFileLink.Text = open.FileName;
+                lbmsg.Text = "File is Selected";
+                grabVideo(open.FileName);
+                videoAnalysis();
             }
-
-            //Face Analysis
-            faceAnalysis();
         }
 
         private void videoAnalysis()
@@ -194,41 +171,79 @@ namespace HandMotionDetection
         private void faceAnalysis()
         {
             //Data for face emotion when data base is not ready.
-            Image<Gray, byte>[] imageList = new Image<Gray, Byte>[10];
-            //imageList[0] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/netural1.jpg");
-            //imageList[1] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/sad1.jpg");
-            //imageList[2] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/angry1.jpg");
-            //imageList[3] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy1.jpg");
-            //imageList[4] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy2.jpg");
-            //imageList[5] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy3.jpg");
-            //imageList[6] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy4.jpg");
-            //imageList[7] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy5.jpg");
-            //imageList[8] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy6.jpg");
-            //imageList[9] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy7.jpg");
+            Image<Gray, byte>[] imageList = new Image<Gray, Byte>[70];
+            imageList[0] = new Image<Gray, byte>(@"..\..\emotionData\netural1.jpg");
+            imageList[1] = new Image<Gray, byte>(@"..\..\emotionData\sad1.jpg");
+            imageList[2] = new Image<Gray, byte>(@"..\..\emotionData\angry1.jpg");
+            imageList[3] = new Image<Gray, byte>(@"..\..\emotionData\happy1.jpg");
+            imageList[4] = new Image<Gray, byte>(@"..\..\emotionData\happy2.jpg");
+            imageList[5] = new Image<Gray, byte>(@"..\..\emotionData\happy3.jpg");
+            imageList[6] = new Image<Gray, byte>(@"..\..\emotionData\happy4.jpg");
+            imageList[7] = new Image<Gray, byte>(@"..\..\emotionData\happy5.jpg");
+            imageList[8] = new Image<Gray, byte>(@"..\..\emotionData\happy6.jpg");
+            imageList[9] = new Image<Gray, byte>(@"..\..\emotionData\happy7.jpg");
+            imageList[10] = new Image<Gray, byte>(@"..\..\emotionData\375.jpg");
+            imageList[11] = new Image<Gray, byte>(@"..\..\emotionData\376.jpg");
+            imageList[12] = new Image<Gray, byte>(@"..\..\emotionData\377.jpg");
+            imageList[13] = new Image<Gray, byte>(@"..\..\emotionData\378.jpg");
+            imageList[14] = new Image<Gray, byte>(@"..\..\emotionData\379.jpg");
+            imageList[15] = new Image<Gray, byte>(@"..\..\emotionData\380.jpg");
+            imageList[16] = new Image<Gray, byte>(@"..\..\emotionData\381.jpg");
+            imageList[17] = new Image<Gray, byte>(@"..\..\emotionData\382.jpg");
+            imageList[18] = new Image<Gray, byte>(@"..\..\emotionData\383.jpg");
+            imageList[19] = new Image<Gray, byte>(@"..\..\emotionData\384.jpg");
+            imageList[20] = new Image<Gray, byte>(@"..\..\emotionData\385.jpg");
+            imageList[21] = new Image<Gray, byte>(@"..\..\emotionData\386.jpg");
+            imageList[22] = new Image<Gray, byte>(@"..\..\emotionData\387.jpg");
+            imageList[23] = new Image<Gray, byte>(@"..\..\emotionData\388.jpg");
+            imageList[24] = new Image<Gray, byte>(@"..\..\emotionData\389.jpg");
+            imageList[25] = new Image<Gray, byte>(@"..\..\emotionData\390.jpg");
+            imageList[26] = new Image<Gray, byte>(@"..\..\emotionData\391.jpg");
+            imageList[27] = new Image<Gray, byte>(@"..\..\emotionData\392.jpg");
+            imageList[28] = new Image<Gray, byte>(@"..\..\emotionData\393.jpg");
+            imageList[29] = new Image<Gray, byte>(@"..\..\emotionData\394.jpg");
+            imageList[30] = new Image<Gray, byte>(@"..\..\emotionData\395.jpg");
+            imageList[31] = new Image<Gray, byte>(@"..\..\emotionData\396.jpg");
+            imageList[32] = new Image<Gray, byte>(@"..\..\emotionData\545.jpg");
+            imageList[33] = new Image<Gray, byte>(@"..\..\emotionData\546.jpg");
+            imageList[34] = new Image<Gray, byte>(@"..\..\emotionData\547.jpg");
+            imageList[35] = new Image<Gray, byte>(@"..\..\emotionData\548.jpg");
+            imageList[36] = new Image<Gray, byte>(@"..\..\emotionData\579.jpg");
+            imageList[37] = new Image<Gray, byte>(@"..\..\emotionData\580.jpg");
+            imageList[38] = new Image<Gray, byte>(@"..\..\emotionData\581.jpg");
+            imageList[39] = new Image<Gray, byte>(@"..\..\emotionData\582.jpg");
+            imageList[40] = new Image<Gray, byte>(@"..\..\emotionData\583.jpg");
+            imageList[41] = new Image<Gray, byte>(@"..\..\emotionData\584.jpg");
+            imageList[42] = new Image<Gray, byte>(@"..\..\emotionData\585.jpg");
+            imageList[43] = new Image<Gray, byte>(@"..\..\emotionData\586.jpg");
+            imageList[44] = new Image<Gray, byte>(@"..\..\emotionData\587.jpg");
+            imageList[45] = new Image<Gray, byte>(@"..\..\emotionData\588.jpg");
+            imageList[46] = new Image<Gray, byte>(@"..\..\emotionData\589.jpg");
+            imageList[47] = new Image<Gray, byte>(@"..\..\emotionData\590.jpg");
+            imageList[48] = new Image<Gray, byte>(@"..\..\emotionData\557.jpg");
+            imageList[49] = new Image<Gray, byte>(@"..\..\emotionData\558.jpg");
+            imageList[50] = new Image<Gray, byte>(@"..\..\emotionData\559.jpg");
+            imageList[51] = new Image<Gray, byte>(@"..\..\emotionData\560.jpg");
+            imageList[52] = new Image<Gray, byte>(@"..\..\emotionData\561.jpg");
+            imageList[53] = new Image<Gray, byte>(@"..\..\emotionData\562.jpg");
+            imageList[54] = new Image<Gray, byte>(@"..\..\emotionData\563.jpg");
+            imageList[55] = new Image<Gray, byte>(@"..\..\emotionData\564.jpg");
+            imageList[56] = new Image<Gray, byte>(@"..\..\emotionData\565.jpg");
+            imageList[57] = new Image<Gray, byte>(@"..\..\emotionData\566.jpg");
+            imageList[58] = new Image<Gray, byte>(@"..\..\emotionData\567.jpg");
+            imageList[59] = new Image<Gray, byte>(@"..\..\emotionData\568.jpg");
+            imageList[60] = new Image<Gray, byte>(@"..\..\emotionData\569.jpg");
+            imageList[61] = new Image<Gray, byte>(@"..\..\emotionData\570.jpg");
+            imageList[62] = new Image<Gray, byte>(@"..\..\emotionData\571.jpg");
+            imageList[63] = new Image<Gray, byte>(@"..\..\emotionData\572.jpg");
+            imageList[64] = new Image<Gray, byte>(@"..\..\emotionData\573.jpg");
+            imageList[65] = new Image<Gray, byte>(@"..\..\emotionData\574.jpg");
+            imageList[66] = new Image<Gray, byte>(@"..\..\emotionData\575.jpg");
+            imageList[67] = new Image<Gray, byte>(@"..\..\emotionData\576.jpg");
+            imageList[68] = new Image<Gray, byte>(@"..\..\emotionData\577.jpg");
+            imageList[69] = new Image<Gray, byte>(@"..\..\emotionData\578.jpg");
 
-            //imageList[0] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/netural1.jpg");
-            //imageList[1] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/sad1.jpg");
-            //imageList[2] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/angry1.jpg");
-            //imageList[3] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy1.jpg");
-            //imageList[4] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy2.jpg");
-            //imageList[5] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy3.jpg");
-            //imageList[6] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy4.jpg");
-            //imageList[7] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy5.jpg");
-            //imageList[8] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy6.jpg");
-            //imageList[9] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy7.jpg");
-
-            imageList[0] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/netural1.jpg");
-            imageList[1] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/sad1.jpg");
-            imageList[2] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/angry1.jpg");
-            imageList[3] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy1.jpg");
-            imageList[4] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy2.jpg");
-            imageList[5] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy3.jpg");
-            imageList[6] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy4.jpg");
-            imageList[7] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy5.jpg");
-            imageList[8] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy6.jpg");
-            imageList[9] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy7.jpg");
-
-            String[] emoList = new String[10];
+            String[] emoList = new String[70];
             emoList[0] = "Netural";
             emoList[1] = "Sad";
             emoList[2] = "Angry";
@@ -239,16 +254,75 @@ namespace HandMotionDetection
             emoList[7] = "Smile";
             emoList[8] = "Smile";
             emoList[9] = "Smile";
+            emoList[10] = "Angry";
+            emoList[11] = "Angry";
+            emoList[12] = "Angry";
+            emoList[13] = "Angry";
+            emoList[14] = "Angry";
+            emoList[15] = "Angry";
+            emoList[16] = "Angry";
+            emoList[17] = "Angry";
+            emoList[18] = "Angry";
+            emoList[19] = "Angry";
+            emoList[20] = "Angry";
+            emoList[21] = "Angry";
+            emoList[22] = "Angry";
+            emoList[23] = "Angry";
+            emoList[24] = "Angry";
+            emoList[25] = "Angry";
+            emoList[26] = "Angry";
+            emoList[27] = "Angry";
+            emoList[28] = "Angry";
+            emoList[29] = "Angry";
+            emoList[30] = "Angry";
+            emoList[31] = "Angry";
+            emoList[32] = "Angry";
+            emoList[33] = "Angry";
+            emoList[34] = "Angry";
+            emoList[35] = "Angry";
+            emoList[36] = "Angry";
+            emoList[37] = "Angry";
+            emoList[38] = "Angry";
+            emoList[39] = "Angry";
+            emoList[40] = "Angry";
+            emoList[41] = "Angry";
+            emoList[42] = "Angry";
+            emoList[43] = "Angry";
+            emoList[44] = "Angry";
+            emoList[45] = "Angry";
+            emoList[46] = "Angry";
+            emoList[47] = "Angry";
+            emoList[48] = "Angry";
+            emoList[49] = "Angry";
+            emoList[50] = "Angry";
+            emoList[51] = "Angry";
+            emoList[52] = "Angry";
+            emoList[53] = "Angry";
+            emoList[54] = "Angry";
+            emoList[55] = "Angry";
+            emoList[56] = "Angry";
+            emoList[57] = "Angry";
+            emoList[58] = "Angry";
+            emoList[59] = "Angry";
+            emoList[60] = "Angry";
+            emoList[61] = "Angry";
+            emoList[62] = "Angry";
+            emoList[63] = "Angry";
+            emoList[64] = "Angry";
+            emoList[65] = "Angry";
+            emoList[66] = "Angry";
+            emoList[67] = "Angry";
+            emoList[68] = "Angry";
+            emoList[69] = "Angry";
 
-            int[] label = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            int[] label = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69 };
             //Use the variable to detect the number of times these emotion appear in the video by frames;
             int smile = 0;
             int angry = 0;
             int netural = 0;
             int sad = 0;
             int noDetect = 0;
-            int frames = grayFrameList.Count;
-
+            totalFrame = grayFrameList.Count;
             List<Image<Gray, byte>> trainfaceList = new List<Image<Gray, byte>>();
 
             Rectangle[] trainFace;
@@ -268,11 +342,20 @@ namespace HandMotionDetection
             fisher.Train(trainfaceList.ToArray(), label);
             FaceRecognizer.PredictionResult result = new FaceRecognizer.PredictionResult();
 
-            for (int i = 0; i < frames; i++)
+            for (int i = 0; i < totalFrame; i++)
             {
                 result = fisher.Predict(grayFrameList.ElementAt(i));
-                lbmsg.Text = frames.ToString();
+                lbmsg.Text = totalFrame.ToString();
                 int num = result.Label;
+
+                if (num == -1)
+                {
+                    faceEmotions.Add("No Detect");
+                }
+                else
+                {
+                    faceEmotions.Add(emoList[num].ToString());
+                }
 
                 if (num == -1)
                 {
@@ -300,48 +383,53 @@ namespace HandMotionDetection
                 }
             }
 
+            if (angry > smile && angry > sad && angry > netural)
+            {
+                lbEmotionConclusion2.Text = "There is a risk of child abuse";
+            }
+
             //get total sum of the 5 emotion data.
             int total = smile + sad + angry + netural + noDetect;
             //put them into the percentage (emotion/frames * 100)
-            double smilePer = (Convert.ToDouble(smile) / frames) * 100;
-            double sadPer = (Convert.ToDouble(sad) / frames) * 100;
-            double angryPer = (Convert.ToDouble(angry) / frames) * 100;
-            double neturalPer = (Convert.ToDouble(netural) / frames) * 100;
-            double noDetectPer = (Convert.ToDouble(noDetect) / frames) * 100;
+            double smilePer = (Convert.ToDouble(smile) / totalFrame) * 100;
+            double sadPer = (Convert.ToDouble(sad) / totalFrame) * 100;
+            double angryPer = (Convert.ToDouble(angry) / totalFrame) * 100;
+            double neturalPer = (Convert.ToDouble(netural) / totalFrame) * 100;
+            double noDetectPer = (Convert.ToDouble(noDetect) / totalFrame) * 100;
 
-            lbmsg.Text = smile.ToString() + " " + sad.ToString() + " " + angry.ToString() + " " + netural.ToString() + " " + noDetect.ToString();
+            lbmsg.Text = "Smile Count:" + smile.ToString() + " ,Sad Count:" + sad.ToString() + " ,Angry Count:" + angry.ToString() + " ,Netural Count:" + netural.ToString() + " ,No Detect Count:" + noDetect.ToString();
             String[] emotionList = { "Smile", "Sad", "Angry", "Netural", "No Detect" };
             double[] emotionPer = { smilePer, sadPer, angryPer, neturalPer, noDetectPer };
 
             //Designing the Pie Chart 
-            chart1.Series.Add("Emotion");
-            chart1.Series["Emotion"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie; // set the chart to pie
-            chart1.Series["Emotion"].ChartArea = "ChartArea1";
+            emotionChart.Series.Add("Emotion");
+            emotionChart.Series["Emotion"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie; // set the chart to pie
+            emotionChart.Series["Emotion"].ChartArea = "ChartArea1";
 
             //Add data to pie chart
             for (int i = 0; i < emotionList.Count(); i++)
             {
-                chart1.Series["Emotion"].Points.AddXY(emotionList[i], emotionPer[i]);
+                emotionChart.Series["Emotion"].Points.AddXY(emotionList[i], emotionPer[i]);
             }
 
-            chart1.Series["Emotion"].BorderWidth = 1;
-            chart1.Series["Emotion"].BorderColor = System.Drawing.Color.FromArgb(26, 59, 105);
-            chart1.Series["Emotion"].Points[0].Color = System.Drawing.Color.LightGreen;
-            chart1.Series["Emotion"].Points[1].Color = System.Drawing.Color.Blue;
-            chart1.Series["Emotion"].Points[2].Color = System.Drawing.Color.Red;
-            chart1.Series["Emotion"].Points[3].Color = System.Drawing.Color.Gray;
-            chart1.Series["Emotion"].Points[4].Color = System.Drawing.Color.Black;
+            emotionChart.Series["Emotion"].BorderWidth = 1;
+            emotionChart.Series["Emotion"].BorderColor = System.Drawing.Color.FromArgb(26, 59, 105);
+            emotionChart.Series["Emotion"].Points[0].Color = System.Drawing.Color.LightGreen;
+            emotionChart.Series["Emotion"].Points[1].Color = System.Drawing.Color.Blue;
+            emotionChart.Series["Emotion"].Points[2].Color = System.Drawing.Color.Red;
+            emotionChart.Series["Emotion"].Points[3].Color = System.Drawing.Color.Gray;
+            emotionChart.Series["Emotion"].Points[4].Color = System.Drawing.Color.Black;
 
-            chart1.Titles.Add("Anaylsis of Face Expression (Frame By Frame)");
-            chart1.Series["Emotion"]["PieLabelStyle"] = "Outside";
-            chart1.Series["Emotion"].Label = "#VALX";
+            emotionChart.Titles.Add("Anaylsis of Face Expression (Frame By Frame)");
+            emotionChart.Series["Emotion"]["PieLabelStyle"] = "Disabled";
+            //chart1.Series["Emotion"].Label = "#VALX";
 
-            chart1.Legends.Add("Legend1");
-            chart1.Legends["Legend1"].Enabled = true;
-            chart1.Legends["Legend1"].Docking = Docking.Bottom;
-            chart1.Legends["Legend1"].Alignment = System.Drawing.StringAlignment.Center;
-            chart1.Series["Emotion"].LegendText = "#PERCENT{P2} ";
-            chart1.DataManipulator.Sort(PointSortOrder.Ascending, chart1.Series["Emotion"]);
+            emotionChart.Legends.Add("Legend1");
+            emotionChart.Legends["Legend1"].Enabled = true;
+            emotionChart.Legends["Legend1"].Docking = Docking.Bottom;
+            emotionChart.Legends["Legend1"].Alignment = System.Drawing.StringAlignment.Center;
+            emotionChart.Series["Emotion"].LegendText = "#VALX (#PERCENT{P2}) ";
+            emotionChart.DataManipulator.Sort(PointSortOrder.Ascending, emotionChart.Series["Emotion"]);
         }
 
         private void removeFace(Bitmap edit)
@@ -469,7 +557,7 @@ namespace HandMotionDetection
                         handMotionList.Add(skin);
                         motionPoints.Add(newCenter);
                         gestures.Add(gesture);
-                        realTimes.Add(time);
+                        runTimes.Add(time / 1000);
                     }
                 }
             }
@@ -521,17 +609,17 @@ namespace HandMotionDetection
             if (facePoint.X + 70 < centerX)
             {
                 lbLeftHand.Text = "Left found";
-                if (size == 0)
+                if (size < 2)
                 {
                     lbLeftHand.Text = "Fist";
                     gesture = "Left Fist";
                 }
-                else if (size == 5)
+                else if (size > 3)
                 {
                     lbLeftHand.Text = "Palm";
                     gesture = "Left Palm";
                 }
-                else if (size > 0)
+                else if ((size > 1) && (size < 4))
                 {
                     lbLeftHand.Text = size + " fingers";
                 }
@@ -539,17 +627,17 @@ namespace HandMotionDetection
             if (facePoint.X - 10 > centerX)
             {
                 lbRightHand.Text = "Right found";
-                if (size == 0)
+                if (size < 2)
                 {
                     lbRightHand.Text = "Fist";
                     gesture = "Right Fist";
                 }
-                else if (size == 5)
+                else if (size > 3)
                 {
                     lbRightHand.Text = "Palm";
                     gesture = "Right Palm";
                 }
-                else if (size > 0)
+                else if ((size > 1) && (size < 4))
                 {
                     lbRightHand.Text = size + " fingers";
                 }
@@ -564,50 +652,154 @@ namespace HandMotionDetection
 
         private void handMotionAnalysis()
         {
-            long lastMotionTime = 0;
-            string gesture = "";
-            PointF lastMotionPosition = new PointF();
+            List<int> leftFists = new List<int>();
+            List<int> rightFists = new List<int>();
+            List<int> leftPalm = new List<int>();
+            List<int> rightPalm = new List<int>();
+
             if (handMotionList != null)
             {
-                //Loop through all detected motions
                 for (int i = 0; i < handMotionList.Count(); i++)
                 {
-                    if (i == 0)
+                    if (gestures.ElementAt(i).ToString().Equals("Left Fist"))
                     {
-                        gesture = gestures.ElementAt(i).ToString();
-                        lastMotionTime = (realTimes.ElementAt(i) / 1000);
-                        lastMotionPosition = motionPoints.ElementAt(i);
+                        leftFists.Add(i);
                     }
-                    else
+                    else if (gestures.ElementAt(i).ToString().Equals("Right Fist"))
                     {
-                        //See if it is same gesture
-                        if (gesture.Equals(gestures.ElementAt(i).ToString()))
-                        {
-                            //Find difference in time to make sure it is continuous of same gesture
-                            long currentMotionTime = (realTimes.ElementAt(i) / 1000);
-                            if (currentMotionTime < lastMotionTime + 10)
-                            {
-                                //Find x and y coordinate of hand motion
-                                PointF currentMotionPoint = motionPoints.ElementAt(i);
-                                float lastX = lastMotionPosition.X;
-                                float lastY = lastMotionPosition.Y;
-                                float currentX = currentMotionPoint.X;
-                                float currentY = currentMotionPoint.Y;
-                                if ((currentX > lastX) && (currentY < lastY))
-                                {
-
-                                }
-                            }
-                        }
-                        else
-                        {
-                            gesture = gestures.ElementAt(i).ToString();
-                            lastMotionTime = (realTimes.ElementAt(i) / 1000);
-                            lastMotionPosition = motionPoints.ElementAt(i);
-                        }
+                        rightFists.Add(i);
+                    }
+                    else if (gestures.ElementAt(i).ToString().Equals("Left Palm"))
+                    {
+                        leftPalm.Add(i);
+                    }
+                    else if (gestures.ElementAt(i).ToString().Equals("Right Palm"))
+                    {
+                        rightPalm.Add(i);
                     }
                 }
             }
+
+            double leftFistWarningFrame = analysisLeftGestureMotion(leftFists);
+            double leftPalmWarningFrame = analysisLeftGestureMotion(leftPalm);
+            double rightFistWarningFrame = analysisRightGestureMotion(rightFists);
+            double rightPalmWarningFrame = analysisRightGestureMotion(rightPalm);
+            double safeFrame = totalFrame - leftFistWarningFrame - leftPalmWarningFrame - rightFistWarningFrame - rightPalmWarningFrame;
+            MessageBox.Show("Left Fist: " + leftFistWarningFrame.ToString() + "\nLeft Palm: " + leftPalmWarningFrame.ToString() + "\nRight Fist: " + rightFistWarningFrame.ToString() + "\nRight Palm: " + rightPalmWarningFrame.ToString());
+        }
+
+        private double analysisLeftGestureMotion(List<int> gestures)
+        {
+            long lastMotionTime = 0;
+            PointF lastMotionPosition = new PointF();
+            List<double> speeds = new List<double>();
+            double speed = 0;
+            double warningFrame = 0;
+            double currentWarning = 0;
+
+            //Check if gesture is empty
+            if (gestures != null)
+            {
+                for (int i = 0; i < gestures.Count(); i++)
+                {
+                    //Get the id of all same gesture
+                    int current = gestures.ElementAt(i);
+                    if (i == 0)
+                    {
+                        //Set time and position if i = 0
+                        lastMotionTime = runTimes.ElementAt(current);
+                        lastMotionPosition = motionPoints.ElementAt(current);
+                    }
+                    else
+                    {
+                        long currentMotionTime = runTimes.ElementAt(current);
+                        PointF currentMotionPosition = motionPoints.ElementAt(current);
+                        float lastX = lastMotionPosition.X;
+                        float lastY = lastMotionPosition.Y;
+                        float currentX = currentMotionPosition.X;
+                        float currentY = currentMotionPosition.Y;
+
+                        if ((currentMotionTime < lastMotionTime + 5) && (currentX < lastX) && (currentY < lastY))
+                        {
+                            double distance = Math.Sqrt(Math.Pow((lastX - currentX), 2) + Math.Pow((lastY - currentY), 2));
+                            double time = currentMotionTime - lastMotionTime;
+                            double s = distance / time;
+                            speed = speed + s;
+                            currentWarning = currentWarning + 1;
+                        }
+                        else
+                        {
+                            if ((speed > 1) && (double.IsInfinity(speed) == false) && (double.IsNaN(speed) == false))
+                            {
+                                speeds.Add(speed);
+                                warningFrame = warningFrame + currentWarning;
+                            }
+                            speed = 0;
+                            currentWarning = 0;
+                        }
+                        lastMotionTime = currentMotionTime;
+                        lastMotionPosition = currentMotionPosition;
+                    }
+                }
+            }
+            return warningFrame;
+        }
+
+        private double analysisRightGestureMotion(List<int> gestures)
+        {
+            long lastMotionTime = 0;
+            PointF lastMotionPosition = new PointF();
+            List<double> speeds = new List<double>();
+            double speed = 0;
+            double warningFrame = 0;
+            double currentWarning = 0;
+
+            //Check if gesture is empty
+            if (gestures != null)
+            {
+                for (int i = 0; i < gestures.Count(); i++)
+                {
+                    //Get the id of all same gesture
+                    int current = gestures.ElementAt(i);
+                    if (i == 0)
+                    {
+                        //Set time and position if i = 0
+                        lastMotionTime = runTimes.ElementAt(current);
+                        lastMotionPosition = motionPoints.ElementAt(current);
+                    }
+                    else
+                    {
+                        long currentMotionTime = runTimes.ElementAt(current);
+                        PointF currentMotionPosition = motionPoints.ElementAt(current);
+                        float lastX = lastMotionPosition.X;
+                        float lastY = lastMotionPosition.Y;
+                        float currentX = currentMotionPosition.X;
+                        float currentY = currentMotionPosition.Y;
+
+                        if ((currentMotionTime < lastMotionTime + 5) && (currentX < lastX) && (currentY < lastY))
+                        {
+                            double distance = Math.Sqrt(Math.Pow((currentX - lastX), 2) + Math.Pow((currentY - lastY), 2));
+                            double time = currentMotionTime - lastMotionTime;
+                            double s = distance / time;
+                            speed = speed + s;
+                            currentWarning = currentWarning + 1;
+                        }
+                        else
+                        {
+                            if ((speed > 1) && (double.IsInfinity(speed) == false) && (double.IsNaN(speed) == false))
+                            {
+                                speeds.Add(speed);
+                                warningFrame = warningFrame + currentWarning;
+                            }
+                            speed = 0;
+                            currentWarning = 0;
+                        }
+                        lastMotionTime = currentMotionTime;
+                        lastMotionPosition = currentMotionPosition;
+                    }
+                }
+            }
+            return warningFrame;
         }
     }
 }
