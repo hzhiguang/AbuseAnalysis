@@ -67,13 +67,13 @@ namespace HandMotionDetection
         {
             InitializeComponent();
 
-            string videoPath = "C:/Users/L33549.CITI/Desktop/a.avi";
-            //string videoPath = "C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/Video/c.avi";
+            //string videoPath = "C:/Users/L33549.CITI/Desktop/a.avi";
+            string videoPath = "C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/Video/abc.avi";
             //string videoPath = "C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/Video/c.avi";
             grabVideo(videoPath);
 
-            faceHaar = new CascadeClassifier("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
-            //faceHaar = new CascadeClassifier("C:/Users/hzhig_000/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
+            //faceHaar = new CascadeClassifier("C:/Users/L33549.CITI/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
+            faceHaar = new CascadeClassifier("C:/Users/hzhig_000/Desktop/AbuseAnalysis/HandMotionDetection/HandMotionDetection/HandMotionDetection/haar/haarcascade_frontalface.xml");
 
             hsv_min = new Hsv(0, 45, 0);
             hsv_max = new Hsv(20, 255, 255);
@@ -163,7 +163,7 @@ namespace HandMotionDetection
                     //Find 2 largest contour (left and right hand)
                     List<Contour<Point>> handContours = findHandContours();
 
-                    defaultFrame.Image = editedSkinFrame;
+                    //defaultFrame.Image = editedSkinFrame;
                     blackFrame.Image = skin;
                     Application.DoEvents();
                     System.Threading.Thread.Sleep(1000 / 10);
@@ -206,16 +206,27 @@ namespace HandMotionDetection
             //imageList[8] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy6.jpg");
             //imageList[9] = new Image<Gray, byte>("C:/Users/L33506/Desktop/emotionData/happy7.jpg");
 
-            imageList[0] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/netural1.jpg");
-            imageList[1] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/sad1.jpg");
-            imageList[2] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/angry1.jpg");
-            imageList[3] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy1.jpg");
-            imageList[4] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy2.jpg");
-            imageList[5] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy3.jpg");
-            imageList[6] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy4.jpg");
-            imageList[7] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy5.jpg");
-            imageList[8] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy6.jpg");
-            imageList[9] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy7.jpg");
+            //imageList[0] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/netural1.jpg");
+            //imageList[1] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/sad1.jpg");
+            //imageList[2] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/angry1.jpg");
+            //imageList[3] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy1.jpg");
+            //imageList[4] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy2.jpg");
+            //imageList[5] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy3.jpg");
+            //imageList[6] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy4.jpg");
+            //imageList[7] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy5.jpg");
+            //imageList[8] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy6.jpg");
+            //imageList[9] = new Image<Gray, byte>("C:/Users/L33549.CITI/Desktop/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy7.jpg");
+
+            imageList[0] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/netural1.jpg");
+            imageList[1] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/sad1.jpg");
+            imageList[2] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/angry1.jpg");
+            imageList[3] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy1.jpg");
+            imageList[4] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy2.jpg");
+            imageList[5] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy3.jpg");
+            imageList[6] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy4.jpg");
+            imageList[7] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy5.jpg");
+            imageList[8] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy6.jpg");
+            imageList[9] = new Image<Gray, byte>("C:/Users/hzhig_000/Dropbox/FYPJ 2013 P3/motionAnalyse/Images/emotionData/happy7.jpg");
 
             String[] emoList = new String[10];
             emoList[0] = "Netural";
@@ -452,7 +463,7 @@ namespace HandMotionDetection
 
                     //Analysis hand gesture
                     string gesture = analysisHandGesture(center);
-                    if (gesture.Equals("Palm") || (gesture.Equals("Fist")))
+                    if ((gesture.Equals("Left Palm")) || (gesture.Equals("Left Fist")) || (gesture.Equals("Right Palm")) || (gesture.Equals("Right Fist")))
                     {
                         PointF newCenter = new PointF(centerX, centerY);
                         handMotionList.Add(skin);
@@ -513,12 +524,12 @@ namespace HandMotionDetection
                 if (size == 0)
                 {
                     lbLeftHand.Text = "Fist";
-                    gesture = "Fist";
+                    gesture = "Left Fist";
                 }
                 else if (size == 5)
                 {
                     lbLeftHand.Text = "Palm";
-                    gesture = "Palm";
+                    gesture = "Left Palm";
                 }
                 else if (size > 0)
                 {
@@ -531,12 +542,12 @@ namespace HandMotionDetection
                 if (size == 0)
                 {
                     lbRightHand.Text = "Fist";
-                    gesture = "Fist";
+                    gesture = "Right Fist";
                 }
                 else if (size == 5)
                 {
                     lbRightHand.Text = "Palm";
-                    gesture = "Palm";
+                    gesture = "Right Palm";
                 }
                 else if (size > 0)
                 {
@@ -553,27 +564,46 @@ namespace HandMotionDetection
 
         private void handMotionAnalysis()
         {
-            MessageBox.Show(realTimes.Count().ToString());
-            MessageBox.Show((realTimes.ElementAt(realTimes.Count() - 1) / 1000).ToString());
+            long lastMotionTime = 0;
+            string gesture = "";
+            PointF lastMotionPosition = new PointF();
             if (handMotionList != null)
             {
                 //Loop through all detected motions
                 for (int i = 0; i < handMotionList.Count(); i++)
                 {
-                    string gesture = "";
                     if (i == 0)
                     {
                         gesture = gestures.ElementAt(i).ToString();
+                        lastMotionTime = (realTimes.ElementAt(i) / 1000);
+                        lastMotionPosition = motionPoints.ElementAt(i);
                     }
                     else
                     {
+                        //See if it is same gesture
                         if (gesture.Equals(gestures.ElementAt(i).ToString()))
                         {
+                            //Find difference in time to make sure it is continuous of same gesture
+                            long currentMotionTime = (realTimes.ElementAt(i) / 1000);
+                            if (currentMotionTime < lastMotionTime + 10)
+                            {
+                                //Find x and y coordinate of hand motion
+                                PointF currentMotionPoint = motionPoints.ElementAt(i);
+                                float lastX = lastMotionPosition.X;
+                                float lastY = lastMotionPosition.Y;
+                                float currentX = currentMotionPoint.X;
+                                float currentY = currentMotionPoint.Y;
+                                if ((currentX > lastX) && (currentY < lastY))
+                                {
 
+                                }
+                            }
                         }
                         else
                         {
                             gesture = gestures.ElementAt(i).ToString();
+                            lastMotionTime = (realTimes.ElementAt(i) / 1000);
+                            lastMotionPosition = motionPoints.ElementAt(i);
                         }
                     }
                 }
