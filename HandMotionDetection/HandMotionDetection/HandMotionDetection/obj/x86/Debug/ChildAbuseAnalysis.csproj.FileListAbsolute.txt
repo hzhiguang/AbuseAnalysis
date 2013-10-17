@@ -1,0 +1,12 @@
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\bin\Debug\HandMotionDetection.exe.config
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\bin\Debug\HandMotionDetection.exe
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\bin\Debug\HandMotionDetection.pdb
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\bin\Debug\SkinDetection.dll
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\bin\Debug\ZedGraph.dll
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\bin\Debug\SkinDetection.pdb
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\ChildAbuseAnalysis.csprojResolveAssemblyReference.cache
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\HandMotionDetection.Form1.resources
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\HandMotionDetection.Properties.Resources.resources
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\ChildAbuseAnalysis.csproj.GenerateResource.Cache
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\HandMotionDetection.exe
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\HandMotionDetection.pdb

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Timers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,8 +17,11 @@ using Emgu.CV;
 using Emgu.CV.Util;
 using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
+using ZedGraph;
+using NAudio.Wave;
+using AviFile;
 
-namespace HandMotionDetection
+namespace ChildAbuseAnalysis
 {
     public partial class Form1 : Form
     {
@@ -65,6 +69,15 @@ namespace HandMotionDetection
         private List<string> gestures;
         private List<long> runTimes;
 
+        //Sound Detection
+        private int tickStart = 0;
+        private string[] files, paths;
+        private int window;
+        private LineItem myCurve1;
+        private LineItem myCurve2;
+        private string filepath = "";
+        private string ext = "";
+
         public Form1()
         {
             InitializeComponent();
@@ -97,6 +110,138 @@ namespace HandMotionDetection
             frameWidth = grabber.Width;
         }
 
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog oFD1 = new OpenFileDialog();
+            oFD1.Multiselect = true;
+
+            if (oFD1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                files = oFD1.SafeFileNames; //Save only the names
+                paths = oFD1.FileNames; //Save the full paths
+                for (int i = 0; i < files.Length; i++)
+                {
+                    //listBox1.Items.Add(files[i]); //Add songs to the listbox
+                    ext = Path.GetExtension(oFD1.FileName);
+                    if (ext == ".avi")
+                    {
+                        //Convert Avi to wav
+                        AviManager aviManager = new AviManager(oFD1.FileName, true);
+                        AudioStream audioStream = aviManager.GetWaveStream();
+                        audioStream.ExportStream(oFD1.FileName + ".wav");
+                        filepath = oFD1.FileName + ".wav";
+                        aviManager.Close();
+                        listBox1.Items.Add(files[i]); //Add songs to the listbox
+                    }
+                    else if (ext == ".wav")
+                    {
+                        filepath = oFD1.FileName;
+                        listBox1.Items.Add(files[i]); //Add songs to the listbox
+                    }
+                }
+            }
+
+            NAudio.Wave.WaveChannel32 wave = new NAudio.Wave.WaveChannel32(new NAudio.Wave.WaveFileReader(filepath));
+            WaveFileReader wavFile = new WaveFileReader(filepath);
+            byte[] mainBuffer = new byte[wave.Length];
+
+            float fileSize = (float)wavFile.Length / 1048576;
+            if (fileSize < 2)
+                window = 8;
+            else if (fileSize > 2 && fileSize < 4)
+                window = 16;
+            else if (fileSize > 4 && fileSize < 8)
+                window = 32;
+            else if (fileSize > 8 && fileSize < 12)
+                window = 128;
+            else if (fileSize > 12 && fileSize < 20)
+                window = 256;
+            else if (fileSize > 20 && fileSize < 30)
+                window = 512;
+            else
+                window = 2048;
+
+            float[] fbuffer = new float[mainBuffer.Length / window];
+            wave.Read(mainBuffer, 0, mainBuffer.Length);
+
+            for (int i = 0; i < fbuffer.Length; i++)
+            {
+                fbuffer[i] = (BitConverter.ToSingle(mainBuffer, i * window));
+            }
+
+            double time = wave.TotalTime.TotalSeconds;
+            GraphPane myPane1 = zedGraphControl2.GraphPane;
+            PointPairList list1 = new PointPairList();
+            PointPairList list2 = new PointPairList();
+            for (int i = 0; i < fbuffer.Length; i++)
+            {
+                list1.Add(i, fbuffer[i]);
+            }
+            list2.Add(0, 0);
+            list2.Add(time, 0);
+            if (myCurve1 != null && myCurve2 != null)
+            {
+                myCurve1.Clear();
+                myCurve2.Clear();
+            }
+            GraphPane myPane2 = zedGraphControl2.GraphPane;
+            myPane2.Title.Text = "Audio Sound Wave";
+            myPane2.XAxis.Title.Text = "Time, Seconds";
+            myPane2.YAxis.Title.Text = "Sound Wave Graph";
+            myCurve1 = myPane1.AddCurve(null, list1, System.Drawing.Color.Blue, SymbolType.None);
+            myCurve1.IsX2Axis = true;
+            myCurve2 = myPane1.AddCurve(null, list2, System.Drawing.Color.Black, SymbolType.None);
+            myPane1.XAxis.Scale.MaxAuto = true;
+            myPane1.XAxis.Scale.MinAuto = true;
+
+            //Threshold Line
+            double threshHoldY = -1.2;
+            double threshHoldX = 1.2;
+            LineObj threshHoldLine = new LineObj(System.Drawing.Color.Red, myPane2.XAxis.Scale.Min, threshHoldY, myPane2.XAxis.Scale.Max, threshHoldY);
+            LineObj threshHoldLine2 = new LineObj(System.Drawing.Color.Red, myPane2.XAxis.Scale.Min, threshHoldX, myPane2.XAxis.Scale.Max, threshHoldX);
+            myPane2.GraphObjList.Add(threshHoldLine);
+            myPane2.GraphObjList.Add(threshHoldLine2);
+
+            // Add a text box with instructions
+            TextObj text = new TextObj(
+                "Ratio Conversion: 1:100\nRed Lines: Threshold\nZoom: left mouse & drag\nContext Menu: right mouse",
+                0.05f, 0.95f, CoordType.ChartFraction, AlignH.Left, AlignV.Bottom);
+            text.FontSpec.StringAlignment = StringAlignment.Near;
+            myPane2.GraphObjList.Add(text);
+
+            // Show the x axis grid
+            myPane2.XAxis.MajorGrid.IsVisible = true;
+            myPane2.YAxis.MajorGrid.IsVisible = true;
+            // Just manually control the X axis range so it scrolls continuously
+            // instead of discrete step-sized jumps
+            //myPane2.XAxis.Scale.Format = @"00:00:00";
+            myPane2.XAxis.Scale.IsSkipCrossLabel = true;
+            myPane2.XAxis.Scale.IsPreventLabelOverlap = true;
+            myPane2.XAxis.Type = ZedGraph.AxisType.Linear;
+            myPane2.XAxis.Scale.Min = 0;
+            myPane2.XAxis.Scale.Max = 1.2;
+            myPane2.AxisChange();
+
+            // turn off the opposite tics so the Y tics don't show up on the Y2 axis
+            myPane2.YAxis.MajorTic.IsOpposite = false;
+            myPane2.YAxis.MinorTic.IsOpposite = false;
+            // Don't display the Y zero line
+            myPane2.YAxis.MajorGrid.IsZeroLine = false;
+            // Align the Y axis labels so they are flush to the axis
+            myPane2.YAxis.Scale.Align = AlignP.Inside;
+            // Manually set the axis range
+            myPane2.YAxis.Scale.Min = -1.5;
+            myPane2.YAxis.Scale.Max = 1.5;
+
+            zedGraphControl2.AxisChange();
+            zedGraphControl2.Invalidate();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.URL = paths[listBox1.SelectedIndex];
+        }
+        
         private void txtFileLink_TextChanged(object sender, EventArgs e)
         {
             DialogResult drVideo;
@@ -141,7 +286,7 @@ namespace HandMotionDetection
                     List<Contour<Point>> handContours = findHandContours();
 
                     //defaultFrame.Image = editedSkinFrame;
-                    blackFrame.Image = skin;
+                    //blackFrame.Image = skin;
                     Application.DoEvents();
                     System.Threading.Thread.Sleep(1000 / 10);
                 }
@@ -608,44 +753,44 @@ namespace HandMotionDetection
             int size = fingers.Count();
             if (facePoint.X + 70 < centerX)
             {
-                lbLeftHand.Text = "Left found";
+                //lbLeftHand.Text = "Left found";
                 if (size < 2)
                 {
-                    lbLeftHand.Text = "Fist";
+                    //lbLeftHand.Text = "Fist";
                     gesture = "Left Fist";
                 }
                 else if (size > 3)
                 {
-                    lbLeftHand.Text = "Palm";
+                    //lbLeftHand.Text = "Palm";
                     gesture = "Left Palm";
                 }
                 else if ((size > 1) && (size < 4))
                 {
-                    lbLeftHand.Text = size + " fingers";
+                    //lbLeftHand.Text = size + " fingers";
                 }
             }
             if (facePoint.X - 10 > centerX)
             {
-                lbRightHand.Text = "Right found";
+                //lbRightHand.Text = "Right found";
                 if (size < 2)
                 {
-                    lbRightHand.Text = "Fist";
+                    //lbRightHand.Text = "Fist";
                     gesture = "Right Fist";
                 }
                 else if (size > 3)
                 {
-                    lbRightHand.Text = "Palm";
+                    //lbRightHand.Text = "Palm";
                     gesture = "Right Palm";
                 }
                 else if ((size > 1) && (size < 4))
                 {
-                    lbRightHand.Text = size + " fingers";
+                    //lbRightHand.Text = size + " fingers";
                 }
             }
             if ((facePoint.X + 70 > centerX) && (facePoint.X - 10 < centerX))
             {
-                lbLeftHand.Text = "NULL";
-                lbRightHand.Text = "NULL";
+                //lbLeftHand.Text = "NULL";
+                //lbRightHand.Text = "NULL";
             }
             return gesture;
         }
@@ -680,12 +825,44 @@ namespace HandMotionDetection
                 }
             }
 
-            double leftFistWarningFrame = analysisLeftGestureMotion(leftFists);
-            double leftPalmWarningFrame = analysisLeftGestureMotion(leftPalm);
-            double rightFistWarningFrame = analysisRightGestureMotion(rightFists);
-            double rightPalmWarningFrame = analysisRightGestureMotion(rightPalm);
-            double safeFrame = totalFrame - leftFistWarningFrame - leftPalmWarningFrame - rightFistWarningFrame - rightPalmWarningFrame;
-            MessageBox.Show("Left Fist: " + leftFistWarningFrame.ToString() + "\nLeft Palm: " + leftPalmWarningFrame.ToString() + "\nRight Fist: " + rightFistWarningFrame.ToString() + "\nRight Palm: " + rightPalmWarningFrame.ToString());
+            double leftFistWarningPer = (analysisLeftGestureMotion(leftFists) / totalFrame) * 100;
+            double leftPalmWarningPer = (analysisLeftGestureMotion(leftPalm) / totalFrame) * 100;
+            double rightFistWarningPer = (analysisRightGestureMotion(rightFists) / totalFrame) * 100;
+            double rightPalmWarningPer = (analysisRightGestureMotion(rightPalm) / totalFrame) * 100;
+            double safePer = ((totalFrame - leftFistWarningPer - leftPalmWarningPer - rightFistWarningPer - rightPalmWarningPer) / totalFrame) * 100;
+
+            String[] motionList = { "Left Fist", "Left Palm", "Right Fist", "Right Palm", "No Detect" };
+            double[] motionPer = { leftFistWarningPer, leftPalmWarningPer, rightFistWarningPer, rightPalmWarningPer, safePer };
+
+            //Designing the Pie Chart 
+            motionChart.Series.Add("Hand Motion");
+            motionChart.Series["Hand Motion"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie; // set the chart to pie
+            motionChart.Series["Hand Motion"].ChartArea = "ChartArea1";
+
+            //Add data to pie chart
+            for (int i = 0; i < motionList.Count(); i++)
+            {
+                motionChart.Series["Hand Motion"].Points.AddXY(motionList[i], motionPer[i]);
+            }
+
+            motionChart.Series["Hand Motion"].BorderWidth = 1;
+            motionChart.Series["Hand Motion"].BorderColor = System.Drawing.Color.FromArgb(26, 59, 105);
+            motionChart.Series["Hand Motion"].Points[0].Color = System.Drawing.Color.LightGreen;
+            motionChart.Series["Hand Motion"].Points[1].Color = System.Drawing.Color.Blue;
+            motionChart.Series["Hand Motion"].Points[2].Color = System.Drawing.Color.Red;
+            motionChart.Series["Hand Motion"].Points[3].Color = System.Drawing.Color.Gray;
+            motionChart.Series["Hand Motion"].Points[4].Color = System.Drawing.Color.Black;
+
+            motionChart.Titles.Add("Anaylsis of Hand Motion (Frame By Frame)");
+            motionChart.Series["Hand Motion"]["PieLabelStyle"] = "Disabled";
+            //motionChart.Series["Emotion"].Label = "#VALX";
+
+            motionChart.Legends.Add("Legend1");
+            motionChart.Legends["Legend1"].Enabled = true;
+            motionChart.Legends["Legend1"].Docking = Docking.Bottom;
+            motionChart.Legends["Legend1"].Alignment = System.Drawing.StringAlignment.Center;
+            motionChart.Series["Hand Motion"].LegendText = "#VALX (#PERCENT{P2}) ";
+            motionChart.DataManipulator.Sort(PointSortOrder.Ascending, motionChart.Series["Hand Motion"]);
         }
 
         private double analysisLeftGestureMotion(List<int> gestures)

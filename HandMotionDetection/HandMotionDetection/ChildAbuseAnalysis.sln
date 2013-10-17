@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandMotionDetection", "HandMotionDetection\HandMotionDetection.csproj", "{DE1322F0-BACF-4615-8272-760C7E26184F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildAbuseAnalysis", "HandMotionDetection\ChildAbuseAnalysis.csproj", "{DE1322F0-BACF-4615-8272-760C7E26184F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C89F3DEF-1544-4A1E-9829-6449541B6CAE} = {C89F3DEF-1544-4A1E-9829-6449541B6CAE}
 	EndProjectSection

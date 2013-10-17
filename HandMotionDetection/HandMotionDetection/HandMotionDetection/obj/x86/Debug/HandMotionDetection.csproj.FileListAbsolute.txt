@@ -30,3 +30,4 @@ C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection
 C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\HandMotionDetection.Form1.resources
 C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\HandMotionDetection.Properties.Resources.resources
 C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\obj\x86\Debug\HandMotionDetection.csproj.GenerateResource.Cache
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\HandMotionDetection\HandMotionDetection\HandMotionDetection\bin\Debug\ZedGraph.dll
