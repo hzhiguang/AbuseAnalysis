@@ -8,7 +8,7 @@
     <ProjectGuid>{DE1322F0-BACF-4615-8272-760C7E26184F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HandMotionDetection</RootNamespace>
+    <RootNamespace>ChildAbuseAnalysis</RootNamespace>
     <AssemblyName>HandMotionDetection</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
