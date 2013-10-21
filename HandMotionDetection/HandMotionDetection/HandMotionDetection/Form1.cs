@@ -831,7 +831,7 @@ namespace ChildAbuseAnalysis
             double rightPalmWarningPer = (analysisRightGestureMotion(rightPalm) / totalFrame) * 100;
             double safePer = ((totalFrame - leftFistWarningPer - leftPalmWarningPer - rightFistWarningPer - rightPalmWarningPer) / totalFrame) * 100;
 
-            String[] motionList = { "Left Fist", "Left Palm", "Right Fist", "Right Palm", "No Detect" };
+            String[] motionList = { "Left Fist", "Left Slap", "Right Fist", "Right Slap", "No Detect" };
             double[] motionPer = { leftFistWarningPer, leftPalmWarningPer, rightFistWarningPer, rightPalmWarningPer, safePer };
 
             //Designing the Pie Chart 
