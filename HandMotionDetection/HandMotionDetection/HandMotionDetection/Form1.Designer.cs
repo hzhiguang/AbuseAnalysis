@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lbmsg = new System.Windows.Forms.Label();
             this.emotionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -59,11 +59,11 @@
             // 
             // emotionChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.emotionChart.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.emotionChart.ChartAreas.Add(chartArea3);
             this.emotionChart.Location = new System.Drawing.Point(12, 32);
             this.emotionChart.Name = "emotionChart";
-            this.emotionChart.Size = new System.Drawing.Size(562, 286);
+            this.emotionChart.Size = new System.Drawing.Size(493, 263);
             this.emotionChart.TabIndex = 10;
             this.emotionChart.Text = "chart1";
             // 
@@ -87,7 +87,7 @@
             // lbEmotionConclusion
             // 
             this.lbEmotionConclusion.AutoSize = true;
-            this.lbEmotionConclusion.Location = new System.Drawing.Point(12, 331);
+            this.lbEmotionConclusion.Location = new System.Drawing.Point(12, 308);
             this.lbEmotionConclusion.Name = "lbEmotionConclusion";
             this.lbEmotionConclusion.Size = new System.Drawing.Size(87, 13);
             this.lbEmotionConclusion.TabIndex = 13;
@@ -95,24 +95,24 @@
             // 
             // lbEmotionConclusion2
             // 
-            this.lbEmotionConclusion2.Location = new System.Drawing.Point(105, 331);
+            this.lbEmotionConclusion2.Location = new System.Drawing.Point(105, 308);
             this.lbEmotionConclusion2.Name = "lbEmotionConclusion2";
             this.lbEmotionConclusion2.Size = new System.Drawing.Size(400, 15);
             this.lbEmotionConclusion2.TabIndex = 14;
             // 
             // motionChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.motionChart.ChartAreas.Add(chartArea2);
-            this.motionChart.Location = new System.Drawing.Point(661, 35);
+            chartArea4.Name = "ChartArea1";
+            this.motionChart.ChartAreas.Add(chartArea4);
+            this.motionChart.Location = new System.Drawing.Point(691, 35);
             this.motionChart.Name = "motionChart";
-            this.motionChart.Size = new System.Drawing.Size(562, 286);
+            this.motionChart.Size = new System.Drawing.Size(532, 260);
             this.motionChart.TabIndex = 15;
             this.motionChart.Text = "chart1";
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(632, 799);
+            this.btnBrowse.Location = new System.Drawing.Point(603, 637);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnBrowse.TabIndex = 16;
@@ -123,16 +123,16 @@
             // axWindowsMediaPlayer1
             // 
             this.axWindowsMediaPlayer1.Enabled = true;
-            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(12, 674);
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(12, 611);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(581, 148);
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(560, 118);
             this.axWindowsMediaPlayer1.TabIndex = 17;
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(713, 690);
+            this.listBox1.Location = new System.Drawing.Point(703, 611);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(286, 69);
             this.listBox1.TabIndex = 18;
@@ -141,7 +141,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(649, 690);
+            this.label2.Location = new System.Drawing.Point(639, 611);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 19;
@@ -149,7 +149,7 @@
             // 
             // zedGraphControl2
             // 
-            this.zedGraphControl2.Location = new System.Drawing.Point(15, 364);
+            this.zedGraphControl2.Location = new System.Drawing.Point(12, 331);
             this.zedGraphControl2.Name = "zedGraphControl2";
             this.zedGraphControl2.ScrollGrace = 0D;
             this.zedGraphControl2.ScrollMaxX = 0D;
@@ -158,14 +158,14 @@
             this.zedGraphControl2.ScrollMinX = 0D;
             this.zedGraphControl2.ScrollMinY = 0D;
             this.zedGraphControl2.ScrollMinY2 = 0D;
-            this.zedGraphControl2.Size = new System.Drawing.Size(984, 295);
+            this.zedGraphControl2.Size = new System.Drawing.Size(966, 274);
             this.zedGraphControl2.TabIndex = 20;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1311, 831);
+            this.ClientSize = new System.Drawing.Size(1311, 741);
             this.Controls.Add(this.zedGraphControl2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox1);
