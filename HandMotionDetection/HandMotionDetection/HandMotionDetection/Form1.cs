@@ -598,46 +598,62 @@ namespace ChildAbuseAnalysis
             }
         }
 
+        //private List<Contour<Point>> findHandContours()
+        //{
+        //    List<Contour<Point>> handList = new List<Contour<Point>>();
+        //    Contour<Point> contours = skin.FindContours(Emgu.CV.CvEnum.CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE, Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_LIST, contourStorage);
+        //    Contour<Point> left = null;
+        //    Contour<Point> right = null;
+
+        //    Double currentSize = 0;
+        //    Double leftSize = 0;
+        //    Double rightSize = 0;
+
+        //    while (contours != null)
+        //    {
+        //        currentSize = contours.Area;
+        //        if (currentSize > leftSize)
+        //        {
+        //            if (detectAndDrawHand(contours) == true)
+        //            {
+        //                leftSize = currentSize;
+        //                left = contours;
+        //            }
+        //        }
+        //        else if (currentSize > rightSize)
+        //        {
+        //            if (detectAndDrawHand(contours) == true)
+        //            {
+        //                rightSize = currentSize;
+        //                right = contours;
+        //            }
+        //        }
+        //        contours = contours.HNext;
+        //    }
+
+        //    if (left != null)
+        //    {
+        //        handList.Add(left);
+        //    }
+        //    if (right != null)
+        //    {
+        //        handList.Add(right);
+        //    }
+        //    return handList;
+        //}
+
         private List<Contour<Point>> findHandContours()
         {
             List<Contour<Point>> handList = new List<Contour<Point>>();
             Contour<Point> contours = skin.FindContours(Emgu.CV.CvEnum.CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE, Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_LIST, contourStorage);
-            Contour<Point> left = null;
-            Contour<Point> right = null;
-
-            Double currentSize = 0;
-            Double leftSize = 0;
-            Double rightSize = 0;
 
             while (contours != null)
             {
-                currentSize = contours.Area;
-                if (currentSize > leftSize)
+                if (detectAndDrawHand(contours) == true)
                 {
-                    if (detectAndDrawHand(contours) == true)
-                    {
-                        leftSize = currentSize;
-                        left = contours;
-                    }
-                }
-                else if (currentSize > rightSize)
-                {
-                    if (detectAndDrawHand(contours) == true)
-                    {
-                        rightSize = currentSize;
-                        right = contours;
-                    }
+                    handList.Add(contours);
                 }
                 contours = contours.HNext;
-            }
-
-            if (left != null)
-            {
-                handList.Add(left);
-            }
-            if (right != null)
-            {
-                handList.Add(right);
             }
             return handList;
         }
