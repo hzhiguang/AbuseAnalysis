@@ -18,7 +18,7 @@
                 <td><a class="nav_link" href="index.aspx">Home</a></td>
                 <td><a class="nav_link">Share</a></td>
                 <td><a class="nav_link">Video</a></td>
-                <td><a class="nav_link">About </a></td>
+                <td><a class="nav_link"><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></a></td>
             </tr>
         </table>
     </div>

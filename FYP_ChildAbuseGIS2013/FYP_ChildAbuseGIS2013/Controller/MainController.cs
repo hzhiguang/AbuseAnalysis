@@ -12,12 +12,12 @@ namespace FYP_ChildAbuseGIS2013.Controller
         private string port = "5432";
         private string userId = "postgres";
         private string pwd = "password";
-        private string db = "postgres";
+        private string db = "ChildAbuseAnalysis";
         private NpgsqlConnection conn;
 
         public MainController() { }
 
-        public bool startConn()
+        public NpgsqlConnection startConn()
         {
             bool success = false;
             try
@@ -30,9 +30,13 @@ namespace FYP_ChildAbuseGIS2013.Controller
             }
             catch (Exception e)
             {
-                Console.Write(e.Message.ToString());
+                //Console.Write(e.Message.ToString());
             }
-            return success;
+            if (success != true)
+            {
+                conn = null;
+            }
+            return conn;
         }
 
         public void closeConn()
