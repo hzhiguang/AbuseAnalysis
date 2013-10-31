@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.SqlServer;
 using FYP_ChildAbuseGIS2013.Model;
 using Npgsql;
 
@@ -18,8 +19,8 @@ namespace FYP_ChildAbuseGIS2013.Controller
             //bool success = false;
             string a = "lalala";
             MainController conn = new MainController();
-            string geomValue = "ST_GeomFromText('POINT('" + loc.x + "' '" + loc.y + "')', 3414)";
-            string query = "INSERT INTO location (address, x, y, geom) Values ('" + loc.address + "','" + loc.x + "','" + loc.y + "', '" + geomValue + "')";
+
+            string query = "INSERT INTO location (address, x, y, geom) Values ('" + loc.address + "','" + loc.x + "','" + loc.y + "', ST_GeomFromText('POINT(" + loc.x + " " + loc.y + ")', 3414))";
             command = new NpgsqlCommand(query, conn.startConn());
             try
             {
@@ -76,7 +77,7 @@ namespace FYP_ChildAbuseGIS2013.Controller
         {
             bool success = false;
             MainController conn = new MainController();
-            string query = "UPDATE location SET address = '" + loc.address + "', x = '" + loc.x + "', y = '" + loc.y + "', geom = ST_GeomFromText('POINT('" + loc.x + "' '" + loc.y + "')', 3414) WHERE id = '" + loc.ID + "'";
+            string query = "UPDATE location SET address = '" + loc.address + "', x = '" + loc.x + "', y = '" + loc.y + "', geom = ST_GeomFromText('POINT(" + loc.x + " " + loc.y + ")', 3414) WHERE id = '" + loc.ID + "'";
             command = new NpgsqlCommand(query, conn.startConn());
             try
             {
