@@ -10,7 +10,7 @@ using ServiceStack.ServiceInterface.ServiceModel;
 namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
 {
     [DataContract]
-    [Route("/analysis/{id}")]
+    [Route("/json/analysis/{id}")]
     public class AnalysisDetailsOperation
     {
         [DataMember]
