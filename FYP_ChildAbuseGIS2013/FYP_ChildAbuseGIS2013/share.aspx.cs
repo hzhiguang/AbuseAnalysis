@@ -49,21 +49,14 @@ namespace FYP_ChildAbuseGIS2013
                     savePath = Server.MapPath("~\\video\\");
                     fileUpLoad.PostedFile.SaveAs(savePath + strVideoPath);
                     FaceAnalysis();
-
-                    //save result
-                    
-
                 }
                 else if (fileType == ".jpg")
                 {
-                   
                     txt_fileUpLoad.Text = "";
                     strVideoPath = fileUpLoad.PostedFile.FileName.ToString();
                     savePath = Server.MapPath("~\\video\\");
                     fileUpLoad.PostedFile.SaveAs(savePath + strVideoPath);
                     Bitmap pic = new Bitmap(savePath + strVideoPath);
-
-
                     property_ids = pic.PropertyIdList;
                   
                     foreach (int scan_property in property_ids)
@@ -112,7 +105,6 @@ namespace FYP_ChildAbuseGIS2013
                             //Datum used at GPS acquisition (ascii)
                             ascii_string_property_id = System.Text.Encoding.ASCII.GetString(byte_property_id);
                            // resultDisplay.InnerText += "GPS Datum= " + ascii_string_property_id;
-
                         }
                         else
                         {
@@ -124,9 +116,7 @@ namespace FYP_ChildAbuseGIS2013
                             //scan_property ++;
                         }
                     }
-
                     //save data
-                    
                 }
             }
         }

@@ -35,42 +35,81 @@
                 lock.className = 'LockOn';
 
             lock.innerHTML = str + "<br/><img src=@'../../image/loading.gif' alt='loading'/>";
+
+            var t = "asc";
+            var dat = new Date(2013, 11, 6, 11, 59, 59, 0);
+            var pa = "ascasc";
+            var desc = "ascascasc";
+            var ty = "image";
+            var loc = "3";
+            var ana = "14";
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:27020/api/file",
+                data: { title: t, date: dat, path: pa, description: desc, type: ty, locationid: loc, analysisid: ana },
+                success: function (r) { alert("INNNNNN") },
+                error: function (x, a, t) {
+                    alert("Error");
+                    alert(x);
+                    alert(a);
+                    alert(t);
+                }
+            });
+            /*var file = [];
+            file[0] = [t, dat, pa, desc, ty, loc, ana];
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:27020/api/file",
+                data: file,
+                success: function (msg) {
+                    alert("LOL");
+                },
+                error: function (msg) {
+                    alert("error")
+                }
+            });*/
         }
     </script>
 </head>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form id="Form1" runat="server" method="post" >
-<table class="tableStyle">
+    <table class="tableStyle">
        <tr>
             <td class="style3"> 
-            
-            <div class="image">
-               <asp:Image ID="iconLogo1" runat="server" ImageUrl="~/image/Share.png" />
-            </div>
+                <div class="image">
+                    <asp:Image ID="iconLogo1" runat="server" ImageUrl="~/image/Share.png" />
+                </div>
             </td>
             <td class="style2">
                 <div class="submitCorner">
                     <table>
                         <tr>
-                                <td>Video/Image :</td>
-                                <td><div class = "upLoadContain"><asp:TextBox ID="txt_fileUpLoad" class="file" runat="server"  /><div class ="fileUpLoadContain"><asp:FileUpload ID="fileUpLoad" name="fileUpLoad"  runat="server"  onchange="return onLoadFile(this);" /></div></div></td>
+                            <td>Video/Image :</td>
+                            <td>
+                                <div class="upLoadContain">
+                                    <asp:TextBox ID="txt_fileUpLoad" class="file" runat="server" />
+                                    <div class ="fileUpLoadContain">
+                                        <asp:FileUpload ID="fileUpLoad" name="fileUpLoad" runat="server" onchange="return onLoadFile(this);" />
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
-                                <td class="headerAlignment">Title:</td>
-                                <td><asp:TextBox ID="tbTitle" class="tbStyle" runat="server"></asp:TextBox></td>
+                            <td class="headerAlignment">Title:</td>
+                            <td><asp:TextBox ID="tbTitle" class="tbStyle" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>
-                                <td>Location:</td>
-                                <td><input type="text" id="tbLocation" runat="server" class="tbStyle"/></td>
+                            <td>Location:</td>
+                            <td><input type="text" id="tbLocation" runat="server" class="tbStyle"/></td>
                         </tr>
                         <tr>
-                                <td class="headerAlignment">Description:</td>
-                                <td><asp:TextBox ID="tbDescription" class="tbStyle" runat="server" Height="105px" 
-                        TextMode="MultiLine" Width="300px"></asp:TextBox></td>
+                            <td class="headerAlignment">Description:</td>
+                            <td><asp:TextBox ID="tbDescription" class="tbStyle" runat="server" Height="105px" TextMode="MultiLine" Width="300px" /></td>
                         </tr>
                         <tr>
-                                <td colspan="2"><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" />&nbsp;&nbsp;&nbsp;<asp:Label ID="lb_msg" runat="server"></asp:Label></td>
+                            <td colspan="2"><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" />&nbsp;&nbsp;&nbsp;<asp:Label ID="lb_msg" runat="server"></asp:Label></td>
                         </tr>
                     </table>
                 </div> 
@@ -79,18 +118,18 @@
        <tr>
             <td colspan="2">
                 <table id="resultTable">
-                <thead>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                </thead>
+                    <thead>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                    </thead>
                 </table>
             </td>
        </tr>
-</table>
-<div id="skm_LockPane" class="LockOff">
-</div>
-</form>
+    </table>
+    <div id="skm_LockPane" class="LockOff">
+    </div>
+    </form>
 </asp:Content>

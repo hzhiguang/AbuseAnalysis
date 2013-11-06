@@ -11,8 +11,16 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
 {
     [DataContract]
     [Route("/json/location")]
-    public class LocationsOperation
+    public class Locations
     {
+    }
+
+    [DataContract]
+    [Route("/json/location/{id}")]
+    public class GetLocationDetails
+    {
+        [DataMember]
+        public string ID { get; set; }
     }
 
     [DataContract]
@@ -25,6 +33,21 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
 
         [DataMember]
         public List<Location> Location { get; set; }
+
+        [DataMember]
+        public ResponseStatus ResponseStatus { get; set; }
+    }
+
+    [DataContract]
+    public class LocationDetailsResult : IHasResponseStatus
+    {
+        public LocationDetailsResult()
+        {
+            this.Location = Location;
+        }
+
+        [DataMember]
+        public Location Location { get; set; }
 
         [DataMember]
         public ResponseStatus ResponseStatus { get; set; }

@@ -67,15 +67,10 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalysisDetailsService.cs" />
     <Compile Include="AnalysisService.cs" />
-    <Compile Include="FileDetailsService.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="FileService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LocationDetailsService.cs" />
     <Compile Include="LocationsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

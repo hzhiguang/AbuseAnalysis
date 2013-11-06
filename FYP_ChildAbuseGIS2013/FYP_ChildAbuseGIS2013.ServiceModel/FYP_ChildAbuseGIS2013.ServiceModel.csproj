@@ -67,12 +67,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Operations\AnalysisDetailsOperation.cs" />
-    <Compile Include="Operations\AnalysisOperation.cs" />
-    <Compile Include="Operations\FileDetailsOperation.cs" />
-    <Compile Include="Operations\FilesOperation.cs" />
-    <Compile Include="Operations\LocationDetailsOperation.cs" />
-    <Compile Include="Operations\LocationsOperation.cs" />
+    <Compile Include="Operations\Analysiss.cs" />
+    <Compile Include="Operations\Files.cs" />
+    <Compile Include="Operations\Locations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\Analysis.cs" />
     <Compile Include="Types\File.cs" />

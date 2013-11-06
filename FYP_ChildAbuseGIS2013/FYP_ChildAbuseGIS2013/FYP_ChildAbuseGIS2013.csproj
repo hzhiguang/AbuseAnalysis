@@ -119,6 +119,7 @@
     <Content Include="css\jquery.dataTables.css" />
     <Content Include="css\jquery.mobile-1.3.2.min.css" />
     <Content Include="css\onemapDesign.css" />
+    <Content Include="css\share.css" />
     <Content Include="emotionDB.aspx" />
     <Content Include="Global.asax" />
     <Content Include="image\facebook-white.png" />

@@ -52,16 +52,8 @@ C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseG
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\ServiceStack.ServiceInterface.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\ServiceStack.Text.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.ServiceModel.dll
-C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\ZedGraph.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.ServiceInterface.pdb
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.xml
-C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.GPU.xml
-C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.ML.xml
-C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.OCR.xml
-C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.Stitching.xml
-C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.UI.xml
-C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.VideoStab.xml
-C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.Util.xml
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Npgsql.pdb
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Npgsql.xml
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\ServiceStack.xml

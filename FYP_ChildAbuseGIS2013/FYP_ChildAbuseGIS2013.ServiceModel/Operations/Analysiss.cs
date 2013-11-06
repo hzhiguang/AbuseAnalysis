@@ -11,8 +11,16 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
 {
     [DataContract]
     [Route("/json/analysis")]
-    public class AnalysisOperation
+    public class Analysiss
     {
+    }
+
+    [DataContract]
+    [Route("/json/analysis/{id}")]
+    public class GetAnalysisDetails
+    {
+        [DataMember]
+        public string ID { get; set; }
     }
 
     [DataContract]
@@ -25,6 +33,21 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
 
         [DataMember]
         public List<Analysis> Analysis { get; set; }
+
+        [DataMember]
+        public ResponseStatus ResponseStatus { get; set; }
+    }
+
+    [DataContract]
+    public class AnalysisDetailsResult : IHasResponseStatus
+    {
+        public AnalysisDetailsResult()
+        {
+            this.Analysis = Analysis;
+        }
+
+        [DataMember]
+        public Analysis Analysis { get; set; }
 
         [DataMember]
         public ResponseStatus ResponseStatus { get; set; }

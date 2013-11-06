@@ -9,12 +9,6 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Types
         [DataMember]
         public int ID { get; set; }
 
-        //[DataMember]
-        //public int locationID { get; set; }
-
-        //[DataMember]
-        //public int analysisID { get; set; }
-
         [DataMember]
         public string title { get; set; }
 
@@ -29,5 +23,11 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Types
 
         [DataMember]
         public string type { get; set; }
+
+        [DataMember]
+        public int locationid { get; set; }
+
+        [DataMember]
+        public int analysisid { get; set; }
     }
 }
