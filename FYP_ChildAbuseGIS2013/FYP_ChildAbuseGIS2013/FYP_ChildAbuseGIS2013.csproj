@@ -222,6 +222,10 @@
       <Project>{A189401A-49CC-4632-A59A-02BD61490731}</Project>
       <Name>FYP_ChildAbuseGIS2013.ServiceInterface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FYP_ChildAbuseGIS2013.ServiceModel\FYP_ChildAbuseGIS2013.ServiceModel.csproj">
+      <Project>{13090E34-2333-405F-A380-EF3E7C12B1C1}</Project>
+      <Name>FYP_ChildAbuseGIS2013.ServiceModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

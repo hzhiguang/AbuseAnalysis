@@ -8,9 +8,6 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Types
         [DataMember]
         public int ID { get; set; }
 
-        //[DataMember]
-        //public int videoID { get; set; }
-
         [DataMember]
         public string address { get; set; }
 

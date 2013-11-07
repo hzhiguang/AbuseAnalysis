@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FYP_ChildAbuseGIS2013", "FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.csproj", "{A56D9C77-C1A2-4E2C-AC14-73B5839F1F08}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A189401A-49CC-4632-A59A-02BD61490731} = {A189401A-49CC-4632-A59A-02BD61490731}
+		{13090E34-2333-405F-A380-EF3E7C12B1C1} = {13090E34-2333-405F-A380-EF3E7C12B1C1}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FYP_ChildAbuseGIS2013.ServiceInterface", "FYP_ChildAbuseGIS2013.ServiceInterface\FYP_ChildAbuseGIS2013.ServiceInterface.csproj", "{A189401A-49CC-4632-A59A-02BD61490731}"

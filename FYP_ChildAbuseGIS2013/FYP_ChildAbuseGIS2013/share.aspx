@@ -44,30 +44,23 @@
             var loc = "3";
             var ana = "14";
 
+            /*$.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "http://localhost:27020/api/json/createfile",
+                data: { title: t, date: dat, path: pa, description: desc, type: ty, locationid: loc, analysisid: ana }
+            });*/
+
+            /*var add = "ascasc";
+            var x = "29830.4695669479";
+            var y = "40135.9793048648";
             $.ajax({
                 type: "POST",
-                url: "http://localhost:27020/api/file",
-                data: { title: t, date: dat, path: pa, description: desc, type: ty, locationid: loc, analysisid: ana },
-                success: function (r) { alert("INNNNNN") },
-                error: function (x, a, t) {
-                    alert("Error");
-                    alert(x);
-                    alert(a);
-                    alert(t);
-                }
-            });
-            /*var file = [];
-            file[0] = [t, dat, pa, desc, ty, loc, ana];
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:27020/api/file",
-                data: file,
-                success: function (msg) {
-                    alert("LOL");
-                },
-                error: function (msg) {
-                    alert("error")
-                }
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "http://localhost:27020/api/json/createLocation",
+                data: { "address": add, "x": x, "y": y }
             });*/
         }
     </script>

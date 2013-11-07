@@ -16,7 +16,7 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
     }
 
     [DataContract]
-    [Route("/file", "POST")]
+    [Route("/json/createfile", "POST")]
     public class CreateFile
     {
         [DataMember]
@@ -33,6 +33,15 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
         public int locationid { get; set; }
         [DataMember]
         public int analysisid { get; set; }
+
+        public CreateFile(string title, DateTime date, string path, string description, string type)
+        {
+            this.title = title;
+            this.date = date;
+            this.path = path;
+            this.description = description;
+            this.type = type;
+        }
     }
 
     [DataContract]
@@ -53,21 +62,6 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
 
         [DataMember]
         public List<File> File { get; set; }
-
-        [DataMember]
-        public ResponseStatus ResponseStatus { get; set; }
-    }
-
-    [DataContract]
-    public class CreateFileResponse : IHasResponseStatus
-    {
-        public CreateFileResponse()
-        {
-            this.File = File;
-        }
-
-        [DataMember]
-        public File File { get; set; }
 
         [DataMember]
         public ResponseStatus ResponseStatus { get; set; }

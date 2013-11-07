@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.Web.UI.HtmlControls;
 using System.Drawing.Imaging;
 using System.Text;
+using FYP_ChildAbuseGIS2013.ServiceInterface;
+using FYP_ChildAbuseGIS2013.ServiceModel.Operations;
 
 namespace FYP_ChildAbuseGIS2013
 {
@@ -38,13 +40,24 @@ namespace FYP_ChildAbuseGIS2013
         
         protected void upload_Click(object sender, EventArgs e)
         {
-           
+            string title = tbTitle.Text.ToString();
+            DateTime date = DateTime.Now;
             string filepath = txt_fileUpLoad.Text;
+            string desc = tbDescription.Text.ToString();
+            string type = "";
+
+            CreateAnalysis cAna = new CreateAnalysis(200, 20, 50, 30, 100, 20, 10, 15, 5);
+            CreateLocation cLoc = new CreateLocation("Testing", 29830.4695669479, 40135.9793048648);
+            CreateFile cFile = new CreateFile("testing", date, "testing.avi", "ascasc", "Image");
+
+            insertRecord(cAna, cLoc, cFile);
+
             if (fileUpLoad.HasFile)
             {
                 string fileType = Path.GetExtension(filepath);
                 if (fileType == ".avi")
                 {
+                    type = "Video";
                     strVideoPath = fileUpLoad.PostedFile.FileName.ToString();
                     savePath = Server.MapPath("~\\video\\");
                     fileUpLoad.PostedFile.SaveAs(savePath + strVideoPath);
@@ -52,13 +65,14 @@ namespace FYP_ChildAbuseGIS2013
                 }
                 else if (fileType == ".jpg")
                 {
+                    type = "Image";
                     txt_fileUpLoad.Text = "";
                     strVideoPath = fileUpLoad.PostedFile.FileName.ToString();
                     savePath = Server.MapPath("~\\video\\");
                     fileUpLoad.PostedFile.SaveAs(savePath + strVideoPath);
                     Bitmap pic = new Bitmap(savePath + strVideoPath);
                     property_ids = pic.PropertyIdList;
-                  
+
                     foreach (int scan_property in property_ids)
                     {
                         byte_property_id = pic.GetPropertyItem(scan_property).Value;
@@ -104,7 +118,7 @@ namespace FYP_ChildAbuseGIS2013
                         {
                             //Datum used at GPS acquisition (ascii)
                             ascii_string_property_id = System.Text.Encoding.ASCII.GetString(byte_property_id);
-                           // resultDisplay.InnerText += "GPS Datum= " + ascii_string_property_id;
+                            // resultDisplay.InnerText += "GPS Datum= " + ascii_string_property_id;
                         }
                         else
                         {
@@ -120,6 +134,23 @@ namespace FYP_ChildAbuseGIS2013
                 }
             }
         }
+
+        private void insertRecord(CreateAnalysis cAna, CreateLocation cLoc, CreateFile cFile)
+        {
+            AnalysisService analysis = new AnalysisService();
+            CreateAnalysisResult anaResult = analysis.Post(cAna);
+            int analysisID = anaResult.Analysis.ID;
+            cFile.analysisid = analysisID;
+
+            LocationsService location = new LocationsService();
+            CreateLocationResult locResult = location.Post(cLoc);
+            int locationID = locResult.Location.ID;
+            cFile.locationid = locationID;
+
+            FileService file = new FileService();
+            file.Post(cFile);
+        }
+
         void FaceAnalysis()
         {
             //start to do the face analyze

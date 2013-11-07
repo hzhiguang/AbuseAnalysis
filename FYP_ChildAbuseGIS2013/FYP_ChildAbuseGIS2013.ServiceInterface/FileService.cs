@@ -18,17 +18,7 @@ namespace FYP_ChildAbuseGIS2013.ServiceInterface
 
         public void Post(CreateFile request)
         {
-            File file = new File();
-            file.title = request.title;
-            file.date = request.date;
-            file.path = request.path;
-            file.description = request.description;
-            file.type = request.type;
-            file.locationid = request.locationid;
-            file.analysisid = request.analysisid;
-            Db.Insert(file);
-            //Db.Insert(new File { title = request.title, date = request.date, path = request.path, description = request.description, type = request.type, locationid = request.locationid, analysisid = request.analysisid });
-            //return new CreateFileResponse { File = file };
+            Db.ExecuteSql("INSERT INTO file (title, date, path, description, type, locationid, analysisid) VALUES ('" + request.title + "', '" + request.date + "', '" + request.path + "', '" + request.description + "', '" + request.type + "', '" + request.locationid + "', '" + request.analysisid + "')");
         }
 
         public FileDetailsResponse Get(GetFileDetails request)
