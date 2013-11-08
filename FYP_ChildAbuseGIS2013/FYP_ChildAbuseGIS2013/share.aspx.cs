@@ -31,12 +31,10 @@ namespace FYP_ChildAbuseGIS2013
         int counter;
         double degrees, minutes, seconds, lat_dd, long_dd;
 
-
         protected void Page_Load(object sender, EventArgs e)
         {
             bool result = Convert.ToBoolean(Session["result"]);
         }
-       
         
         protected void upload_Click(object sender, EventArgs e)
         {

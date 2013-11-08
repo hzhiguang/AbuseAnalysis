@@ -3,13 +3,12 @@
 <head>
     <title>Share With Us</title>
     <link rel="stylesheet" type="text/css" href="../../css/share.css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+    <script type ="text/javascript"src="../../script/TableTools.min.js"></script>
     <script type="text/javascript" charset="utf-8">
+        var resultTable;
         $(document).ready(function () {
-            $("#resultTable tbody tr").click(function (event) {
-                alert("hi"); //trying to alert id of the clicked row
-            });
-
-            $("#resultTable").dataTable({
+            resultTable = $("#example").dataTable({
                 "bProcessing": true,
                 "sAjaxSource": "http://localhost:27020/api/json/file",
                 "sAjaxDataProp": "File",
@@ -24,6 +23,13 @@
                 "bFilter": true,
                 "bInfo": true,
                 "bAutoWidth": true
+            });
+
+            $("#example tbody").delegate("tr", "click", function () {
+                var iPos = resultTable.fnGetPosition(this);
+                if (iPos != null) {
+                    window.location.href = "result.aspx?ID=" + iPos + "";
+                }
             });
         });
 
@@ -87,7 +93,7 @@
        </tr>
        <tr>
             <td colspan="2">
-                <table id="resultTable" class="dataTable">
+                <table cellpadding="0" cellspacing="0" border="0" class="dataTable" id="example">
                 </table>
             </td>
        </tr>
