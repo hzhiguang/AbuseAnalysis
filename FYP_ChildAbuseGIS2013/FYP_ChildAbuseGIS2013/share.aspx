@@ -5,17 +5,21 @@
     <link rel="stylesheet" type="text/css" href="../../css/share.css">
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
+            $("#resultTable tbody tr").click(function (event) {
+                alert("hi"); //trying to alert id of the clicked row
+            });
+
             $("#resultTable").dataTable({
                 "bProcessing": true,
                 "sAjaxSource": "http://localhost:27020/api/json/file",
                 "sAjaxDataProp": "File",
                 "aoColumns": [
-                            { "mData": "ID" },
-                            { "mData": "title" },
-                            { "mData": "date" },
-                            { "mData": "description" },
-                            { "mData": "type" }
-                        ],
+                                { "sTitle": "ID", "mData": "ID" },
+                                { "sTitle": "Title", "mData": "title" },
+                                { "sTitle": "Date", "mData": "date" },
+                                { "sTitle": "Description", "mData": "description" },
+                                { "sTitle": "Type", "mData": "type" }
+                            ],
                 "bPaginate": true,
                 "bFilter": true,
                 "bInfo": true,
@@ -35,33 +39,6 @@
                 lock.className = 'LockOn';
 
             lock.innerHTML = str + "<br/><img src=@'../../image/loading.gif' alt='loading'/>";
-
-            var t = "asc";
-            var dat = new Date(2013, 11, 6, 11, 59, 59, 0);
-            var pa = "ascasc";
-            var desc = "ascascasc";
-            var ty = "image";
-            var loc = "3";
-            var ana = "14";
-
-            /*$.ajax({
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                url: "http://localhost:27020/api/json/createfile",
-                data: { title: t, date: dat, path: pa, description: desc, type: ty, locationid: loc, analysisid: ana }
-            });*/
-
-            /*var add = "ascasc";
-            var x = "29830.4695669479";
-            var y = "40135.9793048648";
-            $.ajax({
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                url: "http://localhost:27020/api/json/createLocation",
-                data: { "address": add, "x": x, "y": y }
-            });*/
         }
     </script>
 </head>
@@ -110,14 +87,7 @@
        </tr>
        <tr>
             <td colspan="2">
-                <table id="resultTable">
-                    <thead>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                    </thead>
+                <table id="resultTable" class="dataTable">
                 </table>
             </td>
        </tr>
