@@ -51,13 +51,37 @@
                         value[a] = jsonObj.Analysis[att];
                         a++;
                     }
-                    var newData = [['Left Fist', value[6]],
+
+                    //Face Analysis Pie Chart
+                    var faceAnalysis = [['Smile', value[2]],
+                                        ['Angry', value[3]],
+                                        ['Sad', value[4]],
+                                        ['Neutral', value[5]],
+                                        ['No Detect', value[1] - value[2] - value[3] - value[4] - value[5]]];
+                    $.jqplot('faceAnalysis', [faceAnalysis],
+                    {
+                        title: 'Face Analysis',
+                        seriesDefaults: {
+                            // Make this a pie chart.
+                            renderer: jQuery.jqplot.PieRenderer,
+                            rendererOptions: {
+                                // Put data labels on the pie slices.
+                                // By default, labels show the percentage of the slice.
+                                showDataLabels: true
+                            }
+                        },
+                        legend: { show: true, location: 'e' }
+                    });
+
+                    //Hand Motion Analysis Pie Chart
+                    var handMotion = [['Left Fist', value[6]],
                                     ['Right Fist', value[7]],
                                     ['Left Palm', value[8]],
                                     ['Right Palm', value[8]],
                                     ['No Detect', value[1]-value[6]-value[7]-value[8]-value[9]]];
-                    $.jqplot('chart1', [newData],
+                    $.jqplot('handMotion', [handMotion],
                     {
+                        title: 'Hand Motion Analysis',
                         seriesDefaults: {
                             // Make this a pie chart.
                             renderer: jQuery.jqplot.PieRenderer,
@@ -78,5 +102,12 @@
 </head>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="chart1" class="plot" style="height:400px; width:300px;"></div>
+    <table>
+        <tbody>
+            <tr>
+                <td><div id="faceAnalysis" class="plot" style="height:600px; width:650px;"></div></td>
+                <td><div id="handMotion" class="plot" style="height:600px; width:650px;"></div></td>
+            </tr>
+        </tbody>
+    </table>
 </asp:Content>
