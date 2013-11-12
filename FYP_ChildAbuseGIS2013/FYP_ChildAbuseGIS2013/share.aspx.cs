@@ -21,6 +21,9 @@ namespace FYP_ChildAbuseGIS2013
 {
     public partial class share : System.Web.UI.Page
     {
+        //Emgu CV
+        private Capture grabber;
+
         //initialise and save file path variable
         string strVideoPath, savePath;
 
@@ -35,6 +38,11 @@ namespace FYP_ChildAbuseGIS2013
         {
             bool result = Convert.ToBoolean(Session["result"]);
         }
+
+        private void grabVideo(string path)
+        {
+            grabber = new Capture(path);
+        }
         
         protected void upload_Click(object sender, EventArgs e)
         {
@@ -44,11 +52,11 @@ namespace FYP_ChildAbuseGIS2013
             string desc = tbDescription.Text.ToString();
             string type = "";
 
-            CreateAnalysis cAna = new CreateAnalysis(200, 20, 50, 30, 100, 20, 10, 15, 5);
+            /*CreateAnalysis cAna = new CreateAnalysis(200, 20, 50, 30, 100, 20, 10, 15, 5);
             CreateLocation cLoc = new CreateLocation("Testing", 29830.4695669479, 40135.9793048648);
             CreateFile cFile = new CreateFile("testing", date, "testing.avi", "ascasc", "Image");
 
-            insertRecord(cAna, cLoc, cFile);
+            insertRecord(cAna, cLoc, cFile);*/
 
             if (fileUpLoad.HasFile)
             {
@@ -59,7 +67,8 @@ namespace FYP_ChildAbuseGIS2013
                     strVideoPath = fileUpLoad.PostedFile.FileName.ToString();
                     savePath = Server.MapPath("~\\video\\");
                     fileUpLoad.PostedFile.SaveAs(savePath + strVideoPath);
-                    FaceAnalysis();
+                    grabVideo(savePath + strVideoPath);
+                    //FaceAnalysis();
                 }
                 else if (fileType == ".jpg")
                 {
