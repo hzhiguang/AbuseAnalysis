@@ -108,6 +108,7 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -230,6 +231,10 @@
     <ProjectReference Include="..\FYP_ChildAbuseGIS2013.ServiceModel\FYP_ChildAbuseGIS2013.ServiceModel.csproj">
       <Project>{13090E34-2333-405F-A380-EF3E7C12B1C1}</Project>
       <Name>FYP_ChildAbuseGIS2013.ServiceModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FYP_ChildAbuseGIS2013.SkinDetection\FYP_ChildAbuseGIS2013.SkinDetection.csproj">
+      <Project>{C6CDCBCE-EB15-4A3F-BFB4-40E94D6DC04E}</Project>
+      <Name>FYP_ChildAbuseGIS2013.SkinDetection</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
