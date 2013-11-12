@@ -133,6 +133,7 @@
     <Content Include="image\twitter_logo_white.png" />
     <Content Include="index.aspx" />
     <Content Include="Design.Master" />
+    <Content Include="js\InfoWindow.js" />
     <Content Include="packages.config" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <None Include="Service References\EmotionExpressionDB\Emotion.disco" />

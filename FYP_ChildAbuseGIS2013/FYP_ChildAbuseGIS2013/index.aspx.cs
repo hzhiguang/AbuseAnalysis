@@ -11,7 +11,7 @@ namespace FYP_ChildAbuseGIS2013
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Response.AppendHeader("Access-Control-Allow-Origin", "*");
         }
     }
 }
