@@ -9,6 +9,9 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Types
         public int ID { get; set; }
 
         [DataMember]
+        public int abuseper { get; set; }
+
+        [DataMember]
         public int totalframe { get; set; }
 
         [DataMember]

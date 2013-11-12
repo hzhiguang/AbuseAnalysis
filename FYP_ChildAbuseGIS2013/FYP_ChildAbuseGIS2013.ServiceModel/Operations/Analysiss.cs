@@ -20,6 +20,8 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
     public class CreateAnalysis
     {
         [DataMember]
+        public int abuseper { get; set; }
+        [DataMember]
         public int totalframe { get; set; }
         [DataMember]
         public int smileframe { get; set; }
@@ -38,8 +40,9 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
         [DataMember]
         public int rightpalmframe { get; set; }
 
-        public CreateAnalysis(int total, int smile, int angry, int sad, int neut, int leftFist, int rightFist, int leftPalm, int rightPalm)
+        public CreateAnalysis(int abuseper, int total, int smile, int angry, int sad, int neut, int leftFist, int rightFist, int leftPalm, int rightPalm)
         {
+            this.abuseper = abuseper;
             this.totalframe = total;
             this.smileframe = smile;
             this.angryframe = angry;

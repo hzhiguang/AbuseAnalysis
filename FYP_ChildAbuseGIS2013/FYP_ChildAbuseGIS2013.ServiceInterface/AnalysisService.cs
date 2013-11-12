@@ -18,7 +18,7 @@ namespace FYP_ChildAbuseGIS2013.ServiceInterface
 
         public CreateAnalysisResult Post(CreateAnalysis request)
         {
-            Db.ExecuteSql("INSERT INTO analysis (totalframe, smileframe, angryframe, sadframe, neutralframe, leftfistframe, rightfistframe, leftpalmframe, rightpalmframe) Values ('" + request.totalframe + "','" + request.smileframe + "','" + request.angryframe + "', '" + request.sadframe + "', '" + request.neutralframe + "', '" + request.leftfistframe + "', '" + request.rightfistframe + "', '" + request.leftpalmframe + "', '" + request.rightpalmframe + "')");
+            Db.ExecuteSql("INSERT INTO analysis (abuseper, totalframe, smileframe, angryframe, sadframe, neutralframe, leftfistframe, rightfistframe, leftpalmframe, rightpalmframe) Values ('" + request.abuseper + "', '" + request.totalframe + "','" + request.smileframe + "','" + request.angryframe + "', '" + request.sadframe + "', '" + request.neutralframe + "', '" + request.leftfistframe + "', '" + request.rightfistframe + "', '" + request.leftpalmframe + "', '" + request.rightpalmframe + "')");
             long id = Db.GetLastInsertId();
             var analysis = Db.GetByIdOrDefault<Analysis>(id);
             if (analysis == null)

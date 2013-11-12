@@ -183,3 +183,7 @@ C:\Users\L33506\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS201
 C:\Users\L33506\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\ServiceStack.Redis.xml
 C:\Users\L33506\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\ServiceStack.Text.xml
 C:\Users\L33506\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\policy.2.0.Npgsql.config
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SkinDetection.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SkinDetection.pdb
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.xml
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.Util.xml

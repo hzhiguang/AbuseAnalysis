@@ -21,6 +21,26 @@ namespace FYP_ChildAbuseGIS2013.ServiceInterface
             Db.ExecuteSql("INSERT INTO file (title, date, path, description, type, locationid, analysisid) VALUES ('" + request.title + "', '" + request.date + "', '" + request.path + "', '" + request.description + "', '" + request.type + "', '" + request.locationid + "', '" + request.analysisid + "')");
         }
 
+        public VideoFileResponse Get(GetVideoFiles request)
+        {
+            return new VideoFileResponse { File = Db.Query<File>("SELECT * FROM file WHERE type = 'Video'") };
+        }
+
+        public ImageFileResponse Get(GetImageFiles request)
+        {
+            return new ImageFileResponse { File = Db.Query<File>("SELECT * FROM file WHERE type = 'Image'") };
+        }
+
+        public AbuseFileResponse Get(GetAbuseFiles request)
+        {
+            return new AbuseFileResponse { File = Db.Query<File>("SELECT * FROM file INNER JOIN analysis ON file.analysisid = analysis.id WHERE analysis.abuseper >= 75") };
+        }
+
+        public NotAbuseFileResponse Get(GetNotAbuseFiles request)
+        {
+            return new NotAbuseFileResponse { File = Db.Query<File>("SELECT * FROM file INNER JOIN analysis ON file.analysisid = analysis.id WHERE analysis.abuseper < 75") };
+        }
+
         public FileDetailsResponse Get(GetFileDetails request)
         {
             var file = Db.GetByIdOrDefault<File>(request.ID);
