@@ -41,6 +41,11 @@ namespace FYP_ChildAbuseGIS2013.ServiceInterface
             return new NotAbuseFileResponse { File = Db.Query<File>("SELECT * FROM file INNER JOIN analysis ON file.analysisid = analysis.id WHERE analysis.abuseper < 75") };
         }
 
+        public BufferFileResponse Get(GetBufferFiles request)
+        {
+            return new BufferFileResponse { File = Db.Query<File>("SELECT * FROM file INNER JOIN location ON file.locationid = location.id WHERE ST_DWithin(geom, ST_GeomFromText('POINT(" + request.lat + " " + request.lon + ")', 3414), " + request.rad + ")") };
+        }
+
         public FileDetailsResponse Get(GetFileDetails request)
         {
             var file = Db.GetByIdOrDefault<File>(request.ID);

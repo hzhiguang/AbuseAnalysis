@@ -69,6 +69,18 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
     }
 
     [DataContract]
+    [Route("/json/bufferfile/{rad}/{lat}/{lon}")]
+    public class GetBufferFiles
+    {
+        [DataMember]
+        public double rad { get; set; }
+        [DataMember]
+        public double lat { get; set; }
+        [DataMember]
+        public double lon { get; set; }
+    }
+
+    [DataContract]
     [Route("/json/file/{id}")]
     public class GetFileDetails
     {
@@ -140,6 +152,21 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
     public class NotAbuseFileResponse : IHasResponseStatus
     {
         public NotAbuseFileResponse()
+        {
+            this.File = new List<File>();
+        }
+
+        [DataMember]
+        public List<File> File { get; set; }
+
+        [DataMember]
+        public ResponseStatus ResponseStatus { get; set; }
+    }
+
+    [DataContract]
+    public class BufferFileResponse : IHasResponseStatus
+    {
+        public BufferFileResponse()
         {
             this.File = new List<File>();
         }
