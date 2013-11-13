@@ -22,13 +22,13 @@ namespace FYP_ChildAbuseGIS2013 {
         protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
         
         /// <summary>
-        /// iconLogo1 control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image iconLogo1;
+        protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
         /// txt_fileUpLoad control.
@@ -64,7 +64,7 @@ namespace FYP_ChildAbuseGIS2013 {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText tbLocation;
+        protected global::System.Web.UI.WebControls.TextBox tbLocation;
         
         /// <summary>
         /// tbDescription control.

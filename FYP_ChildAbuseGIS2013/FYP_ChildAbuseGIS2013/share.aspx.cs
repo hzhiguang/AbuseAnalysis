@@ -76,11 +76,40 @@ namespace FYP_ChildAbuseGIS2013
         int counter;
         double degrees, minutes, seconds, lat_dd, long_dd;
 
+        //Analysis Table
+        private CreateAnalysis cAna;
+        private int abuseper;
+        private int totalframe;
+        private int smile;
+        private int angry;
+        private int sad;
+        private int neutral;
+        private int leftfist;
+        private int rightfist;
+        private int leftpalm;
+        private int rightpalm;
+
+        //Location Table
+        private CreateLocation cLoc;
+        private string address;
+        private double x;
+        private double y;
+
+        //File Table
+        private CreateFile cFile;
+        private string title;
+        private DateTime date;
+        private string path;
+        private string desc;
+        private string type;
+        private int locationid;
+        private int analysisid;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             bool result = Convert.ToBoolean(Session["result"]);
 
-            faceHaar = new CascadeClassifier("C:/Emgu/opencv_attic/opencv/data/haarcascades/haarcascade_frontalface_default.xml");
+            /*faceHaar = new CascadeClassifier("C:/Emgu/opencv_attic/opencv/data/haarcascades/haarcascade_frontalface_default.xml");
 
             hsv_min = new Hsv(0, 45, 0);
             hsv_max = new Hsv(20, 255, 255);
@@ -98,7 +127,7 @@ namespace FYP_ChildAbuseGIS2013
             motionPoints = new List<PointF>();
             gestures = new List<string>();
             runTimes = new List<long>();
-            faceEmotions = new List<string>();
+            faceEmotions = new List<string>();*/
         }
 
         private void grabVideo(string path)
@@ -110,11 +139,10 @@ namespace FYP_ChildAbuseGIS2013
         
         protected void upload_Click(object sender, EventArgs e)
         {
-            string title = tbTitle.Text.ToString();
-            DateTime date = DateTime.Now;
             string filepath = txt_fileUpLoad.Text;
-            string desc = tbDescription.Text.ToString();
-            string type = "";
+            title = tbTitle.Text.ToString();
+            desc = tbDescription.Text.ToString();
+            address = tbLocation.Text.ToString();
 
             /*CreateAnalysis cAna = new CreateAnalysis(200, 20, 50, 30, 100, 20, 10, 15, 5);
             CreateLocation cLoc = new CreateLocation("Testing", 29830.4695669479, 40135.9793048648);
@@ -131,8 +159,14 @@ namespace FYP_ChildAbuseGIS2013
                     strVideoPath = fileUpLoad.PostedFile.FileName.ToString();
                     savePath = Server.MapPath("~\\video\\");
                     fileUpLoad.PostedFile.SaveAs(savePath + strVideoPath);
-                    grabVideo(savePath + strVideoPath);
-                    videoAnalysis();
+                    path = savePath + strVideoPath;
+                    FileInfo oFileInfo = new FileInfo(path);
+                    if (oFileInfo != null || oFileInfo.Length == 0)
+                    {
+                        date = oFileInfo.CreationTime;
+                    }
+                    //grabVideo(path);
+                    //videoAnalysis();
                 }
                 else if (fileType == ".jpg")
                 {
