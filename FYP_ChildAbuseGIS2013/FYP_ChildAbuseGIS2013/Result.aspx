@@ -53,11 +53,11 @@
                     }
 
                     //Face Analysis Pie Chart
-                    var faceAnalysis = [['Smile', value[2]],
-                                        ['Angry', value[3]],
-                                        ['Sad', value[4]],
-                                        ['Neutral', value[5]],
-                                        ['No Detect', value[1] - value[2] - value[3] - value[4] - value[5]]];
+                    var faceAnalysis = [['Smile', value[3]],
+                                        ['Angry', value[4]],
+                                        ['Sad', value[5]],
+                                        ['Neutral', value[6]],
+                                        ['No Detect', value[2] - value[3] - value[4] - value[5] - value[6]]];
                     $.jqplot('faceAnalysis', [faceAnalysis],
                     {
                         title: 'Face Analysis',
@@ -74,11 +74,11 @@
                     });
 
                     //Hand Motion Analysis Pie Chart
-                    var handMotion = [['Left Fist', value[6]],
-                                    ['Right Fist', value[7]],
-                                    ['Left Palm', value[8]],
-                                    ['Right Palm', value[8]],
-                                    ['No Detect', value[1]-value[6]-value[7]-value[8]-value[9]]];
+                    var handMotion = [['Left Fist', value[7]],
+                                    ['Right Fist', value[8]],
+                                    ['Left Palm', value[9]],
+                                    ['Right Palm', value[10]],
+                                    ['No Detect', value[2]-value[7]-value[8]-value[9]-value[10]]];
                     $.jqplot('handMotion', [handMotion],
                     {
                         title: 'Hand Motion Analysis',
@@ -102,6 +102,7 @@
 </head>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <h1 style="text-align:center">Analysis</h1>
     <table>
         <tbody>
             <tr>

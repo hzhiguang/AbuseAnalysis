@@ -52,13 +52,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form id="Form1" runat="server" method="post" >
     <table class="tableStyle">
-       <tr>
-            <td class="style3"> 
+        <tr>
+            <td colspan="2"> 
                 <div class="image">
-                    <asp:Image ID="iconLogo1" runat="server" ImageUrl="~/image/Share.png" />
+                    <center><asp:Image ID="Image1" runat="server" ImageUrl="~/image/Share.png" /></center><hr />
                 </div>
             </td>
-            <td class="style2">
+        </tr>
+        <tr>
+            <td>
                 <div class="submitCorner">
                     <table>
                         <tr>
@@ -77,22 +79,20 @@
                             <td><asp:TextBox ID="tbTitle" class="tbStyle" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>
-                            <td>Location:</td>
-                            <td><input type="text" id="tbLocation" runat="server" class="tbStyle"/></td>
+                            <td>Address:</td>
+                            <td><asp:TextBox ID="tbLocation" class="tbStyle" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>
                             <td class="headerAlignment">Description:</td>
                             <td><asp:TextBox ID="tbDescription" class="tbStyle" runat="server" Height="105px" TextMode="MultiLine" Width="300px" /></td>
                         </tr>
                         <tr>
-                            <td colspan="2"><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" />&nbsp;&nbsp;&nbsp;<asp:Label ID="lb_msg" runat="server"></asp:Label></td>
+                            <td colspan="2"><center><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" />&nbsp;&nbsp;&nbsp;<asp:Label ID="lb_msg" runat="server"></center></asp:Label></td>
                         </tr>
                     </table>
                 </div> 
             </td>
-       </tr>
-       <tr>
-            <td colspan="2">
+            <td>
                 <table cellpadding="0" cellspacing="0" border="0" class="dataTable" id="example">
                 </table>
             </td>

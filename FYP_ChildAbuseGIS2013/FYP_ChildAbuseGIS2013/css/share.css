@@ -119,14 +119,8 @@ input.submitBtn:active {
 	top:0px;
 }
 
-div.image {
-    width:200;
-    height:75px;
-    margin-left:80px;
-}
-
 table.tableStyle {
-    width:1200px;
+    width:1300px;
 }
 table.tableStyle td {
     border: 0px solid #1e62d0;

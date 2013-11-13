@@ -130,6 +130,10 @@
     <Content Include="image\loading.gif" />
     <Content Include="image\result.png" />
     <Content Include="image\Share.png" />
+    <Content Include="image\slideshow\background.png" />
+    <Content Include="image\slideshow\dock.png" />
+    <Content Include="image\slideshow\next.png" />
+    <Content Include="image\slideshow\prev.png" />
     <Content Include="image\twitter_logo_white.png" />
     <Content Include="index.aspx" />
     <Content Include="Design.Master" />
