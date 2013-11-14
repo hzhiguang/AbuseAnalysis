@@ -46,6 +46,11 @@ namespace FYP_ChildAbuseGIS2013.ServiceInterface
             return new BufferFileResponse { File = Db.Query<File>("SELECT * FROM file INNER JOIN location ON file.locationid = location.id WHERE ST_DWithin(geom, ST_GeomFromText('POINT(" + request.lat + " " + request.lon + ")', 3414), " + request.rad + ")") };
         }
 
+        public FileDetailsByLocationResponse Get(GetFileDetailsByLocation request)
+        {
+            return new FileDetailsByLocationResponse { File = Db.Query<File>("SELECT * FROM file WHERE locationid = '" + request.ID + "'") };
+        }
+
         public FileDetailsResponse Get(GetFileDetails request)
         {
             var file = Db.GetByIdOrDefault<File>(request.ID);
