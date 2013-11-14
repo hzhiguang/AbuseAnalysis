@@ -121,6 +121,7 @@
     <Content Include="css\jquery.jqplot.min.css" />
     <Content Include="css\jquery.mobile-1.3.2.min.css" />
     <Content Include="css\onemapDesign.css" />
+    <Content Include="css\resultChart.css" />
     <Content Include="css\share.css" />
     <Content Include="emotionDB.aspx" />
     <Content Include="Global.asax" />
@@ -152,6 +153,8 @@
     </None>
     <Content Include="css\designTemplete.css" />
     <Content Include="result.aspx" />
+    <Content Include="script\chart\chartSlideshow.js" />
+    <Content Include="script\chart\displayChart.js" />
     <Content Include="script\chart\excanvas.min.js" />
     <Content Include="script\chart\jqplot.donutRenderer.min.js" />
     <Content Include="script\chart\jqplot.pieRenderer.min.js" />
