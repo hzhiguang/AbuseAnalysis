@@ -11,11 +11,13 @@ namespace FYP_ChildAbuseGIS2013.ServiceInterface
 {
     public class AnalysisService : Service
     {
+        //Get all analysis data
         public AnalysisResult Get(Analysiss request)
         {
             return new AnalysisResult { Analysis = Db.Select<Analysis>() };
         }
 
+        //Insert 1 analysis object
         public CreateAnalysisResult Post(CreateAnalysis request)
         {
             Db.ExecuteSql("INSERT INTO analysis (abuseper, totalframe, smileframe, angryframe, sadframe, neutralframe, leftfistframe, rightfistframe, leftpalmframe, rightpalmframe) Values ('" + request.abuseper + "', '" + request.totalframe + "','" + request.smileframe + "','" + request.angryframe + "', '" + request.sadframe + "', '" + request.neutralframe + "', '" + request.leftfistframe + "', '" + request.rightfistframe + "', '" + request.leftpalmframe + "', '" + request.rightpalmframe + "')");
@@ -28,6 +30,7 @@ namespace FYP_ChildAbuseGIS2013.ServiceInterface
             return new CreateAnalysisResult { Analysis = analysis };
         }
 
+        //Retrieve 1 analysis object by id
         public AnalysisDetailsResult Get(GetAnalysisDetails request)
         {
             var analysis = Db.GetByIdOrDefault<Analysis>(request.ID);
