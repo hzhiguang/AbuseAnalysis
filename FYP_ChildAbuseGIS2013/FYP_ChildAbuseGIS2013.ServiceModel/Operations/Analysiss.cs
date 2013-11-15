@@ -39,8 +39,14 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
         public int leftpalmframe { get; set; }
         [DataMember]
         public int rightpalmframe { get; set; }
+        [DataMember]
+        public bool soundresult { get; set; }
+        [DataMember]
+        public string soundpath { get; set; }
+        [DataMember]
+        public int feverresult { get; set; }
 
-        public CreateAnalysis(int abuseper, int total, int smile, int angry, int sad, int neut, int leftFist, int rightFist, int leftPalm, int rightPalm)
+        public CreateAnalysis(int abuseper, int total, int smile, int angry, int sad, int neut, int leftFist, int rightFist, int leftPalm, int rightPalm, bool soundresult, string soundpath, int feverresult)
         {
             this.abuseper = abuseper;
             this.totalframe = total;
@@ -52,6 +58,9 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
             this.rightfistframe = rightFist;
             this.leftpalmframe = leftPalm;
             this.rightpalmframe = rightPalm;
+            this.soundresult = soundresult;
+            this.soundpath = soundpath;
+            this.feverresult = feverresult;
         }
     }
 

@@ -5,6 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FYP_ChildAbuseGIS2013", "FY
 	ProjectSection(ProjectDependencies) = postProject
 		{A189401A-49CC-4632-A59A-02BD61490731} = {A189401A-49CC-4632-A59A-02BD61490731}
 		{13090E34-2333-405F-A380-EF3E7C12B1C1} = {13090E34-2333-405F-A380-EF3E7C12B1C1}
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12} = {BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FYP_ChildAbuseGIS2013.ServiceInterface", "FYP_ChildAbuseGIS2013.ServiceInterface\FYP_ChildAbuseGIS2013.ServiceInterface.csproj", "{A189401A-49CC-4632-A59A-02BD61490731}"
@@ -15,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FYP_ChildAbuseGIS2013.ServiceModel", "FYP_ChildAbuseGIS2013.ServiceModel\FYP_ChildAbuseGIS2013.ServiceModel.csproj", "{13090E34-2333-405F-A380-EF3E7C12B1C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FYP_ChildAbuseGIS2013.SkinDetection", "FYP_ChildAbuseGIS2013.SkinDetection\FYP_ChildAbuseGIS2013.SkinDetection.csproj", "{C6CDCBCE-EB15-4A3F-BFB4-40E94D6DC04E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FYP_ChildAbuseGIS2013.SoundDetector", "FYP_ChildAbuseGIS2013.SoundDetector\FYP_ChildAbuseGIS2013.SoundDetector.csproj", "{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +69,16 @@ Global
 		{C6CDCBCE-EB15-4A3F-BFB4-40E94D6DC04E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{C6CDCBCE-EB15-4A3F-BFB4-40E94D6DC04E}.Release|x86.ActiveCfg = Release|x86
 		{C6CDCBCE-EB15-4A3F-BFB4-40E94D6DC04E}.Release|x86.Build.0 = Release|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Debug|x86.ActiveCfg = Debug|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Debug|x86.Build.0 = Debug|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Release|Any CPU.ActiveCfg = Release|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Release|Mixed Platforms.Build.0 = Release|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Release|x86.ActiveCfg = Release|x86
+		{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

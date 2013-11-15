@@ -58,15 +58,6 @@ namespace FYP_ChildAbuseGIS2013 {
         protected global::System.Web.UI.WebControls.TextBox tbTitle;
         
         /// <summary>
-        /// tbLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbLocation;
-        
-        /// <summary>
         /// tbDescription control.
         /// </summary>
         /// <remarks>

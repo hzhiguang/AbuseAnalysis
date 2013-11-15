@@ -1,0 +1,11 @@
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\bin\Debug\FYP_ChildAbuseGIS2013.SoundDetector.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\bin\Debug\FYP_ChildAbuseGIS2013.SoundDetector.pdb
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\bin\Debug\NAudio.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\bin\Debug\ZedGraph.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\obj\x86\Debug\FYP_ChildAbuseGIS2013.SoundDetector.Properties.Resources.resources
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\obj\x86\Debug\FYP_ChildAbuseGIS2013.SoundDetector.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013.SoundDetector\obj\x86\Debug\FYP_ChildAbuseGIS2013.SoundDetector.pdb
