@@ -159,7 +159,7 @@ namespace FYP_ChildAbuseGIS2013
             string filepath = txt_fileUpLoad.Text;
             title = tbTitle.Text.ToString();
             desc = tbDescription.Text.ToString();
-            //address = tbLocation.Text.ToString();
+            address = tbLocation.Text.ToString();
 
             /*CreateAnalysis cAna = new CreateAnalysis(200, 20, 50, 30, 100, 20, 10, 15, 5);
             CreateLocation cLoc = new CreateLocation("Testing", 29830.4695669479, 40135.9793048648);
