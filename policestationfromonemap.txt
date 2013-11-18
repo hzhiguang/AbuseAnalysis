@@ -1,0 +1,595 @@
+
+		  var policeMarkerListPg1 = [];
+          var policeMarkerListPg2 = [];
+          var policeMarkerListPg3 = [];
+          var policeMarkerListPg4 = [];
+          var policeMarkerListPg5 = [];
+          var policeMarkerListPg6 = [];
+          var policeMarkerListPg7 = []; 
+ function addPoliceStation() {
+              addPoliceStation1();
+              addPoliceStation2();
+              addPoliceStation3();
+              addPoliceStation4();
+              addPoliceStation5();
+              addPoliceStation6();
+              addPoliceStation7();
+          }
+		  
+		   // Start of Police Markker
+          function addPoliceStation1() {
+              var searchText = "Police"
+              var returngeom = 1;
+              var otptflds = "SEARCHVAL, CATEGORY, THEME, AGENCY";
+              var rset = 1;
+
+              var themeSearch = new ThemeSearch;
+              themeSearch.searchVal = searchText;
+              themeSearch.returnGeom = returngeom;
+              themeSearch.otptFlds = otptflds;
+
+              themeSearch.rset = rset;
+              themeSearch.GetThemeSearchResults(GetResult2);
+
+          }
+
+          function GetResult2(resultData) {
+
+              var returngeom = 1;
+              var policeinfomarker = [];
+
+              var pages = resultData.nop;
+              var results = resultData.results;
+              if (results == 'No results') {
+                  alert("No Results of agency marker");
+                  return false
+              }
+              else {
+                  for (var i = 0; i < results.length; i++) {
+                      var row = results[i];
+                      policeinfomarker = [row.SEARCHVAL, row.AGENCY, row.CATEGORY, row.THEME, row.X, row.Y];
+                      policeMarkerListPg1.push(policeinfomarker);
+                      var corridnates = row.X + "," + row.Y
+                      getPoliceAddressPg1(corridnates);
+                      //console.log(policeMarkerList[i][0]);
+                  }
+
+              }
+
+              //alert(policeMarkerList[0][1]);
+
+          }
+          function getPoliceAddressPg1(corridnatesXY) {
+              // debugger;
+              var oneMapAddressInfoObj = new GetAddressInfo;
+              oneMapAddressInfoObj.XY = corridnatesXY;
+
+              oneMapAddressInfoObj.GetAddress(function (addressData) {
+                  getPoliceAddress1(addressData);
+              });
+          }
+
+          function getPoliceAddress1(addressData) {
+              //debugger;
+              if (addressData.results == "No results") {
+                  return "No results";
+                  // return false
+              }
+              else {
+                  locationAddress = addressData.results[0].ROAD + ", " + addressData.results[0].POSTALCODE;
+                  //addressData.results[0].XCOORD addressData.results[0].YCOORD 
+                  //addressData.results[0].BUILDINGNAME + ", " + 
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/spf.png");
+
+                  for (var i = 0; i < childcareMarkerList.length; i++) {
+                      var infoTemplate = new InfoTemplate(
+                       policeMarkerListPg1[i][1],
+                        "Name:" + policeMarkerListPg1[i][0] + "<br/><br/>Category:" + policeMarkerListPg1[i][2] + "<br/><br/>Address:" + locationAddress
+                      );
+                      graphic = new Graphic(new Point(policeMarkerListPg1[i][4], policeMarkerListPg1[i][5], spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+
+
+          //2
+          function addPoliceStation2() {
+              var searchText = "Police"
+              var returngeom = 1;
+              var otptflds = "SEARCHVAL, CATEGORY, THEME, AGENCY";
+              var rset = 2;
+
+              var themeSearch = new ThemeSearch;
+              themeSearch.searchVal = searchText;
+              themeSearch.returnGeom = returngeom;
+              themeSearch.otptFlds = otptflds;
+
+              themeSearch.rset = rset;
+              themeSearch.GetThemeSearchResults(GetResult3);
+
+          }
+
+          function GetResult3(resultData) {
+
+              var returngeom = 1;
+              var policeinfomarker = [];
+
+              var pages = resultData.nop;
+              var results = resultData.results;
+              if (results == 'No results') {
+                  alert("No Results of agency marker");
+                  return false
+              }
+              else {
+                  for (var i = 0; i < results.length; i++) {
+                      var row = results[i];
+                      policeinfomarker = [row.SEARCHVAL, row.AGENCY, row.CATEGORY, row.THEME, row.X, row.Y];
+                      policeMarkerListPg2.push(policeinfomarker);
+                      var corridnates = row.X + "," + row.Y
+                      getPoliceAddressPg2(corridnates);
+                      //console.log(policeMarkerList[i][0]);
+                  }
+
+              }
+
+              //alert(policeMarkerList[0][1]);
+
+          }
+          function getPoliceAddressPg2(corridnatesXY) {
+              // debugger;
+              var oneMapAddressInfoObj = new GetAddressInfo;
+              oneMapAddressInfoObj.XY = corridnatesXY;
+
+              oneMapAddressInfoObj.GetAddress(function (addressData) {
+                  getPoliceAddress2(addressData);
+              });
+          }
+
+          function getPoliceAddress2(addressData) {
+              //debugger;
+              if (addressData.results == "No results") {
+                  return "No results";
+                  // return false
+              }
+              else {
+                  locationAddress = addressData.results[0].ROAD + ", " + addressData.results[0].POSTALCODE;
+                  //addressData.results[0].XCOORD addressData.results[0].YCOORD 
+                  //addressData.results[0].BUILDINGNAME + ", " + 
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/spf.png");
+
+                  for (var i = 0; i < childcareMarkerList.length; i++) {
+                      var infoTemplate = new InfoTemplate(
+                       policeMarkerListPg1[i][1],
+                        "Name:" + policeMarkerListPg2[i][0] + "<br/><br/>Category:" + policeMarkerListPg2[i][2] + "<br/><br/>Address:" + locationAddress
+                      );
+                      graphic = new Graphic(new Point(policeMarkerListPg2[i][4], policeMarkerListPg2[i][5], spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+
+          //3
+          function addPoliceStation3() {
+              var searchText = "Police"
+              var returngeom = 1;
+              var otptflds = "SEARCHVAL, CATEGORY, THEME, AGENCY";
+              var rset = 3;
+
+              var themeSearch = new ThemeSearch;
+              themeSearch.searchVal = searchText;
+              themeSearch.returnGeom = returngeom;
+              themeSearch.otptFlds = otptflds;
+
+              themeSearch.rset = rset;
+              themeSearch.GetThemeSearchResults(GetResult4);
+
+          }
+
+          function GetResult4(resultData) {
+
+              var returngeom = 1;
+              var policeinfomarker = [];
+
+              var pages = resultData.nop;
+              var results = resultData.results;
+              if (results == 'No results') {
+                  alert("No Results of agency marker");
+                  return false
+              }
+              else {
+                  for (var i = 0; i < results.length; i++) {
+                      var row = results[i];
+                      policeinfomarker = [row.SEARCHVAL, row.AGENCY, row.CATEGORY, row.THEME, row.X, row.Y];
+                      policeMarkerListPg3.push(policeinfomarker);
+                      var corridnates = row.X + "," + row.Y
+                      getPoliceAddressPg3(corridnates);
+                      //console.log(policeMarkerList[i][0]);
+                  }
+
+              }
+
+              //alert(policeMarkerList[0][1]);
+
+          }
+          function getPoliceAddressPg3(corridnatesXY) {
+              // debugger;
+              var oneMapAddressInfoObj = new GetAddressInfo;
+              oneMapAddressInfoObj.XY = corridnatesXY;
+
+              oneMapAddressInfoObj.GetAddress(function (addressData) {
+                  getPoliceAddress3(addressData);
+              });
+          }
+
+          function getPoliceAddress3(addressData) {
+              //debugger;
+              if (addressData.results == "No results") {
+                  return "No results";
+                  // return false
+              }
+              else {
+                  locationAddress = addressData.results[0].ROAD + ", " + addressData.results[0].POSTALCODE;
+                  //addressData.results[0].XCOORD addressData.results[0].YCOORD 
+                  //addressData.results[0].BUILDINGNAME + ", " + 
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/spf.png");
+
+                  for (var i = 0; i < childcareMarkerList.length; i++) {
+                      var infoTemplate = new InfoTemplate(
+                       policeMarkerListPg3[i][1],
+                        "Name:" + policeMarkerListPg3[i][0] + "<br/><br/>Category:" + policeMarkerListPg3[i][2] + "<br/><br/>Address:" + locationAddress
+                      );
+                      graphic = new Graphic(new Point(policeMarkerListPg3[i][4], policeMarkerListPg3[i][5], spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+
+          function addPoliceStation4() {
+              var searchText = "Police"
+              var returngeom = 1;
+              var otptflds = "SEARCHVAL, CATEGORY, THEME, AGENCY";
+              var rset = 4;
+
+              var themeSearch = new ThemeSearch;
+              themeSearch.searchVal = searchText;
+              themeSearch.returnGeom = returngeom;
+              themeSearch.otptFlds = otptflds;
+
+              themeSearch.rset = rset;
+              themeSearch.GetThemeSearchResults(GetResult5);
+
+          }
+
+          function GetResult5(resultData) {
+
+              var returngeom = 1;
+              var policeinfomarker = [];
+
+              var pages = resultData.nop;
+              var results = resultData.results;
+              if (results == 'No results') {
+                  alert("No Results of agency marker");
+                  return false
+              }
+              else {
+                  for (var i = 0; i < results.length; i++) {
+                      var row = results[i];
+                      policeinfomarker = [row.SEARCHVAL, row.AGENCY, row.CATEGORY, row.THEME, row.X, row.Y];
+                      policeMarkerListPg4.push(policeinfomarker);
+                      var corridnates = row.X + "," + row.Y
+                      getPoliceAddressPg4(corridnates);
+                      //console.log(policeMarkerList[i][0]);
+                  }
+
+              }
+
+              //alert(policeMarkerList[0][1]);
+
+          }
+          function getPoliceAddressPg4(corridnatesXY) {
+              // debugger;
+              var oneMapAddressInfoObj = new GetAddressInfo;
+              oneMapAddressInfoObj.XY = corridnatesXY;
+
+              oneMapAddressInfoObj.GetAddress(function (addressData) {
+                  getPoliceAddress4(addressData);
+              });
+          }
+
+          function getPoliceAddress4(addressData) {
+              //debugger;
+              if (addressData.results == "No results") {
+                  return "No results";
+                  // return false
+              }
+              else {
+                  locationAddress = addressData.results[0].ROAD + ", " + addressData.results[0].POSTALCODE;
+                  //addressData.results[0].XCOORD addressData.results[0].YCOORD 
+                  //addressData.results[0].BUILDINGNAME + ", " + 
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/spf.png");
+
+                  for (var i = 0; i < childcareMarkerList.length; i++) {
+                      var infoTemplate = new InfoTemplate(
+                       policeMarkerListPg4[i][1],
+                        "Name:" + policeMarkerListPg4[i][0] + "<br/><br/>Category:" + policeMarkerListPg4[i][2] + "<br/><br/>Address:" + locationAddress
+                      );
+                      graphic = new Graphic(new Point(policeMarkerListPg4[i][4], policeMarkerListPg4[i][5], spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+
+
+          function addPoliceStation5() {
+              var searchText = "Police"
+              var returngeom = 1;
+              var otptflds = "SEARCHVAL, CATEGORY, THEME, AGENCY";
+              var rset = 5;
+
+              var themeSearch = new ThemeSearch;
+              themeSearch.searchVal = searchText;
+              themeSearch.returnGeom = returngeom;
+              themeSearch.otptFlds = otptflds;
+
+              themeSearch.rset = rset;
+              themeSearch.GetThemeSearchResults(GetResult6);
+
+          }
+
+          function GetResult6(resultData) {
+
+              var returngeom = 1;
+              var policeinfomarker = [];
+
+              var pages = resultData.nop;
+              var results = resultData.results;
+              if (results == 'No results') {
+                  alert("No Results of agency marker");
+                  return false
+              }
+              else {
+                  for (var i = 0; i < results.length; i++) {
+                      var row = results[i];
+                      policeinfomarker = [row.SEARCHVAL, row.AGENCY, row.CATEGORY, row.THEME, row.X, row.Y];
+                      policeMarkerListPg1.push(policeinfomarker);
+                      var corridnates = row.X + "," + row.Y
+                      getPoliceAddressPg5(corridnates);
+                      //console.log(policeMarkerList[i][0]);
+                  }
+
+              }
+
+              //alert(policeMarkerList[0][1]);
+
+          }
+          function getPoliceAddressPg5(corridnatesXY) {
+              // debugger;
+              var oneMapAddressInfoObj = new GetAddressInfo;
+              oneMapAddressInfoObj.XY = corridnatesXY;
+
+              oneMapAddressInfoObj.GetAddress(function (addressData) {
+                  getPoliceAddress5(addressData);
+              });
+          }
+
+          function getPoliceAddress5(addressData) {
+              //debugger;
+              if (addressData.results == "No results") {
+                  return "No results";
+                  // return false
+              }
+              else {
+                  locationAddress = addressData.results[0].ROAD + ", " + addressData.results[0].POSTALCODE;
+                  //addressData.results[0].XCOORD addressData.results[0].YCOORD 
+                  //addressData.results[0].BUILDINGNAME + ", " + 
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/spf.png");
+
+                  for (var i = 0; i < childcareMarkerList.length; i++) {
+                      var infoTemplate = new InfoTemplate(
+                       policeMarkerListPg5[i][1],
+                        "Name:" + policeMarkerListPg5[i][0] + "<br/><br/>Category:" + policeMarkerListPg5[i][2] + "<br/><br/>Address:" + locationAddress
+                      );
+                      graphic = new Graphic(new Point(policeMarkerListPg5[i][4], policeMarkerListPg5[i][5], spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+
+          function addPoliceStation6() {
+              var searchText = "Police"
+              var returngeom = 1;
+              var otptflds = "SEARCHVAL, CATEGORY, THEME, AGENCY";
+              var rset = 6;
+
+              var themeSearch = new ThemeSearch;
+              themeSearch.searchVal = searchText;
+              themeSearch.returnGeom = returngeom;
+              themeSearch.otptFlds = otptflds;
+
+              themeSearch.rset = rset;
+              themeSearch.GetThemeSearchResults(GetResult7);
+
+          }
+
+          function GetResult7(resultData) {
+
+              var returngeom = 1;
+              var policeinfomarker = [];
+
+              var pages = resultData.nop;
+              var results = resultData.results;
+              if (results == 'No results') {
+                  alert("No Results of agency marker");
+                  return false
+              }
+              else {
+                  for (var i = 0; i < results.length; i++) {
+                      var row = results[i];
+                      policeinfomarker = [row.SEARCHVAL, row.AGENCY, row.CATEGORY, row.THEME, row.X, row.Y];
+                      policeMarkerListPg6.push(policeinfomarker);
+                      var corridnates = row.X + "," + row.Y
+                      getPoliceAddressPg6(corridnates);
+                      //console.log(policeMarkerList[i][0]);
+                  }
+
+              }
+
+              //alert(policeMarkerList[0][1]);
+
+          }
+          function getPoliceAddressPg6(corridnatesXY) {
+              // debugger;
+              var oneMapAddressInfoObj = new GetAddressInfo;
+              oneMapAddressInfoObj.XY = corridnatesXY;
+
+              oneMapAddressInfoObj.GetAddress(function (addressData) {
+                  getPoliceAddress6(addressData);
+              });
+          }
+
+          function getPoliceAddress6(addressData) {
+              //debugger;
+              if (addressData.results == "No results") {
+                  return "No results";
+                  // return false
+              }
+              else {
+                  locationAddress = addressData.results[0].ROAD + ", " + addressData.results[0].POSTALCODE;
+                  //addressData.results[0].XCOORD addressData.results[0].YCOORD 
+                  //addressData.results[0].BUILDINGNAME + ", " + 
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/spf.png");
+
+                  for (var i = 0; i < childcareMarkerList.length; i++) {
+                      var infoTemplate = new InfoTemplate(
+                       policeMarkerListPg6[i][1],
+                        "Name:" + policeMarkerListPg6[i][0] + "<br/><br/>Category:" + policeMarkerListPg6[i][2] + "<br/><br/>Address:" + locationAddress
+                      );
+                      graphic = new Graphic(new Point(policeMarkerListPg6[i][4], policeMarkerListPg6[i][5], spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+
+          function addPoliceStation7() {
+              var searchText = "Police"
+              var returngeom = 1;
+              var otptflds = "SEARCHVAL, CATEGORY, THEME, AGENCY";
+              var rset = 7;
+
+              var themeSearch = new ThemeSearch;
+              themeSearch.searchVal = searchText;
+              themeSearch.returnGeom = returngeom;
+              themeSearch.otptFlds = otptflds;
+
+              themeSearch.rset = rset;
+              themeSearch.GetThemeSearchResults(GetResult8);
+
+          }
+
+          function GetResult8(resultData) {
+
+              var returngeom = 1;
+              var policeinfomarker = [];
+
+              var pages = resultData.nop;
+              var results = resultData.results;
+              if (results == 'No results') {
+                  alert("No Results of agency marker");
+                  return false
+              }
+              else {
+                  for (var i = 0; i < results.length; i++) {
+                      var row = results[i];
+                      policeinfomarker = [row.SEARCHVAL, row.AGENCY, row.CATEGORY, row.THEME, row.X, row.Y];
+                      policeMarkerListPg7.push(policeinfomarker);
+                      var corridnates = row.X + "," + row.Y
+                      getPoliceAddressPg7(corridnates);
+                      //console.log(policeMarkerList[i][0]);
+                  }
+
+              }
+
+              //alert(policeMarkerList[0][1]);
+
+          }
+          function getPoliceAddressPg7(corridnatesXY) {
+              // debugger;
+              var oneMapAddressInfoObj = new GetAddressInfo;
+              oneMapAddressInfoObj.XY = corridnatesXY;
+
+              oneMapAddressInfoObj.GetAddress(function (addressData) {
+                  getPoliceAddress7(addressData);
+              });
+          }
+
+          function getPoliceAddress7(addressData) {
+              //debugger;
+              if (addressData.results == "No results") {
+                  return "No results";
+                  // return false
+              }
+              else {
+                  locationAddress = addressData.results[0].ROAD + ", " + addressData.results[0].POSTALCODE;
+                  //addressData.results[0].XCOORD addressData.results[0].YCOORD 
+                  //addressData.results[0].BUILDINGNAME + ", " + 
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/spf.png");
+
+                  for (var i = 0; i < childcareMarkerList.length; i++) {
+                      var infoTemplate = new InfoTemplate(
+                       policeMarkerListPg7[i][1],
+                        "Name:" + policeMarkerListPg1[i][0] + "<br/><br/>Category:" + policeMarkerListPg7[i][2] + "<br/><br/>Address:" + locationAddress
+                      );
+                      graphic = new Graphic(new Point(policeMarkerListPg7[i][4], policeMarkerListPg7[i][5], spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+		  
+		  
+		   $(document).ready(function () {
+                  $.ajax({
+                      type: "GET",
+                      url: "http://gis.sit.nyp.edu.sg/Safety_AT_SG_WebService/SgDataService.asmx/GetPoliceStation",
+                      data: "{}",
+                      contentType: "application/json; charset=utf-8",
+                      //crossDomain: true,
+                      dataType: "json",
+                      //cache: false,
+                      success: function (gps) {
+                          alert("success");
+                      },
+                      error: function (gps) {
+                          alert("error");
+                          
+                      }
+                  });
+              });
