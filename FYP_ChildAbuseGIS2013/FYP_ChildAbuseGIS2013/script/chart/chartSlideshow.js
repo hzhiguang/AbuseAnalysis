@@ -57,12 +57,35 @@ function handChart() {
     });
 }
 
+function twitterChart() {
+    var twitter = [['Tweets with word "Abuse"', 32],
+                    ['Tweets with word "Child"', 35.99],
+                    ['Tweets with external links', 11.99],
+                    ['Tweets with word "Test"', 8.03],
+                    ['Other Tweets', 11.99]];
+    $.jqplot('twitterAna', [twitter],
+    {
+        title: 'Twitter Timeline Analysis',
+        seriesDefaults: {
+            // Make this a pie chart.
+            renderer: jQuery.jqplot.PieRenderer,
+            rendererOptions: {
+                // Put data labels on the pie slices.
+                // By default, labels show the percentage of the slice.
+                showDataLabels: true
+            }
+        },
+        legend: { show: true, location: 'e' }
+    });
+}
+
 $(document).ready(function () {
     var i = 0;
     $("#next").css("opacity", "0.4");
     $("#prev").css("opacity", "0.4");
     $("#faceAnalysis").hide();
     $("#handMotion").hide();
+    $("#twitterAna").hide();
 
     $("#next").mouseover(function () {
         $(this).css("opacity", "1");
@@ -74,6 +97,8 @@ $(document).ready(function () {
             $("#faceAnalysis").show();
             $("#handMotion").hide();
             $("#handMotion").empty();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
             faceChart();
         }
         else if (i == 1) {
@@ -81,10 +106,27 @@ $(document).ready(function () {
             $("#faceAnalysis").hide();
             $("#faceAnalysis").empty();
             $("#handMotion").show();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
             handChart();
         }
+        else if (i == 2) {
+            i++;
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#twitterAna").show();
+            twitterChart();
+        }
         else {
-            i = 0;
+            i = 1;
+            $("#faceAnalysis").show();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
+            faceChart();
         }
     });
 
@@ -93,22 +135,41 @@ $(document).ready(function () {
     }).mouseout(function () {
         $(this).css("opacity", "0.4");
     }).click(function () {
-        if (i == 0) {
+        if (i == 2) {
             i--;
-            $("#faceAnalysis").show();
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
             $("#handMotion").hide();
             $("#handMotion").empty();
-            faceChart();
+            $("#twitterAna").show();
+            twitterChart();
         }
         else if (i == 1) {
             i--;
             $("#faceAnalysis").hide();
             $("#faceAnalysis").empty();
             $("#handMotion").show();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
             handChart();
         }
+        else if (i == 0) {
+            i--;
+            $("#faceAnalysis").show();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
+            faceChart();
+        }
         else {
-            i++;
+            i = 1;
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#twitterAna").show();
+            twitterChart();
         }
     });
 

@@ -12,37 +12,7 @@
                 var fileUpload = document.getElementById('<%=fileUpLoad.ClientID %>');
                 document.getElementById('<%=txt_fileUpLoad.ClientID %>').value = fileUpload.value;
                 return true;
-            }
-
-            var location = document.getElementById("tbLocation");
-            $(function () {
-                $("#tbLocation").autocomplete({
-                    source: function (request, response) {
-                        $.ajax({
-                            url: "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Yishun&types=geocode&components=country:sg&sensor=true&key=AIzaSyB8VvHDdnvy4ZSiACllPSOw8FmduyfhvdI",
-                            dataType: "jsonp",
-                            data: {
-                                featureClass: "predictions",
-                                style: "full",
-                                maxRows: 12,
-                                name_startsWith: request.term
-                            },
-                            success: function( data ) {
-                                response( $.map( data.geonames, function( item ) {
-                                    return {
-                                        label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
-                                        value: item.name
-                                    }
-                                }));
-                            }
-                        });
-                    },
-                    minLength: 2,
-                    select: function( event, ui ) {
-                        alert("Hi");
-                    }
-                });
-            });
+            };
         </script>
     </head>
 </asp:Content>
