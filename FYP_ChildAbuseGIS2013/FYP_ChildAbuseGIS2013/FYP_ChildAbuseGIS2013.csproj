@@ -124,22 +124,27 @@
     <Content Include="css\share.css" />
     <Content Include="emotionDB.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="image\childcare.png" />
     <Content Include="image\facebook-white.png" />
     <Content Include="image\FYP2013.png" />
     <Content Include="image\googlePlus.png" />
     <Content Include="image\loading.gif" />
+    <Content Include="image\locationMarker.png" />
+    <Content Include="image\locationMarker2.png" />
     <Content Include="image\result.png" />
     <Content Include="image\Share.png" />
     <Content Include="image\slideshow\background.png" />
     <Content Include="image\slideshow\dock.png" />
     <Content Include="image\slideshow\next.png" />
     <Content Include="image\slideshow\prev.png" />
+    <Content Include="image\spf.png" />
     <Content Include="image\twitter_logo_white.png" />
-    <Content Include="index.aspx" />
     <Content Include="Design.Master" />
+    <Content Include="index.aspx" />
     <Content Include="js\InfoWindow.js" />
     <Content Include="packages.config" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <Content Include="proxy.ashx" />
     <None Include="Service References\EmotionExpressionDB\Emotion.disco" />
     <None Include="Service References\EmotionExpressionDB\configuration91.svcinfo" />
     <None Include="Service References\EmotionExpressionDB\configuration.svcinfo" />
@@ -198,6 +203,9 @@
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="proxy.ashx.cs">
+      <DependentUpon>proxy.ashx</DependentUpon>
+    </Compile>
     <Compile Include="result.aspx.cs">
       <DependentUpon>result.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

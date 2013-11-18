@@ -14,7 +14,13 @@
    height:750px;
    width:1050px;
 }
-
+#HomeButton {
+      /**position: absolute;
+      margin-top: 150px;
+      left: 20px;
+      z-index: 99;
+      **/
+    }
 div.featureStyle1
 {
     height:50px;
@@ -177,7 +183,7 @@ var dojoConfig = {
         "dojo/dom-construct", "esri/InfoTemplate", "esri/symbols/SimpleMarkerSymbol", "esri/geometry/Point", "esri/symbols/Font", "esri/symbols/TextSymbol", "dojo/_base/array", "dojo/_base/Color",
         "dojo/number", "dojo/parser", "dojo/dom", "dijit/registry", "esri/layers/FeatureLayer", "esri/request", "esri/geometry/Extent", "esri/symbols/SimpleFillSymbol", "esri/symbols/PictureMarkerSymbol",
         "esri/renderers/ClassBreaksRenderer", "esri/layers/GraphicsLayer", "esri/SpatialReference", "esri/dijit/PopupTemplate", "esri/geometry/Point", "esri/geometry/webMercatorUtils",
-        "dijit/form/Button", "dijit/form/Textarea", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dojo/domReady!"
+        "dijit/form/Button", "dijit/form/Textarea", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dojo/domReady!", "esri/dijit/HomeButton", "esri/dijit/Scalebar"
       ], function (
         Map, Geocoder, Locator, Draw, geometry, Graphic, InfoWindow, dom,
         domConstruct,
@@ -185,13 +191,24 @@ var dojoConfig = {
         Font, TextSymbol,
         arrayUtils, Color,
         number, parser, dom, registry, FeatureLayer, esriRequest, Extent, SimpleFillSymbol, PictureMarkerSymbol, ClassBreaksRenderer,
-        GraphicsLayer, SpatialReference, PopupTemplate, Point, webMercatorUtils
+        GraphicsLayer, SpatialReference, PopupTemplate, Point, webMercatorUtils, HomeButton, Scalebar
       //"extras/ClusterLayer",ClusterLayer
       ) {
           parser.parse();
 
 
-          var map, geocoder, locator, marker, gsvc,toolbar;
+          var map, geocoder, locator, marker, gsvc, toolbar, home, location, locationAddress;
+          var markerList = [];
+          var childcareMarkerList = [];
+          var x = "";
+          var y = "";
+          var raduis = "";
+
+          var fileData = new Array();
+
+          var locationData = new Array();
+          var analysisData = new Array();
+          var bufferResult = new Array();
           var clusterLayer;
           var popupOptions;
 
@@ -204,20 +221,85 @@ var dojoConfig = {
 
           function init() {
               map = oneMap.map;
-              map.infoWindow.resize(250, 100);
+              map.infoWindow.resize(250, 150);
               gsvc = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
 
-              //registry.byId("locate").on("click", locate);
-              dojo.connect(search, "onclick", locate);
-              dojo.connect(map_clear, "onclick", clear);
-             // dojo.connect(tb, "onDrawEnd", addPolygon);
-              //registry.byId("map_clear").on("click", clear);
-              autocomplete();
-              addMarker();
+              addFileData();
+              showme();
               addChildCare();
+              policeStationMarker();
+              autocomplete();
+              createHomeButton();
+              createScaleBar();
+              dojo.connect(show, "onclick", showme);
+              dojo.connect(draw, "onclick", activateTool);
+              dojo.connect(map_clear, "onclick", clear);
+              dojo.connect(search, "onclick", locate);
+              createToolbar();
+              //dojo.connect(draw, "onclick", activateTool());
           }
+
           dojo.addOnLoad(init);
 
+
+
+          function createHomeButton() {
+              home = new HomeButton({
+                  map: map
+              }, "HomeButton");
+              home.startup();
+          }
+
+          function createScaleBar() {
+              var scalebar = new Scalebar({
+                  map: map,
+                  // "dual" displays both miles and kilmometers
+                  // "english" is the default, which displays miles
+                  // use "metric" for kilometers
+                  scalebarUnit: "dual",
+                  attachTo: "GetOneMap bottom-right"
+              });
+          }
+
+          function activateTool() {
+              //alert("activate");
+              //var tool = this.label.toUpperCase().replace(/ /g, "_");
+              toolbar.activate(esri.toolbars.Draw.CIRCLE);
+              map.hideZoomSlider();
+          }
+
+          function createToolbar(themap) {
+              //console.log("initalise toolbar");
+              toolbar = new Draw(map);
+              toolbar.on("draw-end", addToMap);
+          }
+
+          function addToMap(evt) {
+              //alert("hello");
+              var symbol;
+              toolbar.deactivate();
+              map.showZoomSlider();
+              switch (evt.geometry.type) {
+                  case "point":
+                  case "multipoint":
+                      symbol = new SimpleMarkerSymbol();
+                      break;
+                  case "polyline":
+                      symbol = new SimpleLineSymbol();
+                      break;
+                  default:
+                      symbol = new SimpleFillSymbol();
+                      break;
+              }
+              console.log(evt.geometry.toJson());
+              console.log(evt.geometry.getPoint(0, 4));
+              var graphic = new Graphic(evt.geometry, symbol);
+              map.graphics.add(graphic);
+          }
+
+
+
+          //autocomplete function to search and locate address
           function autocomplete() {
               geocoder = new Geocoder({
                   map: map,
@@ -256,29 +338,17 @@ var dojoConfig = {
               locator.addressToLocations(options);
 
           }
-
+          //showing result of location 
           function showResults(evt) {
               var candidate;
-              //var symbol = new SimpleMarkerSymbol();
-              var infoTemplate = new InfoTemplate(
-            "Location",
-            "Address: ${address}<br />Score: ${score}<br />Source locator: ${locatorName}"
-          );
-              //symbol.setStyle(SimpleMarkerSymbol.STYLE_SQUARE);
-              //symbol.setColor(new Color([153, 0, 51, 0.75]));
-
               var geom;
               arrayUtils.every(evt.addresses, function (candidate) {
                   console.log(candidate.score);
                   if (candidate.score > 80) {
                       console.log(candidate.location);
-                      //var attributes = {
-                      // address: candidate.address,
-                      // score: candidate.score,
-                      // locatorName: candidate.attributes.Loc_name
-                      //};
+                      x = candidate.location.x;
+                      y = candidate.location.y;
                       geom = candidate.location;
-                      console.log(geom);
                       doBuffer(geom);
                   }
               });
@@ -286,114 +356,304 @@ var dojoConfig = {
               map.centerAndZoom(geom, 4);
               //}
           }
-
-          function addMarker() {
-              var spatialReference = new SpatialReference({ wkid: 3414 });
-              var geom = new Point(29830.4695669479, 40135.9793048648, spatialReference);
-              var iconPath = "M16,3.5c-4.142,0-7.5,3.358-7.5,7.5c0,4.143,7.5,18.121,7.5,18.121S23.5,15.143,23.5,11C23.5,6.858,20.143,3.5,16,3.5z M16,14.584c-1.979,0-3.584-1.604-3.584-3.584S14.021,7.416,16,7.416S19.584,9.021,19.584,11S17.979,14.584,16,14.584z";
-              var pictureSymbol = new PictureMarkerSymbol();
-              pictureSymbol.setUrl("../image/locationMarker.png");
-              var infoTemplate = new InfoTemplate(
-            "Location",
-            "Title:<br/>Description:<br/>Date:<br/> location:"
-          );
-              //symbol.setPath(iconPath);
-              //symbol.setColor(new Color([35, 63, 156]));
-              //var symbol = new SimpleMarkerSymbol();
-              //var attributes = "<tr><td>Test:</td><td>Hello</td></tr>"
-              var graphic = new Graphic(geom, pictureSymbol, null, infoTemplate);
-              //add a graphic to the map at the geocoded location
-              map.graphics.add(graphic);
-          }
-          function addChildCare() {
-              // alert("ICE CREAM");
-
-              var attraction = new Array();
-              $(document).ready(function () {
-                  $.ajax({
-                      type: "OPTIONS",
-                      url: "http://www.onemap.sg/API/services.svc/themeSearch?token=xkg8VRu6Ol+gMH+SUamkRIEB7fKzhwMvfMo/2U8UJcFhdvR4yN1GutmUIA3A6r3LDhot215OVVkZvNRzjl28TNUZgYFSswOi&searchVal=child care&otptFlds=SEARCHVAL,CATEGORY,THEME,AGENCY&returnGeom=1&rset=1",
-                      data: "{}",
-                      //contentType: "application/json; charset=utf-8",
-                      crossDomain: true,
-                      dataType: "json",
-                      //cache: false,
-                      success: function (msg) {
-                          for (var i = 0; i < msg.d.length; i++) {
-                              attraction[i] = [msg.d[i].SEARCHVAL, msg.d[i].CATEGORY, msg.d[i].THEME, msg.d[i].X, msg.d[i].Y];
-                              alert(msg.d[i].SEARCHVAL);
-                          }
-
-                      },
-                      error: function (msg) {
-                          //alert(JSON.stringify(msg)+ " error")
-                      }
-                  });
-              });
-          }
+          //function design buffer base on location
           function doBuffer(location) {
-
               //map.graphics.clear();
               var params = new esri.tasks.BufferParameters();
-              console.log(location);
               params.geometries = [location];
 
               //buffer in linear units such as meters, km, miles etc.
-              params.distances = [0.1, 1];
+              params.distances = [0.01, 1];
+              raduis = 1000;
+
+              //1000cm = 1km
               params.unit = esri.tasks.GeometryService.UNIT_KILOMETER;
               params.outSpatialReference = map.SpatialReference;
-
               gsvc.buffer(params, showBuffer);
           }
 
+          //function displaying buffer on the map
           function showBuffer(geometries) {
+              bufferPara(raduis, x, y);
               var symbol = new esri.symbol.SimpleFillSymbol(
-        esri.symbol.SimpleFillSymbol.STYLE_SOLID,
-        new esri.symbol.SimpleLineSymbol(
-          esri.symbol.SimpleLineSymbol.STYLE_SOLID,
-          new dojo.Color([255, 0, 0, 0.65]), 2
-        ),
-        new dojo.Color([255, 0, 0, 0.35])
-      );
+                esri.symbol.SimpleFillSymbol.STYLE_SOLID,
+                new esri.symbol.SimpleLineSymbol(
+                  esri.symbol.SimpleLineSymbol.STYLE_SOLID,
+                  new dojo.Color([255, 0, 0, 0.65]), 2
+                ),
+                new dojo.Color([255, 0, 0, 0.35])
+              );
+
 
               dojo.forEach(geometries, function (geometry) {
-                  var infoTemplate = new InfoTemplate(
-                "Area",
-                "Surronding"
-            );
+                  console.log("print");
+                  var statement = "";
+
+
+                  for (var i = 0; i < bufferResult.length; i++) {
+                      statement = "There are a total of " + bufferResult.length + " reported child abuse case within 1km of this area <br/><br/>"
+                      statement += "Case " + (i+1) + " :" + bufferResult[i][1] + "<br/><br/>Description :" + bufferResult[i][4] + "<br/><br/>Date:" + bufferResult[i][2] + "<br/><br/>";
+                  }
+
+                  var infoTemplate = new InfoTemplate("Buffer Result", statement);
+
                   var graphic = new esri.Graphic(geometry, symbol, null, infoTemplate);
                   map.graphics.add(graphic);
               });
           }
 
-          function createToolbar(themap) {
-              toolbar = new Draw(map);
-              toolbar.on("draw-end", addToMap);
+          function bufferPara(raduis, lat, long) {
+              $.ajax({
+                  type: "GET",
+                  async: false,
+                  url: "/api/json/bufferfile/" + raduis + "/" + lat + "/" + long,
+                  data: "{}",
+                  contentType: "application/json; charset=utf-8",
+                  //crossDomain: true,
+                  dataType: "json",
+                  //cache: false,
+                  success: function (file) {
+                      console.log("got it");
+                      alert("success");
+                      bufferResult = [];
+                      for (var i = 0; i < file.File.length; i++) {
+                          bufferResult[i] = [file.File[i].ID, file.File[i].title, file.File[i].date, file.File[i].path, file.File[i].description, file.File[i].type, file.File[i].locationid, file.File[i].analysisid];
+                      }
+                  },
+                  error: function (file) {
+                      alert("error");
+                  }
+              });
           }
 
-          function addPolygon(evt) {
-              var symbol;
-              toolbar.deactivate();
-              map.showZoomSlider();
-              switch (evt.geometry.type) {
-                  case "point":
-                  case "multipoint":
-                      symbol = new SimpleMarkerSymbol();
-                      break;
-                  case "polyline":
-                      symbol = new SimpleLineSymbol();
-                      break;
-                  default:
-                      symbol = new SimpleFillSymbol();
-                      break;
-              }
-              var graphic = new Graphic(evt.geometry, symbol);
-              map.graphics.add(graphic);
+          //add marker of child abuse case
+          function addFileData() {
+              $(document).ready(function () {
+
+                  $.ajax({
+                      type: "GET",
+                      async: false,
+                      url: "/api/json/file",
+                      data: "{}",
+                      contentType: "application/json; charset=utf-8",
+                      //crossDomain: true,
+                      dataType: "json",
+                      //cache: false,
+                      success: function (file) {
+                          console.log(file.File.length);
+                          for (var i = 0; i < file.File.length; i++) {
+                              fileData[i] = [file.File[i].ID, file.File[i].title, file.File[i].date, file.File[i].path, file.File[i].description, file.File[i].type, file.File[i].locationid, file.File[i].analysisid];
+                          }
+                      },
+                      error: function (file) {
+                          alert("error");
+                      }
+                  });
+              });
           }
+          function addLocationData(i) {
+              $(document).ready(function () {
+                  $.ajax({
+                      type: "GET",
+                      async: false,
+                      url: "/api/json/location/" + fileData[i][6],
+                      data: "{}",
+                      contentType: "application/json; charset=utf-8",
+                      //crossDomain: true,
+                      dataType: "json",
+                      //cache: false,
+                      success: function (loc) {
+                          //alert("sucesss");
+                          locationData[i] = [loc.Location.ID, loc.Location.address, loc.Location.x, loc.Location.y];
+                          console.log(locationData[i][0]);
+                      },
+                      error: function (loc) {
+                          alert("error");
+                      }
+                  });
+              });
+          }
+
+          function addAnalysisData(i) {
+              $(document).ready(function () {
+                  $.ajax({
+                      type: "GET",
+                      async: false,
+                      url: "/api/json/analysis/" + fileData[i][7],
+                      data: "{}",
+                      contentType: "application/json; charset=utf-8",
+                      //crossDomain: true,
+                      dataType: "json",
+                      //cache: false,
+                      success: function (aly) {
+                          //alert("sucesss");
+                          analysisData[i] = [aly.Analysis.ID, aly.Analysis.abuseper];
+                          console.log(analysisData[i][0]);
+
+                      },
+                      error: function (aly) {
+                          alert("error");
+                      }
+                  });
+              });
+          }
+          function showme() {
+
+              for (var i = 0; i < fileData.length; i++) {
+                  addLocationData(i);
+                  addAnalysisData(i);
+                  addCaseMarker(fileData[i][0], locationData[i][0], analysisData[i][0], fileData[i][1], fileData[i][4], fileData[i][2], locationData[i][1], analysisData[i][1], fileData[i][3], locationData[i][2], locationData[i][3]);
+                  // alert(analysisData[i][0]);
+                  // alert(locationData[i][0]);
+
+              }
+          }
+          /** addCaseMarker(fileData[i][0], locationData[i][0], analysisData[i][0], fileData[i][1], fileData[i][4], fileData[i][2], locationData[i][1], analysisData[i][1], fileData[i][3], locationData[i][2], locationData[i][3]); **/
+
+          function addCaseMarker(cID, locID, alyID, cTitle, cDesc, cDate, locAdd, alyResult, cPath, cX, cY) {
+              var spatialReference = new SpatialReference({ wkid: 3414 });
+              if ((cID == locID) && (cID == alyID)) {
+                  if (alyResult > 75) {
+                      var graphic;
+                      var pictureSymbol = new PictureMarkerSymbol();
+                      pictureSymbol.setUrl("../image/locationMarker.png");
+                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult + "<br/><br/> Source:" + cPath);
+                      graphic = new Graphic(new Point(cX, cY, spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+                  else {
+
+                      var graphic;
+                      var pictureSymbol = new PictureMarkerSymbol();
+                      pictureSymbol.setUrl("../image/locationMarker2.png");
+                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult + "<br/><br/> Source:" + cPath);
+                      graphic = new Graphic(new Point(cX, cY, spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+
+
+          //adding child care center marker
+          function addChildCare() {
+              var searchText = "childcare"
+              var returngeom = 1;
+              var otptflds = "SEARCHVAL, CATEGORY, THEME, AGENCY";
+              var ddlPageno = 1;
+              var rset = 1;
+
+              var themeSearch = new ThemeSearch;
+              themeSearch.searchVal = searchText;
+              themeSearch.returnGeom = returngeom;
+              themeSearch.otptFlds = otptflds;
+              themeSearch.rset = rset;
+              themeSearch.GetThemeSearchResults(GetResult)
+          }
+
+
+          function GetResult(resultData) {
+
+              var returngeom = 1;
+              var childcareinfomarker = [];
+
+              var pages = resultData.nop;
+              var results = resultData.results;
+              if (results == 'No results') {
+                  alert("No Results of agency marker");
+                  return false
+              }
+              else {
+                  for (var i = 0; i < results.length; i++) {
+                      var row = results[i];
+                      childcareinfomarker = [row.SEARCHVAL, row.AGENCY, row.CATEGORY, row.THEME, row.X, row.Y];
+                      childcareMarkerList.push(childcareinfomarker);
+                      //Reverse GeoCode and display marker
+                      var corridnates = row.X + "," + row.Y
+                      getChildCareAddress(corridnates);
+                      //End of Reverse
+                  }
+              }
+          }
+
+          //Getting Address From geocoding and display the marker
+          function getChildCareAddress(corridnatesXY) {
+              // debugger;
+              var oneMapAddressInfoObj = new GetAddressInfo;
+              oneMapAddressInfoObj.XY = corridnatesXY;
+
+              oneMapAddressInfoObj.GetAddress(function (addressData) {
+                  getCCAddress(addressData);
+              });
+          }
+
+          function getCCAddress(addressData) {
+              //debugger;
+              if (addressData.results == "No results") {
+                  return "No results";
+                  // return false
+              }
+              else {
+                  locationAddress = addressData.results[0].ROAD + ", " + addressData.results[0].POSTALCODE;
+                  //addressData.results[0].XCOORD addressData.results[0].YCOORD 
+                  //addressData.results[0].BUILDINGNAME + ", " + 
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/childcare.png");
+
+                  for (var i = 0; i < childcareMarkerList.length; i++) {
+                      var infoTemplate = new InfoTemplate(
+                       childcareMarkerList[i][1],
+                        "Name:" + childcareMarkerList[i][0] + "<br/><br/>Category:" + childcareMarkerList[i][2] + "<br/><br/>Address:" + locationAddress
+                      );
+                      graphic = new Graphic(new Point(childcareMarkerList[i][4], childcareMarkerList[i][5], spatialReference), pictureSymbol, null, infoTemplate);
+                      map.graphics.add(graphic);
+                  }
+              }
+          }
+          //Start of police station
+          function policeStationMarker() {
+              var xmlhttp = new XMLHttpRequest();
+              xmlhttp.open("GET", "http://gis.sit.nyp.edu.sg/SAFETY_AT_SG_WEBSERVICE/SgDataService.asmx/GetPoliceStation", false);
+              xmlhttp.send();
+              var xmlDoc = xmlhttp.responseXML;
+              var xmlalbums = xmlDoc.documentElement.getElementsByTagName("PoliceStation");
+              map.infoWindow.resize(350, 120);
+
+              $.each(xmlalbums, function () {
+                  var name = $(this).find("ID").text();
+
+                  policestation = $(this).find("Name").text();
+                  address = $(this).find("Address").text();
+                  postal = $(this).find("PostalCode").text();
+                  coordX = $(this).find("X").text();
+                  coordY = $(this).find("Y").text();
+
+                  var graphic;
+                  var spatialReference = new SpatialReference({ wkid: 3414 });
+                  var pictureSymbol = new PictureMarkerSymbol();
+                  pictureSymbol.setUrl("../image/spf.png");
+
+
+                  var infoTemplate = new InfoTemplate("Police Station NO." + name, "Name:" + policestation + "<br/><br/>Address:" + address + "<br/><br/>Postal Code:" + postal);
+                  graphic = new Graphic(new Point(coordX, coordY, spatialReference), pictureSymbol, null, infoTemplate);
+                  map.graphics.add(graphic);
+
+              });
+
+          }
+          //End of Police List Marker
+
+          // fucntion clear Map
           function clear() {
               alert("clear");
               map.graphics.clear();
-              addMarker();
+              markerList = [];
+              childcareMarkerList = [];
+              addChildCare();
+              policeStationMarker();
+              showme();
           }
           //end of require
       });
@@ -402,8 +662,9 @@ var dojoConfig = {
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id ="main" class="tundra">
 <!--Start of map -->
-<div id="map" data-dojo-type="dijit/layout/ContentPane" 
-           data-dojo-props="region:'center'"></div>
+<div id="map" class="map">
+<!--<div id="HomeButton"></div>-->
+</div>
 <!--End of map -->
 
 <!--Start of feature1 -->
@@ -415,8 +676,10 @@ var dojoConfig = {
             <td><div class="subMenu">
                 <table id ="subMenuTable">
                     <tr>
-                        <td><div class="btn_design"><img src="image/draw.png" id="Img1" onmouseover=" this.src = '../image/draw_hover.png'" onmouseout="this.src = '../image/draw.png'"  class="map_clear_btn" alt="draw"/></div></td>
-                        <td><div class="btn_design" onclick="tb.activate(esri.toolbars.Draw.POLYGON);" id="tb"><img src="image/map_clear.png" id="map_clear" onmouseover=" this.src = '../image/map_clear_hover.png'" onmouseout="this.src = '../image/map_clear.png'"  class="map_clear_btn" alt="clear"/></div></td>
+                    <!--<button data-dojo-type="dijit/form/Button">Polygon</button>-->
+                        <td></td>
+                        <td><div class="btn_design"><img src="image/draw.png" id="draw" onmouseover=" this.src = '../image/draw_hover.png'" onmouseout="this.src = '../image/draw.png'"  class="map_clear_btn" alt="draw" /></div></td>
+                        <td><div class="btn_design"><img src="image/map_clear.png" id="map_clear" onmouseover=" this.src = '../image/map_clear_hover.png'" onmouseout="this.src = '../image/map_clear.png'"  class="map_clear_btn" alt="clear"/></div></td>
                     
                     </tr>
                 </table></div></td>
@@ -440,13 +703,23 @@ var dojoConfig = {
                 </tr>
                 <tr>
                     <td></td>
-                    <td><img src="image/locationMarker.png"/ alt ="child_abuse_case"></td>
+                    <td><img src="image/locationMarker.png"/ alt ="child_abuse_case_marker" id="show"></td>
                     <td>Child Abuse Case</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><img src="image/locationMarker2.png"/ alt ="child_abuse_case"></td>
+                    <td><img src="image/locationMarker2.png"/ alt ="report_abuse_case_marker"></td>
                     <td>Report Case</td>
+                </tr>
+                 <tr>
+                    <td></td>
+                    <td><img src="image/childcare.png"/ alt ="child_care_marker"></td>
+                    <td>Child Care Center</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><img src="image/spf.png"/ alt ="police_station_marker"></td>
+                    <td>Police Station</td>
                 </tr>
             </table>
             
