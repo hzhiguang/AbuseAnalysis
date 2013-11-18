@@ -34,10 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxInterop.WMPLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\AxInterop.WMPLib.dll</HintPath>
-    </Reference>
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\..\..\Emgu\bin\Emgu.CV.dll</HintPath>
     </Reference>
@@ -62,17 +58,8 @@
     <Reference Include="Emgu.Util">
       <HintPath>..\..\..\..\..\Emgu\bin\Emgu.Util.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.WMPLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>bin\Interop.WMPLib.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Security">
       <HintPath>..\packages\Npgsql.2.0.12.1\lib\net40\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="Npgsql">
       <HintPath>..\packages\Npgsql.2.0.12.1\lib\net40\Npgsql.dll</HintPath>
@@ -128,63 +115,36 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\ZedGraph.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\jquery.dataTables.css" />
     <Content Include="css\jquery.jqplot.min.css" />
     <Content Include="css\jquery.mobile-1.3.2.min.css" />
     <Content Include="css\onemapDesign.css" />
-    <Content Include="css\resultChart.css" />
     <Content Include="css\share.css" />
     <Content Include="emotionDB.aspx" />
-    <Content Include="FlowPlayer\flowplayer-3.2.12.min.js" />
-    <Content Include="FlowPlayer\flowplayer-3.2.16.swf" />
-    <Content Include="FlowPlayer\flowplayer.controls-3.2.15.swf" />
-    <Content Include="FlowPlayer\flowplayer.menu-3.2.12.swf" />
-    <Content Include="FlowPlayer\flowplayer.playlist-3.2.10.js" />
-    <Content Include="FlowPlayer\flowplayer.pseudostreaming-3.2.12.swf" />
-    <Content Include="FlowPlayer\flowplayer.sharing-3.2.14.swf" />
     <Content Include="Global.asax" />
-    <Content Include="image\black.gif" />
-    <Content Include="image\c.JPG" />
-    <Content Include="image\close.png" />
+    <Content Include="image\childcare.png" />
     <Content Include="image\facebook-white.png" />
     <Content Include="image\FYP2013.png" />
     <Content Include="image\googlePlus.png" />
     <Content Include="image\loading.gif" />
-    <Content Include="image\My_Movie.JPG" />
-    <Content Include="image\My_Movie2.JPG" />
-    <Content Include="image\Part 1.JPG" />
-    <Content Include="image\Part 2.JPG" />
-    <Content Include="image\play.jpg" />
+    <Content Include="image\locationMarker.png" />
+    <Content Include="image\locationMarker2.png" />
     <Content Include="image\result.png" />
     <Content Include="image\Share.png" />
     <Content Include="image\slideshow\background.png" />
     <Content Include="image\slideshow\dock.png" />
     <Content Include="image\slideshow\next.png" />
     <Content Include="image\slideshow\prev.png" />
-    <Content Include="image\thermal.JPG" />
+    <Content Include="image\spf.png" />
     <Content Include="image\twitter_logo_white.png" />
-    <Content Include="image\white.jpg" />
-    <Content Include="index.aspx" />
     <Content Include="Design.Master" />
+    <Content Include="index.aspx" />
     <Content Include="js\InfoWindow.js" />
-    <Content Include="js\jquery-1.9.1.js" />
-    <Content Include="js\jquery-ui-1.10.3.custom.js" />
-    <Content Include="js\jquery-ui-1.10.3.custom.min.js" />
-    <Content Include="FlowPlayer\videoplayer.css" />
-    <Content Include="js\share.js" />
-    <Content Include="js\videoplayer.js" />
     <Content Include="packages.config" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
+    <Content Include="proxy.ashx" />
     <None Include="Service References\EmotionExpressionDB\Emotion.disco" />
     <None Include="Service References\EmotionExpressionDB\configuration91.svcinfo" />
     <None Include="Service References\EmotionExpressionDB\configuration.svcinfo" />
@@ -197,7 +157,6 @@
     </None>
     <Content Include="css\designTemplete.css" />
     <Content Include="result.aspx" />
-    <Content Include="script\chart\chartSlideshow.js" />
     <Content Include="script\chart\excanvas.min.js" />
     <Content Include="script\chart\jqplot.donutRenderer.min.js" />
     <Content Include="script\chart\jqplot.pieRenderer.min.js" />
@@ -209,7 +168,6 @@
     <Content Include="script\jquery.mobile-1.3.2.js" />
     <Content Include="script\jquery.mobile-1.3.2.min.js" />
     <Content Include="share.aspx" />
-    <Content Include="video.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -218,35 +176,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <None Include="Service References\EmotionExpressionDB\Emotion.wsdl" />
-    <None Include="Web References\com.arcgisonline.tasks\Geometry.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\com.arcgisonline.tasks\GeometryServer.wsdl" />
-    <None Include="Web References\com.arcgisonline.tasks\Point.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\com.arcgisonline.tasks\Polygon.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\com.arcgisonline.tasks\Polyline.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\com.arcgisonline.tasks\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\com.arcgisonline.tasks\RelationResult.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\com.arcgisonline.tasks\SpatialReference.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\com.arcgisonline.tasks\Unit.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinatesConverter.cs" />
     <Compile Include="Design.Master.cs">
       <DependentUpon>Design.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -272,10 +203,8 @@
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
+    <Compile Include="proxy.ashx.cs">
+      <DependentUpon>proxy.ashx</DependentUpon>
     </Compile>
     <Compile Include="result.aspx.cs">
       <DependentUpon>result.aspx</DependentUpon>
@@ -295,18 +224,6 @@
     </Compile>
     <Compile Include="share.aspx.designer.cs">
       <DependentUpon>share.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="video.aspx.cs">
-      <DependentUpon>video.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="video.aspx.designer.cs">
-      <DependentUpon>video.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Web References\com.arcgisonline.tasks\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -332,26 +249,6 @@
       <Project>{C6CDCBCE-EB15-4A3F-BFB4-40E94D6DC04E}</Project>
       <Name>FYP_ChildAbuseGIS2013.SkinDetection</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FYP_ChildAbuseGIS2013.SoundDetector\FYP_ChildAbuseGIS2013.SoundDetector.csproj">
-      <Project>{BB0A20A2-6313-479D-A71E-0E3AE2AE0B12}</Project>
-      <Name>FYP_ChildAbuseGIS2013.SoundDetector</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://tasks.arcgisonline.com/ArcGIS/services/Geometry/GeometryServer%3fwsdl">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\com.arcgisonline.tasks\</RelPath>
-      <UpdateFromURL>http://tasks.arcgisonline.com/ArcGIS/services/Geometry/GeometryServer%3fwsdl</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>FYP_ChildAbuseGIS2013_com_arcgisonline_tasks_Geometry_GeometryServer</CachedSettingsPropName>
-    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
