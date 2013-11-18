@@ -291,8 +291,6 @@ var dojoConfig = {
                       symbol = new SimpleFillSymbol();
                       break;
               }
-              console.log(evt.geometry.toJson());
-              console.log(evt.geometry.getPoint(0, 4));
               var graphic = new Graphic(evt.geometry, symbol);
               map.graphics.add(graphic);
           }
