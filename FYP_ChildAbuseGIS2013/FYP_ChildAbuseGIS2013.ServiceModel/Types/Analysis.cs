@@ -37,5 +37,14 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Types
 
         [DataMember]
         public int rightpalmframe { get; set; }
+
+        [DataMember]
+        public bool soundresult { get; set; }
+
+        [DataMember]
+        public string soundpath { get; set; }
+
+        [DataMember]
+        public int feverresult { get; set; }
     }
 }

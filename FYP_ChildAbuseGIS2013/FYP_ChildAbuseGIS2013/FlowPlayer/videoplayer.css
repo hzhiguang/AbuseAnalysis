@@ -1,0 +1,179 @@
+﻿body
+{
+    font-family: Arial;
+    font-size: 10pt;
+    width: auto;
+    height: auto;
+    position: relative;
+}
+
+#dvItemTemplate
+{
+    width: 100%;
+    height: 100%;
+}
+
+section.blurb .box
+{
+    padding: 0;
+}
+
+a.myPlayer
+{
+    display: block;
+    width: 550px;
+    height: 400px;
+    text-align: center;
+    margin: 10px;
+    left: 30%;
+    border: 1px solid #999;
+    z-index: 999%;
+    position: absolute;
+}
+
+a.myPlayer img
+{
+    margin-top: 70px;
+    border: 0px;
+}
+
+a.myPlayer:hover
+{
+    border: 1px solid #000;
+}
+
+#toggle_div
+{
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#toggle_div_undim
+{
+    background-color: rgba(0,0,0,0.5);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#toggle_div1
+{
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-position: center;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+#toggle_div1_undim
+{
+    background-color: rgba(0,0,0,0.5);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#toggle_div2
+{
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#toggle_div2_undim
+{
+    background-color: rgba(0,0,0,0.5);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#toggle_div3
+{
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+#toggle_div3_undim
+{
+    background-color: rgba(0,0,0,0.5);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#toggle_div4
+{
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#toggle_div4_undim
+{
+    background-color: rgba(0,0,0,0.5);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#toggle_div5
+{
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+#toggle_div5_undim
+{
+    background-color: rgba(0,0,0,0.5);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 999;
+}

@@ -159,6 +159,7 @@ C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseG
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.ServiceInterface.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.ServiceModel.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SkinDetection.dll
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SoundDetector.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Mono.Security.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Npgsql.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\policy.2.0.Npgsql.dll
@@ -174,6 +175,7 @@ C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseG
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.ServiceInterface.pdb
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.ServiceModel.pdb
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SkinDetection.pdb
+C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SoundDetector.pdb
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.Util.xml
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Npgsql.pdb
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Npgsql.xml
@@ -186,3 +188,9 @@ C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseG
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\obj\Debug\FYP_ChildAbuseGIS2013.dll
 C:\Users\L33549.CITI\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\obj\Debug\FYP_ChildAbuseGIS2013.pdb
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SkinDetection.dll
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SoundDetector.dll
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SkinDetection.pdb
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\FYP_ChildAbuseGIS2013.SoundDetector.pdb
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.CV.xml
+C:\Users\hzhig_000\Desktop\AbuseAnalysis\FYP_ChildAbuseGIS2013\FYP_ChildAbuseGIS2013\bin\Emgu.Util.xml

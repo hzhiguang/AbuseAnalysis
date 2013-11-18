@@ -89,6 +89,14 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
     }
 
     [DataContract]
+    [Route("/json/filebyloc/{id}")]
+    public class GetFileDetailsByLocation
+    {
+        [DataMember]
+        public string ID { get; set; }
+    }
+
+    [DataContract]
     public class FileResponse : IHasResponseStatus
     {
         public FileResponse()
@@ -188,6 +196,21 @@ namespace FYP_ChildAbuseGIS2013.ServiceModel.Operations
 
         [DataMember]
         public File File { get; set; }
+
+        [DataMember]
+        public ResponseStatus ResponseStatus { get; set; }
+    }
+
+    [DataContract]
+    public class FileDetailsByLocationResponse : IHasResponseStatus
+    {
+        public FileDetailsByLocationResponse()
+        {
+            this.File = new List<File>();
+        }
+
+        [DataMember]
+        public List<File> File { get; set; }
 
         [DataMember]
         public ResponseStatus ResponseStatus { get; set; }
