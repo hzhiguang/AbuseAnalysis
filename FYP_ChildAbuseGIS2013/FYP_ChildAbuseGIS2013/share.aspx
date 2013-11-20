@@ -18,26 +18,12 @@
                 document.getElementById('<%=txt_fileUpLoad.ClientID %>').value = fileUpload.value;
                 return true;
             };
-
-            function initialize() {
-                var countryRestrict = { 'country': 'sg' };
-                autocomplete = new google.maps.places.Autocomplete(
-                    /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
-                    {
-                        types: ['geocode'],
-                        componentRestrictions: countryRestrict
-                    }
-                );
-                google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                    alert("testing");
-                });
-            }
         </script>
     </head>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <body onload="initialize()">
-    <form id="Form1" runat="server" method="post">
+    <form id="reportCase" runat="server" method="post">
     <table class="tableStyle">
         <tr>
             <td colspan="2">
@@ -78,7 +64,10 @@
                             </td>
                             <td>
                                 <div id="locationField">
-                                    <input id="autocomplete" placeholder="Enter address" type="text"></input>
+                                    <input id="autocomplete" name="autocomplete" placeholder="Enter address" type="text"></input>
+                                    <asp:TextBox ID="tbLocation" class="tbStyle" runat="server" Visible=false></asp:TextBox>
+                                    <asp:TextBox ID="tbX" class="tbStyle" runat="server" Visible=false></asp:TextBox>
+                                    <asp:TextBox ID="tbY" class="tbStyle" runat="server" Visible=false></asp:TextBox>
                                 </div>
                             </td>
                         </tr>
@@ -93,8 +82,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <center><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" />&nbsp;&nbsp;&nbsp;<asp:Label ID="lb_msg" runat="server"></center>
-                                </asp:Label>
+                                <center><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" /></center>
                             </td>
                         </tr>
                     </table>
