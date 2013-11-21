@@ -77,7 +77,12 @@ function handChart() {
 }
 
 function soundChart() {
-    var sound = [['True', value[11]]];
+    var soundPer = 0;
+    if (value[11] == true) {
+        soundPer = 100;
+    }
+    var sound = [['True', soundPer],
+                    ['False', 100 - soundPer]];
     $.jqplot('soundAnalysis', [sound],
     {
         title: 'Sound Analysis',
@@ -136,7 +141,44 @@ function twitterChart() {
 }
 
 $(document).ready(function () {
-    var i = 0;
+    var id = $.urlParam('ID');
+    var data_file = "http://localhost:27020/api/json/analysis/" + id;
+    var http_request = new XMLHttpRequest();
+    try {
+        // Opera 8.0+, Firefox, Chrome, Safari
+        http_request = new XMLHttpRequest();
+    } catch (e) {
+        // Internet Explorer Browsers
+        try {
+            http_request = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                http_request = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+                // Something went wrong
+                alert("Your browser broke!");
+                return false;
+            }
+        }
+    }
+
+    http_request.onreadystatechange = function () {
+        if (http_request.readyState == 4) {
+            // Javascript function JSON.parse to parse JSON data
+            var jsonObj = JSON.parse(http_request.responseText);
+            var a = 0;
+            for (var att in jsonObj.Analysis) {
+                name[a] = att;
+                value[a] = jsonObj.Analysis[att];
+                a++;
+            }
+            overallChart();
+        }
+    }
+    http_request.open("GET", data_file, true);
+    http_request.send();
+
+    var i = 1;
     $("#next").css("opacity", "0.4");
     $("#prev").css("opacity", "0.4");
     $("#faceAnalysis").hide();
@@ -263,7 +305,7 @@ $(document).ready(function () {
         $(this).css("opacity", "0.4");
     }).click(function () {
         if (i == 5) {
-            i--;
+            i = i - 1;
             $("#overallAnalysis").hide();
             $("#overallAnalysis").empty();
             $("#faceAnalysis").hide();
@@ -278,7 +320,7 @@ $(document).ready(function () {
             twitterChart();
         }
         else if (i == 4) {
-            i--;
+            i = i - 1;
             $("#overallAnalysis").hide();
             $("#overallAnalysis").empty();
             $("#faceAnalysis").hide();
@@ -293,7 +335,7 @@ $(document).ready(function () {
             feverChart();
         }
         else if (i == 3) {
-            i--;
+            i = i - 1;
             $("#overallAnalysis").hide();
             $("#overallAnalysis").empty();
             $("#faceAnalysis").hide();
@@ -308,7 +350,7 @@ $(document).ready(function () {
             soundChart();
         }
         else if (i == 2) {
-            i--;
+            i = i - 1;
             $("#overallAnalysis").hide();
             $("#overallAnalysis").empty();
             $("#faceAnalysis").hide();
@@ -323,7 +365,7 @@ $(document).ready(function () {
             handChart();
         }
         else if (i == 1) {
-            i--;
+            i = i - 1;
             $("#overallAnalysis").hide();
             $("#overallAnalysis").empty();
             $("#faceAnalysis").show();
@@ -338,7 +380,7 @@ $(document).ready(function () {
             faceChart();
         }
         else if (i == 0) {
-            i--;
+            i = i - 1;
             $("#overallAnalysis").show();
             $("#faceAnalysis").hide();
             $("#faceAnalysis").empty();
@@ -368,40 +410,4 @@ $(document).ready(function () {
             twitterChart();
         }
     });
-
-    var id = $.urlParam('ID');
-    var data_file = "http://localhost:27020/api/json/analysis/" + id;
-    var http_request = new XMLHttpRequest();
-    try {
-        // Opera 8.0+, Firefox, Chrome, Safari
-        http_request = new XMLHttpRequest();
-    } catch (e) {
-        // Internet Explorer Browsers
-        try {
-            http_request = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e) {
-            try {
-                http_request = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e) {
-                // Something went wrong
-                alert("Your browser broke!");
-                return false;
-            }
-        }
-    }
-
-    http_request.onreadystatechange = function () {
-        if (http_request.readyState == 4) {
-            // Javascript function JSON.parse to parse JSON data
-            var jsonObj = JSON.parse(http_request.responseText);
-            var a = 0;
-            for (var att in jsonObj.Analysis) {
-                name[a] = att;
-                value[a] = jsonObj.Analysis[att];
-                a++;
-            }
-        }
-    }
-    http_request.open("GET", data_file, true);
-    http_request.send();
 });

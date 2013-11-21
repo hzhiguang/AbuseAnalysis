@@ -134,6 +134,7 @@
     <Content Include="css\jquery.jqplot.min.css" />
     <Content Include="css\jquery.mobile-1.3.2.min.css" />
     <Content Include="css\onemapDesign.css" />
+    <Content Include="css\resultChart.css" />
     <Content Include="css\share.css" />
     <Content Include="cublas32_42_9.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

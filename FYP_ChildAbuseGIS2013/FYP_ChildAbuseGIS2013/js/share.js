@@ -22,7 +22,7 @@ $(document).ready(function () {
     $("#example tbody").delegate("tr", "click", function () {
         var iPos = resultTable.fnGetPosition(this);
         if (iPos != null) {
-            window.location.href = "result.aspx?ID=" + iPos + "";
+            window.open("result.aspx?ID=" + iPos + "", '_blank');
         }
     });
 });
