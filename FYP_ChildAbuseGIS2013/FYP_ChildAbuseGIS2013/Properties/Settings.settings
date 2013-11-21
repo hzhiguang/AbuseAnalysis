@@ -5,5 +5,8 @@
     <Setting Name="FYP_ChildAbuseGIS2013_com_arcgisonline_tasks_Geometry_GeometryServer" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://tasks.arcgisonline.com/ArcGIS/services/Geometry/GeometryServer</Value>
     </Setting>
+    <Setting Name="FYP_ChildAbuseGIS2013_com_arcgisonline_tasks1_Geometry_GeometryServer" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://tasks.arcgisonline.com/ArcGIS/services/Geometry/GeometryServer</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

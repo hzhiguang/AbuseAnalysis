@@ -13,13 +13,13 @@ namespace FYP_ChildAbuseGIS2013 {
     public partial class share {
         
         /// <summary>
-        /// Form1 control.
+        /// reportCase control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm reportCase;
         
         /// <summary>
         /// Image1 control.
@@ -65,6 +65,24 @@ namespace FYP_ChildAbuseGIS2013 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbLocation;
+        
+        /// <summary>
+        /// tbX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbX;
+        
+        /// <summary>
+        /// tbY control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbY;
         
         /// <summary>
         /// tbDescription control.

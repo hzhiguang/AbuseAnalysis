@@ -32,5 +32,15 @@ namespace FYP_ChildAbuseGIS2013.Properties {
                 return ((string)(this["FYP_ChildAbuseGIS2013_com_arcgisonline_tasks_Geometry_GeometryServer"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://tasks.arcgisonline.com/ArcGIS/services/Geometry/GeometryServer")]
+        public string FYP_ChildAbuseGIS2013_com_arcgisonline_tasks1_Geometry_GeometryServer {
+            get {
+                return ((string)(this["FYP_ChildAbuseGIS2013_com_arcgisonline_tasks1_Geometry_GeometryServer"]));
+            }
+        }
     }
 }

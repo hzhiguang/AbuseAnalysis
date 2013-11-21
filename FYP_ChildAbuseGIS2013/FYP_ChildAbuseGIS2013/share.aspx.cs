@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Xml;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -9,6 +12,8 @@ using System.Drawing;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using Emgu.CV.VideoSurveillance;
+using Emgu.Util;
 using Emgu.CV.UI;
 using System.Diagnostics;
 using System.Web.UI.HtmlControls;
@@ -39,7 +44,6 @@ namespace FYP_ChildAbuseGIS2013
         private List<Image<Gray, Byte>> grayFrameList;
         private int frameHeight;
         private int frameWidth;
-        private int totalFrame;
 
         //Temp Memory Storage
         private MemStorage contourStorage;
@@ -49,6 +53,7 @@ namespace FYP_ChildAbuseGIS2013
         private Rectangle[] faceDetect;
         private Point facePoint;
         private List<string> faceEmotions;
+        private int noDetect;
 
         //Skin Detection
         private Image<Gray, Byte> skin;
@@ -80,6 +85,9 @@ namespace FYP_ChildAbuseGIS2013
         private string vfilepath = "";
         private string ext = "";
 
+        //Fever Detection
+        private List<int> newList = new List<int>();
+
         //initialise and save file path variable
         string strVideoPath, savePath;
 
@@ -93,7 +101,7 @@ namespace FYP_ChildAbuseGIS2013
         //Analysis Table
         private CreateAnalysis cAna;
         private int abuseper;
-        private int totalframe;
+        private int totalFrame;
         private int smile;
         private int angry;
         private int sad;
@@ -126,7 +134,7 @@ namespace FYP_ChildAbuseGIS2013
         {
             bool result = Convert.ToBoolean(Session["result"]);
 
-            /*faceHaar = new CascadeClassifier("C:/Emgu/opencv_attic/opencv/data/haarcascades/haarcascade_frontalface_default.xml");
+            faceHaar = new CascadeClassifier("C:/Emgu/opencv_attic/opencv/data/haarcascades/haarcascade_frontalface_default.xml");
 
             hsv_min = new Hsv(0, 45, 0);
             hsv_max = new Hsv(20, 255, 255);
@@ -144,7 +152,7 @@ namespace FYP_ChildAbuseGIS2013
             motionPoints = new List<PointF>();
             gestures = new List<string>();
             runTimes = new List<long>();
-            faceEmotions = new List<string>();*/
+            faceEmotions = new List<string>();
         }
 
         private void grabVideo(string path)
@@ -159,19 +167,22 @@ namespace FYP_ChildAbuseGIS2013
             string filepath = txt_fileUpLoad.Text;
             title = tbTitle.Text.ToString();
             desc = tbDescription.Text.ToString();
-            address = tbLocation.Text.ToString();
-
-            /*CreateAnalysis cAna = new CreateAnalysis(200, 20, 50, 30, 100, 20, 10, 15, 5);
-            CreateLocation cLoc = new CreateLocation("Testing", 29830.4695669479, 40135.9793048648);
-            CreateFile cFile = new CreateFile("testing", date, "testing.avi", "ascasc", "Image");
-
-            insertRecord(cAna, cLoc, cFile);*/
 
             if (fileUpLoad.HasFile)
             {
                 string fileType = Path.GetExtension(filepath);
                 if (fileType == ".avi")
                 {
+                    //Get the address
+                    address = tbLocation.Text.ToString();
+                    double lng = Double.Parse(tbX.Text.ToString());
+                    double lat = Double.Parse(tbY.Text.ToString());
+                    string convert = CoordinatesConverter.CoordinatesConvertor(lng, lat, 4326, 3414);
+                    string[] converting = convert.Split(',');
+                    x = Double.Parse(converting[0]);
+                    y = Double.Parse(converting[1]);
+
+                    //Get the video filename for analysis
                     type = "Video";
                     strVideoPath = fileUpLoad.PostedFile.FileName.ToString();
                     savePath = Server.MapPath("~\\video\\");
@@ -188,8 +199,9 @@ namespace FYP_ChildAbuseGIS2013
                     vfilepath = path + ".wav";
                     aviManager.Close();
                     soundAnalysis();
-                    //grabVideo(path);
-                    //videoAnalysis();
+                    grabVideo(path);
+                    videoAnalysis();
+                    insertIntoDatabase();
                 }
                 else if (fileType == ".jpg")
                 {
@@ -206,13 +218,7 @@ namespace FYP_ChildAbuseGIS2013
                         byte_property_id = pic.GetPropertyItem(scan_property).Value;
                         prop_type = pic.GetPropertyItem(scan_property).Type.ToString();
 
-                        if (scan_property == 1)
-                        {
-                            //Latitude North or South
-                            ascii_string_property_id = System.Text.Encoding.ASCII.GetString(byte_property_id);
-                            //resultDisplay.InnerText = ascii_string_property_id +",Latitude";
-                        }
-                        else if (scan_property == 2)
+                        if (scan_property == 2)
                         {
                             //Latitude degrees minutes and seconds (rational)
                             degrees = System.BitConverter.ToInt32(byte_property_id, 0) / System.BitConverter.ToInt32(byte_property_id, 4);
@@ -220,53 +226,59 @@ namespace FYP_ChildAbuseGIS2013
                             seconds = System.BitConverter.ToInt32(byte_property_id, 16) / System.BitConverter.ToInt32(byte_property_id, 20);
 
                             lat_dd = degrees + (minutes / 60) + (seconds / 3600); //->Latitude
-
-                            //resultDisplay.InnerText += degrees + " " + minutes + " " + seconds + " " + lat_dd + ", ";
-                        }
-                        else if (scan_property == 3)
-                        {
-                            //Longitude East or West
-                            ascii_string_property_id = System.Text.Encoding.ASCII.GetString(byte_property_id);
-
-                            //resultDisplay.InnerText += ascii_string_property_id + ",Longitude";
                         }
                         else if (scan_property == 4)
                         {
-
                             //Longitude degrees minutes and seconds (rational)
                             degrees = System.BitConverter.ToInt32(byte_property_id, 0) / System.BitConverter.ToInt32(byte_property_id, 4);
                             minutes = System.BitConverter.ToInt32(byte_property_id, 8) / System.BitConverter.ToInt32(byte_property_id, 12);
                             seconds = System.BitConverter.ToInt32(byte_property_id, 16) / System.BitConverter.ToInt32(byte_property_id, 20);
                             long_dd = degrees + (minutes / 60) + (seconds / 3600); //-->longtitude
-
-                            //resultDisplay.InnerText += degrees + " " + minutes + " " + seconds + " " + long_dd;
-                        }
-
-                        else if (scan_property == 18)
-                        {
-                            //Datum used at GPS acquisition (ascii)
-                            ascii_string_property_id = System.Text.Encoding.ASCII.GetString(byte_property_id);
-                            // resultDisplay.InnerText += "GPS Datum= " + ascii_string_property_id;
                         }
                         else
                         {
+                            //Do nothing...
+                            /**
                             if (scan_property == 24)
                             {
                                 //Magnetic bearing of subject to photographer (rational)
                                 //do nothing
                             }
                             //scan_property ++;
+                             * **/
                         }
                     }
                 }
                 if ((lat_dd > 0) && (long_dd > 0))
                 {
-                    //string convert = CoordinatesConverter.CoordinatesConvertor(long_dd, lat_dd, 4326, 3414);
-                    //lb_msg.Text = convert;
+                    //Reverse Geocoding
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load("http://maps.googleapis.com/maps/api/geocode/xml?latlng=" + lat_dd + "," + long_dd + "&sensor=false");
+                    XmlNode element = doc.SelectSingleNode("//GeocodeResponse/status");
+                    if (element.InnerText == "ZERO_RESULTS")
+                    {
+                        lb_msg.Text = "No result found";
+                    }
+                    else
+                    {
+                        element = doc.SelectSingleNode("//GeocodeResponse/result/formatted_address");
+                        address = element.InnerText;
+                    }
+
+                    string convert = CoordinatesConverter.CoordinatesConvertor(long_dd, lat_dd, 4326, 3414);
+                    string[] converting = convert.Split(',');
+                    x = Double.Parse(converting[0]);
+                    y = Double.Parse(converting[1]);
                 }
                 else
                 {
-
+                    address = tbLocation.Text.ToString();
+                    double lng = Double.Parse(tbX.Text.ToString());
+                    double lat = Double.Parse(tbY.Text.ToString());
+                    string convert = CoordinatesConverter.CoordinatesConvertor(lng, lat, 4326, 3414);
+                    string[] converting = convert.Split(',');
+                    x = Double.Parse(converting[0]);
+                    y = Double.Parse(converting[1]);
                 }
             }
         }
@@ -314,8 +326,10 @@ namespace FYP_ChildAbuseGIS2013
                     //Find 2 largest contour (left and right hand)
                     List<Contour<Point>> handContours = findHandContours();
 
-                    //defaultFrame.Image = editedSkinFrame;
-                    //blackFrame.Image = skin;
+                    //Fever
+                    Bitmap feverMap = currentFrame.ToBitmap();
+                    newList.Add(retrieveGreenPixel(feverMap));
+
                     System.Windows.Forms.Application.DoEvents();
                     System.Threading.Thread.Sleep(1000 / 10);
                 }
@@ -330,6 +344,8 @@ namespace FYP_ChildAbuseGIS2013
 
             //Hand Motion Analysis
             handMotionAnalysis();
+
+            feverresult = newList.ElementAt(0);
         }
 
         private void detectFace()
@@ -491,7 +507,7 @@ namespace FYP_ChildAbuseGIS2013
 
             int[] label = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69 };
             //Use the variable to detect the number of times these emotion appear in the video by frames;
-            int noDetect = 0;
+            noDetect = 0;
             totalFrame = grayFrameList.Count;
             List<Image<Gray, byte>> trainfaceList = new List<Image<Gray, byte>>();
 
@@ -515,7 +531,6 @@ namespace FYP_ChildAbuseGIS2013
             for (int i = 0; i < totalFrame; i++)
             {
                 result = fisher.Predict(grayFrameList.ElementAt(i));
-                //lbmsg.Text = totalFrame.ToString();
                 int num = result.Label;
 
                 if (num == -1)
@@ -551,11 +566,6 @@ namespace FYP_ChildAbuseGIS2013
                 {
                     // it should not come here . 
                 }
-            }
-
-            if (angry > smile && angry > sad && angry > neutral)
-            {
-                //lbEmotionConclusion2.Text = "There is a risk of child abuse";
             }
 
             //get total sum of the 5 emotion data.
@@ -1026,6 +1036,45 @@ namespace FYP_ChildAbuseGIS2013
             soundpath = savePath + title + ".png";
             graph.Save(soundpath);
             soundresult = false;
+        }
+
+        private int retrieveGreenPixel(Bitmap image1)
+        {
+            Color clr = image1.GetPixel(50, 50); // Get the color of pixel at position 5,5
+            int totalColors = clr.R + clr.B + clr.G;
+            int red = clr.R;
+            int blue = clr.B;
+            int green = clr.G;
+            return green;
+        }
+
+        private void insertIntoDatabase()
+        {
+            abuseper = 0;
+            //Face
+            if (angry > smile && angry > sad && angry > neutral && angry > noDetect)
+            {
+                abuseper = abuseper + 25;
+            }
+            //Motion
+            if ((((leftfist + rightfist + leftpalm + rightpalm) / totalFrame) * 100) > 20)
+            {
+                abuseper = abuseper + 25;
+            }
+            //Sound
+            if (soundresult == true)
+            {
+                abuseper = abuseper + 25;
+            }
+            //Heat
+            if (feverresult >= 50)
+            {
+                abuseper = abuseper + 25;
+            }
+            CreateAnalysis cAna = new CreateAnalysis(abuseper, totalFrame, smile, angry, sad, neutral, leftfist, rightfist, leftpalm, rightpalm, soundresult, soundpath, feverresult);
+            CreateLocation cLoc = new CreateLocation(address, x, y);
+            CreateFile cFile = new CreateFile(title, date, path, desc, type);
+            insertRecord(cAna, cLoc, cFile);
         }
 
         private Bitmap resizeImage(Bitmap imgToResize, Size size)

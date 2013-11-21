@@ -172,3 +172,7 @@ div.LockOn {
    text-align:left;
 	vertical-align:top; 
 }
+
+#autocomplete {
+    width: 300px;
+}

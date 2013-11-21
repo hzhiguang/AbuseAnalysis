@@ -1,4 +1,5 @@
 ﻿var resultTable;
+var addressResult = false;
 
 $(document).ready(function () {
     resultTable = $("#example").dataTable({
@@ -21,7 +22,7 @@ $(document).ready(function () {
     $("#example tbody").delegate("tr", "click", function () {
         var iPos = resultTable.fnGetPosition(this);
         if (iPos != null) {
-            window.location.href = "result.aspx?ID=" + iPos + "";
+            window.open("result.aspx?ID=" + iPos + "", '_blank');
         }
     });
 });
@@ -32,4 +33,28 @@ function skm_LockScreen(str) {
         lock.className = 'LockOn';
 
     lock.innerHTML = str + "<br/><img src=@'../../image/loading.gif' alt='loading'/>";
+}
+
+function initialize() {
+    var countryRestrict = { 'country': 'sg' };
+    autocomplete = new google.maps.places.Autocomplete(
+    /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
+                    {
+                        types: ['geocode'],
+                        componentRestrictions: countryRestrict
+                    }
+                );
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            addressResult = false;
+            return;
+        }
+        else {
+            addressResult = true;
+            $("#tbLocation").value = document.getElementById('autocomplete').value;
+            $("#tbX").value = place.geometry.location.lat();
+            $("#tbY").value = place.geometry.location.lng();
+        }
+    });
 }

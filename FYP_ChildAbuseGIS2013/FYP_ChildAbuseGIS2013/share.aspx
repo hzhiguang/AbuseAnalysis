@@ -1,12 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Design.Master" AutoEventWireup="true"
     CodeBehind="share.aspx.cs" Inherits="FYP_ChildAbuseGIS2013.share" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <head>
         <title>Share With Us</title>
         <link rel="stylesheet" type="text/css" href="../../css/share.css">
         <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
-        <script type="text/javascript" src="../../script/TableTools.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script type ="text/javascript"src="script/jquery.dataTables.js"></script>
+        <script type ="text/javascript"src="script/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="../../js/share.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
         <script type="text/javascript">
             function onLoadFile(myForm) {
                 var fileUpload = document.getElementById('<%=fileUpLoad.ClientID %>');
@@ -17,7 +22,8 @@
     </head>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form id="Form1" runat="server" method="post">
+<body onload="initialize()">
+    <form id="reportCase" runat="server" method="post">
     <table class="tableStyle">
         <tr>
             <td colspan="2">
@@ -57,7 +63,12 @@
                                 Address:
                             </td>
                             <td>
-                                <asp:TextBox ID="tbLocation" class="tbStyle" runat="server"></asp:TextBox>
+                                <div id="locationField">
+                                    <input id="autocomplete" name="autocomplete" placeholder="Enter address" type="text"></input>
+                                    <asp:TextBox ID="tbLocation" class="tbStyle" runat="server" Visible=false></asp:TextBox>
+                                    <asp:TextBox ID="tbX" class="tbStyle" runat="server" Visible=false></asp:TextBox>
+                                    <asp:TextBox ID="tbY" class="tbStyle" runat="server" Visible=false></asp:TextBox>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -71,8 +82,12 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <center><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" />&nbsp;&nbsp;&nbsp;<asp:Label ID="lb_msg" runat="server"></center>
-                                </asp:Label>
+                                <center><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" /></center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lb_msg" runat="server" ></asp:Label> 
                             </td>
                         </tr>
                     </table>
@@ -87,4 +102,5 @@
     <div id="skm_LockPane" class="LockOff">
     </div>
     </form>
+</body>
 </asp:Content>
