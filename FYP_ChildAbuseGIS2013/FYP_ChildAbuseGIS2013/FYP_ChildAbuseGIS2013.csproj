@@ -168,10 +168,14 @@
     <Content Include="image\twitter_logo_white.png" />
     <Content Include="Design.Master" />
     <Content Include="index.aspx" />
+    <Content Include="js\heatmap-arcgis.js" />
+    <Content Include="js\heatmap.js" />
+    <Content Include="js\HeatMapCustom.js" />
     <Content Include="js\InfoWindow.js" />
     <Content Include="js\jquery-1.9.1.js" />
     <Content Include="js\jquery-ui-1.10.3.custom.js" />
     <Content Include="js\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="js\onemap.js" />
     <Content Include="js\share.js" />
     <Content Include="js\videoplayer.js" />
     <Content Include="npp32_42_9.dll">

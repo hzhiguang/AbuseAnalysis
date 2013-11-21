@@ -184,7 +184,7 @@
                   success: function (file) {
                       var statement = "";
                       bufferResult = [];
-                      statement = "There are a total of <font colr='red'><b>" + bufferResult.length + "</b></font> reported child abuse case within <underline>" + raduisOfArea + "</underline> of this area <br/><br/>"
+                      statement = "There are a total of <font colr='red'><b>" + bufferResult.length + "</b></font> reported child abuse case within <underline>" + raduisOfArea + "</underline>KM of this area <br/><br/>"
                       for (var i = 0; i < file.File.length; i++) {
                           bufferResult[i] = [file.File[i].ID, file.File[i].title, file.File[i].date, file.File[i].path, file.File[i].description, file.File[i].type, file.File[i].locationid, file.File[i].analysisid];
                           statement += "<b>Case</b> " + (i + 1) + " :" + bufferResult[i][1] + "<br/><br/><b>Description</b> :" + bufferResult[i][4] + "<br/><br/><b>Date</b>:" + bufferResult[i][2] + "<br/><br/>";
@@ -419,7 +419,7 @@
                       var graphic;
                       var pictureSymbol = new PictureMarkerSymbol();
                       pictureSymbol.setUrl("../image/locationMarker.png");
-                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult + "<br/><br/> Source:" + cPath);
+                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult);
                       graphic = new Graphic(new Point(cX, cY, spatialReference), pictureSymbol, null, infoTemplate);
                       map.graphics.add(graphic);
                   }
@@ -428,7 +428,7 @@
                       var graphic;
                       var pictureSymbol = new PictureMarkerSymbol();
                       pictureSymbol.setUrl("../image/locationMarker2.png");
-                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult + "<br/><br/> Source:" + cPath);
+                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult);
                       graphic = new Graphic(new Point(cX, cY, spatialReference), pictureSymbol, null, infoTemplate);
                       map.graphics.add(graphic);
                   }
