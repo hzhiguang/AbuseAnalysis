@@ -261,8 +261,8 @@ namespace FYP_ChildAbuseGIS2013
                 }
                 if ((lat_dd > 0) && (long_dd > 0))
                 {
-                    string convert = CoordinatesConverter.CoordinatesConvertor(long_dd, lat_dd, 4326, 3414);
-                    lb_msg.Text = convert;
+                    //string convert = CoordinatesConverter.CoordinatesConvertor(long_dd, lat_dd, 4326, 3414);
+                    //lb_msg.Text = convert;
                 }
                 else
                 {
