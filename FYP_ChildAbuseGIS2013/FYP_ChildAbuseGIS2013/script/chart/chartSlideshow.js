@@ -11,7 +11,26 @@ $.urlParam = function (name) {
     }
 }
 
-function faceChart(){
+function overallChart() {
+    var overallAnalysis = [['Abuse', value[1]],
+                            ['Not Abuse', 100 - value[1]]];
+    $.jqplot('overallAnalysis', [overallAnalysis],
+    {
+        title: 'Overall Analysis',
+        seriesDefaults: {
+            // Make this a pie chart.
+            renderer: jQuery.jqplot.PieRenderer,
+            rendererOptions: {
+                // Put data labels on the pie slices.
+                // By default, labels show the percentage of the slice.
+                showDataLabels: true
+            }
+        },
+        legend: { show: true, location: 'e' }
+    });
+}
+
+function faceChart() {
     //Face Analysis Pie Chart
     var faceAnalysis = [['Smile', value[3]],
                         ['Angry', value[4]],
@@ -57,6 +76,43 @@ function handChart() {
     });
 }
 
+function soundChart() {
+    var sound = [['True', value[11]]];
+    $.jqplot('soundAnalysis', [sound],
+    {
+        title: 'Sound Analysis',
+        seriesDefaults: {
+            // Make this a pie chart.
+            renderer: jQuery.jqplot.PieRenderer,
+            rendererOptions: {
+                // Put data labels on the pie slices.
+                // By default, labels show the percentage of the slice.
+                showDataLabels: true
+            }
+        },
+        legend: { show: true, location: 'e' }
+    });
+}
+
+function feverChart() {
+    var fever = [['Fever', value[13]],
+                    ['No Fever', 100 - value[13]]];
+    $.jqplot('feverAnalysis', [fever],
+    {
+        title: 'Fever Analysis',
+        seriesDefaults: {
+            // Make this a pie chart.
+            renderer: jQuery.jqplot.PieRenderer,
+            rendererOptions: {
+                // Put data labels on the pie slices.
+                // By default, labels show the percentage of the slice.
+                showDataLabels: true
+            }
+        },
+        legend: { show: true, location: 'e' }
+    });
+}
+
 function twitterChart() {
     var twitter = [['Tweets with word "Abuse"', 32],
                     ['Tweets with word "Child"', 35.99],
@@ -85,6 +141,8 @@ $(document).ready(function () {
     $("#prev").css("opacity", "0.4");
     $("#faceAnalysis").hide();
     $("#handMotion").hide();
+    $("#soundAnalysis").hide();
+    $("#feverAnalysis").hide();
     $("#twitterAna").hide();
 
     $("#next").mouseover(function () {
@@ -94,39 +152,108 @@ $(document).ready(function () {
     }).click(function () {
         if (i == 0) {
             i++;
+            $("#overallAnalysis").show();
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
+            overallChart();
+        }
+        else if (i == 1) {
+            i++;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
             $("#faceAnalysis").show();
             $("#handMotion").hide();
             $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
             $("#twitterAna").hide();
             $("#twitterAna").empty();
             faceChart();
         }
-        else if (i == 1) {
+        else if (i == 2) {
             i++;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
             $("#faceAnalysis").hide();
             $("#faceAnalysis").empty();
             $("#handMotion").show();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
             $("#twitterAna").hide();
             $("#twitterAna").empty();
             handChart();
         }
-        else if (i == 2) {
+        else if (i == 3) {
             i++;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
             $("#faceAnalysis").hide();
             $("#faceAnalysis").empty();
             $("#handMotion").hide();
             $("#handMotion").empty();
+            $("#soundAnalysis").show();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
+            soundChart();
+        }
+        else if (i == 4) {
+            i++;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").show();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
+            feverChart();
+        }
+        else if (i == 5) {
+            i++;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
             $("#twitterAna").show();
             twitterChart();
         }
         else {
             i = 1;
-            $("#faceAnalysis").show();
+            $("#overallAnalysis").show();
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
             $("#handMotion").hide();
             $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
             $("#twitterAna").hide();
             $("#twitterAna").empty();
-            faceChart();
+            overallChart();
         }
     });
 
@@ -135,39 +262,108 @@ $(document).ready(function () {
     }).mouseout(function () {
         $(this).css("opacity", "0.4");
     }).click(function () {
-        if (i == 2) {
+        if (i == 5) {
             i--;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
             $("#faceAnalysis").hide();
             $("#faceAnalysis").empty();
             $("#handMotion").hide();
             $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
             $("#twitterAna").show();
             twitterChart();
         }
-        else if (i == 1) {
+        else if (i == 4) {
             i--;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").show();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
+            feverChart();
+        }
+        else if (i == 3) {
+            i--;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#soundAnalysis").show();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
+            soundChart();
+        }
+        else if (i == 2) {
+            i--;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
             $("#faceAnalysis").hide();
             $("#faceAnalysis").empty();
             $("#handMotion").show();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
             $("#twitterAna").hide();
             $("#twitterAna").empty();
             handChart();
         }
-        else if (i == 0) {
+        else if (i == 1) {
             i--;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
             $("#faceAnalysis").show();
             $("#handMotion").hide();
             $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
             $("#twitterAna").hide();
             $("#twitterAna").empty();
             faceChart();
         }
-        else {
-            i = 1;
+        else if (i == 0) {
+            i--;
+            $("#overallAnalysis").show();
             $("#faceAnalysis").hide();
             $("#faceAnalysis").empty();
             $("#handMotion").hide();
             $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
+            $("#twitterAna").hide();
+            $("#twitterAna").empty();
+            overallChart();
+        }
+        else {
+            i = 4;
+            $("#overallAnalysis").hide();
+            $("#overallAnalysis").empty();
+            $("#faceAnalysis").hide();
+            $("#faceAnalysis").empty();
+            $("#handMotion").hide();
+            $("#handMotion").empty();
+            $("#soundAnalysis").hide();
+            $("#soundAnalysis").empty();
+            $("#feverAnalysis").hide();
+            $("#feverAnalysis").empty();
             $("#twitterAna").show();
             twitterChart();
         }

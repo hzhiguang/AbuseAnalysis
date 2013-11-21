@@ -85,6 +85,11 @@
                                 <center><asp:Button ID="btnSubmit" runat="server" Text="Analyze"  name="Upload" class="submitBtn" onclick="upload_Click"  OnClientClick="skm_LockScreen('Analyze Processing , Please Wait');" /></center>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lb_msg" runat="server" ></asp:Label> 
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </td>

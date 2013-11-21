@@ -15,8 +15,11 @@
     <div id="chartSlideShow">
         <img id="next" src="../../image/slideshow/next.png" alt="" />
         <img id="prev" src="../../image/slideshow/prev.png" alt="" />
+        <div id="overallAnalysis" class="plot"></div>
         <div id="faceAnalysis" class="plot"></div>
         <div id="handMotion" class="plot"></div>
+        <div id="soundAnalysis class="plot"></div>
+        <div id="feverAnalysis" class="plot"></div>
         <div id="twitterAna" class="plot"></div>
     </div>
 </asp:Content>
