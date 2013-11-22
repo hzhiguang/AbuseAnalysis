@@ -175,7 +175,6 @@ namespace FYP_ChildAbuseGIS2013
                 {
                     //Get the address
                     address = tbLocation.Text.ToString();
-                    lb_msg.Text = tbX.Text.ToString();
                     //double lng = Double.Parse(tbX.Text.ToString());
                     //double lat = Double.Parse(tbY.Text.ToString());
                     //string convert = CoordinatesConverter.CoordinatesConvertor(lng, lat, 4326, 3414);
