@@ -178,8 +178,8 @@ var dojoConfig = {
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id ="main" class="tundra">
 <!--Start of map -->
-<div id="map" class="map" >
-        <!--<div id="HomeButton"></div>-->
+<div id="map"  >
+        
         <div id="heatLayer"></div>
 </div>
 <!--End of map -->
@@ -193,7 +193,7 @@ var dojoConfig = {
             <td><div class="subMenu">
                 <table id ="subMenuTable">
                     <tr>
-                        <td></td>
+                        <td><div id="HomeButton"></div></td>
                         <td><div class="btn_heatmap"><img src="image/heatmap.png" id="btnheatMap1" onmouseover=" this.src = '../image/heatmap_hover.png'" onmouseout="this.src = '../image/heatmap.png'"  class="map_clear_btn" alt="heatmap" /></div></td>
                         <td><div class="btn_design"><img src="image/draw.png" id="draw" onmouseover=" this.src = '../image/draw_hover.png'" onmouseout="this.src = '../image/draw.png'"  class="map_clear_btn" alt="draw" /></div></td>
                         <td><div class="btn_design"><img src="image/map_clear.png" id="map_clear" onmouseover=" this.src = '../image/map_clear_hover.png'" onmouseout="this.src = '../image/map_clear.png'"  class="map_clear_btn" alt="clear"/></div></td>
