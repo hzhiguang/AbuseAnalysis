@@ -182,8 +182,8 @@ var dojoConfig = {
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id ="main" class="tundra">
 <!--Start of map -->
-<div id="map" class="map" >
-        <!--<div id="HomeButton"></div>-->
+<div id="map"  >
+        
         <div id="heatLayer"></div>
 </div>
 <!--End of map -->
