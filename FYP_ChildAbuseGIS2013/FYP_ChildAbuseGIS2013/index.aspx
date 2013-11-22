@@ -3,10 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <head>
     <title>Index Page</title>
-     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"  >
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"  />
       <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">-->
-      <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
+       <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
 </head>
 <style>
 #map
@@ -14,14 +14,16 @@
    height:750px;
    width:1050px;
 }
-#HomeButton 
-{
-     
-}
+#HomeButton {
+     /** position: absolute;
+      top: 95px;
+      left: 20px;
+      z-index: 50;**/
+    }
 div.featureStyle1
 {
     height:50px;
-    width:450px;
+    width:500px;
     background-color:#062032;
     background:rgb(6, 32, 50); /* Fallback for older browsers without RGBA-support */
     background:rgba(6, 32, 50, 0.5);
@@ -140,20 +142,22 @@ div.legendInfo
 {
     width:220px;
 }
+
   /* set title font properties */
       .infowindow .window .top .right .user .titlebar .title { font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:14pt; }
       /* set content font properties */
       .infowindow .window .top .right .user .content { font-style:italic; font-size:10pt; }
 </style>
 <!-- the basic of using arcgis map -->
-<link rel="stylesheet" href="   http://js.arcgis.com/3.7/js/dojo/dijit/themes/tundra/tundra.css">
 
+<link rel="stylesheet" href=" http://js.arcgis.com/3.7/js/dojo/dijit/themes/claro/claro.css">
 
 
 
 <!-- 
     There are 4 theme in arcgis API 
-    <link rel="stylesheet" href=" http://js.arcgis.com/3.7/js/dojo/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="   http://js.arcgis.com/3.7/js/dojo/dijit/themes/tundra/tundra.css">
+    
 <link rel="stylesheet" href=" http://js.arcgis.com/3.7/js/dojo/dijit/themes/nihilo/nihilo.css">
 .<link rel="stylesheet" href="http://js.arcgis.com/3.7/js/dojo/dijit/themes/soria/soria.css">
 -->

@@ -2,18 +2,18 @@
 
         "esri/map", "esri/dijit/Geocoder", "esri/tasks/locator", "esri/toolbars/draw", "esri/tasks/geometry", "esri/graphic", "myModules/InfoWindow", "dojo/dom",
         "dojo/dom-construct", "esri/InfoTemplate", "esri/symbols/SimpleMarkerSymbol", "esri/geometry/Point", "esri/symbols/Font", "esri/symbols/TextSymbol", "dojo/_base/lang", "dojo/json",
-          "esri/config", "dojo/_base/array", "dojo/_base/Color",
+          "esri/config", "dojo/_base/array", "dojo/_base/Color", "esri/dijit/HomeButton", "esri/dijit/Scalebar",
         "dojo/number", "dojo/parser", "dojo/dom", "dijit/registry", "esri/layers/FeatureLayer", "esri/request", "esri/geometry/Extent", "esri/symbols/SimpleFillSymbol", "esri/symbols/PictureMarkerSymbol",
         "esri/renderers/ClassBreaksRenderer", "esri/layers/GraphicsLayer", "esri/SpatialReference", "esri/tasks/GeometryService", "esri/dijit/PopupTemplate", "esri/geometry/Point", "esri/geometry/webMercatorUtils", "esri/tasks/AreasAndLengthsParameters",
-        "dijit/form/Button", "dijit/form/Textarea", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dojo/domReady!", "esri/dijit/HomeButton", "esri/dijit/Scalebar"
+        "dijit/form/Button", "dijit/form/Textarea", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dojo/domReady!"
       ], function (
         Map, Geocoder, Locator, Draw, geometry, Graphic, InfoWindow, dom,
         domConstruct,
         InfoTemplate, SimpleMarkerSymbol, Point,
         Font, TextSymbol, lang, json, esriConfig,
-        arrayUtils, Color,
+        arrayUtils, Color, HomeButton, Scalebar,
         number, parser, dom, registry, FeatureLayer, esriRequest, Extent, SimpleFillSymbol, PictureMarkerSymbol, ClassBreaksRenderer,
-        GraphicsLayer, SpatialReference, GeometryService, PopupTemplate, Point, webMercatorUtils, AreasAndLengthsParameters, HomeButton, Scalebar
+        GraphicsLayer, SpatialReference, GeometryService, PopupTemplate, Point, webMercatorUtils, AreasAndLengthsParameters
       //"extras/ClusterLayer",ClusterLayer
       ) {
           parser.parse();
@@ -53,25 +53,26 @@
               addFileData();
               showme();
               addChildCare();
-              policeStationMarker();
+              //policeStationMarker();
               autocomplete();
               GetKindergartens();
               //GetFamily();
               //GetVoluntaryWelfareOrgs();
               //GetStudentCare();
               createHomeButton();
-              createScaleBar();
+              //createScaleBar();
               dojo.connect(btnheatMap1, "onclick", heatInit);
               dojo.connect(draw, "onclick", activateTool);
               dojo.connect(map_clear, "onclick", clear);
               dojo.connect(search, "onclick", locate);
               createToolbar();
-              
+
               //dojo.connect(map, "onClick", addPoint);
               //dojo.connect(draw, "onclick", activateTool());
           }
 
           dojo.addOnLoad(init);
+
 
           //this is to check the corrdinates on the map by clicking
           /**
@@ -87,18 +88,18 @@
           function createHomeButton() {
               home = new HomeButton({
                   map: map
-              }, document.getElementById("HomeButton"));
+              }, "HomeButton");
               home.startup();
           }
 
           function createScaleBar() {
               scalebar = new Scalebar({
-                  map: oneMap.map,
+                  map: map,
                   // "dual" displays both miles and kilmometers
                   // "english" is the default, which displays miles
                   // use "metric" for kilometers
                   scalebarUnit: "dual",
-                  attachTo: "GetOneMap bottom-right"
+                  attachTo: "bottom-left"
               });
           }
 
@@ -184,7 +185,7 @@
                   success: function (file) {
                       var statement = "";
                       bufferResult = [];
-                      statement = "There are a total of <font colr='red'><b>" + bufferResult.length + "</b></font> reported child abuse case within <underline>" + raduisOfArea + "</underline> of this area <br/><br/>"
+                      statement = "There are a total of <font colr='red'><b>" + bufferResult.length + "</b></font> reported child abuse case within <underline>" + raduisOfArea + "</underline>KM of this area <br/><br/>"
                       for (var i = 0; i < file.File.length; i++) {
                           bufferResult[i] = [file.File[i].ID, file.File[i].title, file.File[i].date, file.File[i].path, file.File[i].description, file.File[i].type, file.File[i].locationid, file.File[i].analysisid];
                           statement += "<b>Case</b> " + (i + 1) + " :" + bufferResult[i][1] + "<br/><br/><b>Description</b> :" + bufferResult[i][4] + "<br/><br/><b>Date</b>:" + bufferResult[i][2] + "<br/><br/>";
@@ -226,7 +227,7 @@
           locator = new Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
           locator.on("address-to-locations-complete", showResults);
           function locate() {
-             // alert(geocoder.value);
+              // alert(geocoder.value);
               //map.graphics.clear();
               var address = {
                   "SingleLine": geocoder.value
@@ -290,7 +291,7 @@
                   var statement = "";
                   statement = "There are a total of <font color='red'><b>" + bufferResult.length + "</b></font> reported child abuse case within <underline>1</underline>KM of this area <br/><br/>"
                   for (var i = 0; i < bufferResult.length; i++) {
-                      
+
                       statement += "<b>Case</b> " + (i + 1) + " :" + bufferResult[i][1] + "<br/><br/><b>Description</b> :" + bufferResult[i][4] + "<br/><br/><b>Date</b>:" + bufferResult[i][2] + "<br/><br/>";
                   }
                   var infoTemplate = new InfoTemplate("Buffer Result", statement);
@@ -419,7 +420,7 @@
                       var graphic;
                       var pictureSymbol = new PictureMarkerSymbol();
                       pictureSymbol.setUrl("../image/locationMarker.png");
-                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult + "<br/><br/> Source:" + cPath);
+                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult);
                       graphic = new Graphic(new Point(cX, cY, spatialReference), pictureSymbol, null, infoTemplate);
                       map.graphics.add(graphic);
                   }
@@ -428,7 +429,7 @@
                       var graphic;
                       var pictureSymbol = new PictureMarkerSymbol();
                       pictureSymbol.setUrl("../image/locationMarker2.png");
-                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult + "<br/><br/> Source:" + cPath);
+                      var infoTemplate = new InfoTemplate("Child Abuse Case", "Title:" + cTitle + "<br/><br/>Description:" + cDesc + "<br/><br/>Date:" + cDate + "<br/><br/> location: " + locAdd + "<br/><br/>Anaylsis:" + alyResult);
                       graphic = new Graphic(new Point(cX, cY, spatialReference), pictureSymbol, null, infoTemplate);
                       map.graphics.add(graphic);
                   }
@@ -883,5 +884,5 @@
 
 
           //end of require
-        
+
       });

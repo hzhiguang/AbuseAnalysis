@@ -175,12 +175,13 @@ namespace FYP_ChildAbuseGIS2013
                 {
                     //Get the address
                     address = tbLocation.Text.ToString();
-                    double lng = Double.Parse(tbX.Text.ToString());
-                    double lat = Double.Parse(tbY.Text.ToString());
-                    string convert = CoordinatesConverter.CoordinatesConvertor(lng, lat, 4326, 3414);
-                    string[] converting = convert.Split(',');
-                    x = Double.Parse(converting[0]);
-                    y = Double.Parse(converting[1]);
+                    lb_msg.Text = tbX.Text.ToString();
+                    //double lng = Double.Parse(tbX.Text.ToString());
+                    //double lat = Double.Parse(tbY.Text.ToString());
+                    //string convert = CoordinatesConverter.CoordinatesConvertor(lng, lat, 4326, 3414);
+                    //string[] converting = convert.Split(',');
+                    //x = Double.Parse(converting[0]);
+                    //y = Double.Parse(converting[1]);
 
                     //Get the video filename for analysis
                     type = "Video";
@@ -200,8 +201,8 @@ namespace FYP_ChildAbuseGIS2013
                     aviManager.Close();
                     soundAnalysis();
                     grabVideo(path);
-                    videoAnalysis();
-                    insertIntoDatabase();
+                    //videoAnalysis();
+                    //insertIntoDatabase();
                 }
                 else if (fileType == ".jpg")
                 {
